@@ -16,7 +16,7 @@ mongoose.connection.on('connected', () => {
 
 const app = express();
 
-const users = require('./routes/users');
+const korisnici = require('./routes/korisnici');
 
 // port number
 const port = 3000;
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Body parser Middleare
 app.use(bodyParser.json());
 
-app.use('/users', users);
+app.use('/korisnici', korisnici);
 
 // Index route
 app.get('/', (req, res) => {
