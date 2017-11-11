@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
-// User schema
+// Korisnik - šema
 const userSchema = mongoose.Schema({
-    name: {
+    ime_prezime: {
         type: String
     },
 
@@ -13,12 +13,12 @@ const userSchema = mongoose.Schema({
         required: true
     },
 
-    username: {
+    korisnicko_ime: {
         type: String,
         required: true
     },
 
-    password: {
+    lozinka: {
         type: String,
         required: true
     }
@@ -32,25 +32,31 @@ module.exports.getUserById = function(id, callback) {
     Korisnik.findById(id, callback);
 }
 
-module.exports.getUserByUsername = function(username, callback) {
-    const query = {username: username}
+module.exports.getUserByUsername = function(korisnicko_ime, callback) {
+    const query = {korisnicko_ime: korisnicko_ime}
     
     Korisnik.findOne(query, callback);
 }
 
-module.exports.addUser = function(newUser, callback) {
+module.exports.addUser = function(noviKorisnik, callback) {
     bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-            //if(err) throw err;
-            //newUser.password = hash;
-            //newUser.save(callback);
-
+        bcrypt.hash(noviKorisnik.lozinka, salt, (err, hash) => {
             if(err) {
                 throw err;
             } else {
-                newUser.password = hash;
-                newUser.save(callback);
+                noviKorisnik.lozinka = hash;
+                noviKorisnik.save(callback);
             }
         });
+    });
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, callback) {
+    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+        if(err) {
+            throw err;
+        } else {
+            callback(null, isMatch);
+        }
     });
 }

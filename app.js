@@ -6,10 +6,10 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
-// Connect to database
+// Konekcija na bazu
 mongoose.connect(config.database);
 
-// On connection
+// Konektovano
 mongoose.connection.on('connected', () => {
     console.log('Connected to database: ' + config.database);
 })
@@ -18,27 +18,32 @@ const app = express();
 
 const korisnici = require('./routes/korisnici');
 
-// port number
+// port
 const port = 3000;
 
 // CORS middleware
 app.use(cors());
 
-// Set static folder
+// Postavljanje static foldera
 app.use(express.static(path.join(__dirname, 'public')));
-//
 
-// Body parser Middleare
+// Body parser Middleware
 app.use(bodyParser.json());
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 app.use('/korisnici', korisnici);
 
-// Index route
+// Index ruta
 app.get('/', (req, res) => {
     res.send('Invalid endpoint');
 })
 
-// Start server
+// Start servera
 app.listen(port, () => {
     console.log('Server started on port: ' + port);
 });
