@@ -1,0 +1,30 @@
+{
+  "name": "360degreecustomerview",
+  "version": "1.0.0",
+  "description": "360-degree customer view",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "*",
+    "mongoose": "*",
+    "bcryptjs": "*",
+    "cors": "*",
+    "jsonwebtoken": "*",
+    "body-parser": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demija/360DegreeCustomerView.git"
+  },
+  "author": "Adem Gabela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/demija/360DegreeCustomerView/issues"
+  },
+  "homepage": "https://github.com/demija/360DegreeCustomerView#readme"
+}
