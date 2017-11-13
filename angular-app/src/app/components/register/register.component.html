@@ -1,3 +1,25 @@
-<p>
-  register works!
-</p>
+<form (submit)="onRegisterSubmit()">
+    <div class="form-group">
+        <label for="imePrezimeTextbox">Ime i prezime</label>
+        <input type="text" [(ngModel)]="ime_prezime" name="ime_prezime" class="form-control" id="imePrezimeTextbox" placeholder="Unesi ime i prezime">
+    </div>
+    <div class="form-group">
+        <label for="emailTextbox">Email adresa</label>
+        <input type="email" [(ngModel)]="email" name="email" class="form-control" id="emailTextbox" placeholder="Unesi e-mail adresu">
+    </div>
+    <div class="form-group">
+        <label for="korisnickoimeTextbox">Korisničko ime</label>
+        <input type="text" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" placeholder="Unesi korisničko ime">
+    </div>
+    <div class="form-group">
+        <label for="lozinkaTextbox">Lozinka</label>
+        <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Unesi lozinku">
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+        <input type="checkbox" class="form-check-input">
+        Check me out
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Registracija</button>
+</form>
