@@ -1,3 +1,12 @@
-<p>
-  login works!
-</p>
+<h2 class="page-header">Prijava</h2>
+<form (submit)="onLoginSubmit()">
+    <div class="form-group">
+        <label class="col-form-label" for="korisnickoimeTextbox">Korisničko ime</label>
+        <input type="text" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" placeholder="Unesi korisničko ime">
+    </div>
+    <div class="form-group">
+        <label class="col-form-label" for="lozinkaTextbox">Lozinka</label>
+        <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Unesi lozinku">
+    </div>
+    <button type="submit" class="btn btn-primary">Prijava</button>
+</form>
