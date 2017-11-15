@@ -1,7 +1,7 @@
 <nav class="nav">
-    <a class="nav-link active" [routerLink]="['/']">Home</a>
-    <a class="nav-link" [routerLink]="['login']">Login</a>
-    <a class="nav-link" [routerLink]="['register']">Register</a>
-    <a class="nav-link disabled" href="#">Disabled</a>
-    <a class="nav-link" (click)="onLogoutClick()" href="#">Odjava</a>
+    <a class="nav-link active" [routerLink]="['/']" *ngIf="authService.loggedIn()">Home</a>
+    <a class="nav-link" [routerLink]="['/login']" *ngIf="!authService.loggedIn()">Login</a>
+    <a class="nav-link" [routerLink]="['/register']" *ngIf="!authService.loggedIn()">Register</a>
+    <a class="nav-link" [routerLink]="['/profile']" *ngIf="authService.loggedIn()">Profile</a>
+    <a class="nav-link" (click)="onLogoutClick()" href="#" *ngIf="authService.loggedIn()">Odjava</a>
 </nav>
