@@ -10,16 +10,20 @@ export class ValidateService {
 
         if(user.korisnicko_ime == undefined || user.korisnicko_ime == '') {
             document.getElementById('korisnickoimeTextbox').classList.add('is-invalid');
+            document.getElementById('korisnickoimeError').classList.remove('d-none');
             valid = false;
         } else {
             document.getElementById('korisnickoimeTextbox').classList.remove('is-invalid');
+            document.getElementById('korisnickoimeError').classList.add('d-none');
         }
 
         if(user.lozinka == undefined || user.lozinka == '') {
             document.getElementById('lozinkaTextbox').classList.add('is-invalid');
+            document.getElementById('lozinkaError').classList.remove('d-none');
             valid = false;
         } else {
             document.getElementById('lozinkaTextbox').classList.remove('is-invalid');
+            document.getElementById('lozinkaError').classList.add('d-none');
         }
 
         return valid;
