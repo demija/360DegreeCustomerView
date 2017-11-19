@@ -14,6 +14,7 @@ import { AuthService } from './services/auth.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const appRoutes: Routes = [
     {
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
         LoginComponent,
         RegisterComponent,
         HomeComponent,
-        ProfileComponent
+        ProfileComponent,
+        SidebarComponent
     ],
     imports: [
         BrowserModule,

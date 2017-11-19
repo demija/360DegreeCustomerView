@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidateService } from '../../services/validate.service';
 import { AuthService } from '../../services/auth.service';
-import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-register',
@@ -10,47 +10,61 @@ import { Router } from '@angular/router';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-    ime_prezime: String;
+    id_uposlenika: String;
+    ime: String;
+    prezime: String;
     email: String;
     korisnicko_ime: String;
     lozinka: String;
+    potvrdaLozinke: String;
+    odjel: String;
+    datum_registracije: Date;
 
-    constructor(private validateService: ValidateService, private flashMessagesService: FlashMessagesService, private authService: AuthService, private router: Router) { }
+    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router) { }
 
     ngOnInit() {
     }
 
     onRegisterSubmit() {
         const user = {
-            ime_prezime: this.ime_prezime,
+            id_uposlenika: this.id_uposlenika,
+            ime: this.ime,
+            prezime: this.prezime,
             email: this.email,
             korisnicko_ime: this.korisnicko_ime,
-            lozinka: this.lozinka
+            lozinka: this.lozinka,
+            potvrdaLozinke: this.potvrdaLozinke,
+            odjel: this.odjel,
+            datum_registracije: this.datum_registracije
         }
 
-        // Required fields
+        // Validacija unesenih vrijednosti
         if(!this.validateService.validateRegister(user)) {
-            //console.log('Greška!');
-
-            this.flashMessagesService.show('Greška!', {cssClass: 'alert-danger', timeout: 3000});
-
             return false;
         }
-
-        // validacija emaila na isti način, pozivm funkcije
 
         // Registracija korisnika
         this.authService.registerUser(user).subscribe(data => {
             if(data.success) {
-                this.flashMessagesService.show('Uspješno registrovano!', {cssClass: 'alert-success', timeout: 3000});
+                swal({
+                    //position: 'top-right',
+                    type: 'success',
+                    title: 'Registracija uspješna',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 
                 this.router.navigate(['/login']);
             } else {
-                this.flashMessagesService.show('Greška!', {cssClass: 'alert-danger', timeout: 3000});
+                swal({
+                    title: 'Greška!',
+                    text: 'Problem prilikom registracije',
+                    type: 'error',
+                    confirmButtonText: 'Uredu'
+                })
 
                 this.router.navigate(['/registracija']);
             }
         });
     }
-
 }

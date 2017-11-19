@@ -4,8 +4,19 @@ const config = require('../config/database');
 
 // Korisnik - šema
 const userSchema = mongoose.Schema({
-    ime_prezime: {
-        type: String
+    id_uposlenika: {
+        type: String,
+        required: true
+    },
+
+    ime: {
+        type: String,
+        required: true
+    },
+
+    prezime: {
+        type: String,
+        required: true
     },
 
     email: {
@@ -21,6 +32,19 @@ const userSchema = mongoose.Schema({
     lozinka: {
         type: String,
         required: true
+    },
+
+    odjel: {
+        type: String,
+        required: true
+    },
+
+    datum_registracije: {
+        type: Date
+    },
+
+    broj_telefona: {
+        type: String
     }
 });
 

@@ -1,7 +1,17 @@
-<nav class="nav">
+<nav class="navbar navbar-expand-lg navbar-light bg-faded">   
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" [routerLink]="['/']" *ngIf="authService.loggedIn()">Početna stranica</a>
+            <a class="nav-item nav-link" [routerLink]="['/profile']" *ngIf="authService.loggedIn()">Moj profil</a>
+            <a class="nav-item nav-link" (click)="onLogoutClick()" href="#" *ngIf="authService.loggedIn()">Odjava</a>
+        </div>
+    </div>
+</nav>
+
+<!--<nav class="nav">
     <a class="nav-link active" [routerLink]="['/']" *ngIf="authService.loggedIn()">Home</a>
     <a class="nav-link" [routerLink]="['/login']" *ngIf="!authService.loggedIn()">Login</a>
     <a class="nav-link" [routerLink]="['/register']" *ngIf="!authService.loggedIn()">Register</a>
     <a class="nav-link" [routerLink]="['/profile']" *ngIf="authService.loggedIn()">Profile</a>
     <a class="nav-link" (click)="onLogoutClick()" href="#" *ngIf="authService.loggedIn()">Odjava</a>
-</nav>
+</nav>-->

@@ -1,25 +1,85 @@
-<form (submit)="onRegisterSubmit()">
-    <div class="form-group">
-        <label for="imePrezimeTextbox">Ime i prezime</label>
-        <input type="text" [(ngModel)]="ime_prezime" name="ime_prezime" class="form-control" id="imePrezimeTextbox" placeholder="Unesi ime i prezime">
-    </div>
-    <div class="form-group">
-        <label for="emailTextbox">Email adresa</label>
-        <input type="email" [(ngModel)]="email" name="email" class="form-control" id="emailTextbox" placeholder="Unesi e-mail adresu">
-    </div>
-    <div class="form-group">
-        <label for="korisnickoimeTextbox">Korisničko ime</label>
-        <input type="text" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" placeholder="Unesi korisničko ime">
-    </div>
-    <div class="form-group">
-        <label for="lozinkaTextbox">Lozinka</label>
-        <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Unesi lozinku">
-    </div>
-    <div class="form-check">
-        <label class="form-check-label">
-        <input type="checkbox" class="form-check-input">
-        Check me out
-        </label>
-    </div>
-    <button type="submit" class="btn btn-primary">Registracija</button>
-</form>
+<div class="w-75 p-3 registerBlock">
+    <h2 class="page-header">Registracija</h2>
+    <br>
+    <form (submit)="onRegisterSubmit()">
+        <table class="table">
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="idUposlenikaTextbox">ID uposlenika</label>
+                        <label id="idUposlenikaError" class="float-right text-danger d-none">Obavezan unos!</label>
+                        <input type="text" [(ngModel)]="id_uposlenika" name="id_uposlenika" class="form-control" id="idUposlenikaTextbox" placeholder="ID">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="korisnickoimeTextbox">Korisničko ime</label>
+                        <label id="korisnickoimeError" class="float-right text-danger d-none">Obavezan unos!</label>
+                        <input type="text" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" placeholder="Korisničko ime minimalno 5 karaktera">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="imeTextbox">Ime</label>
+                        <label id="imeError" class="float-right text-danger d-none">Obavezan unos!</label>
+                        <input type="text" [(ngModel)]="ime" name="ime" class="form-control" id="imeTextbox" placeholder="Ime">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="prezimeTextbox">Prezime</label>
+                        <label id="prezimeError" class="float-right text-danger d-none">Obavezan unos!</label>
+                        <input type="text" [(ngModel)]="prezime" name="prezime" class="form-control" id="prezimeTextbox" placeholder="Prezime">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="lozinkaTextbox">Lozinka</label>
+                        <label id="lozinkaError" class="float-right text-danger d-none">Obavezan unos!</label>
+                        <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Lozinka">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="potvrdaLozinkeTextbox">Potvrda lozinke</label>
+                        <label id="potvrdaLozinkeError" class="float-right text-danger d-none">Lozinke nisu iste!</label>
+                        <input type="password" [(ngModel)]="potvrdaLozinke" name="potvrdaLozinke" class="form-control" id="potvrdaLozinkeTextbox" placeholder="Potvrda lozinke">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="emailTextbox">Email adresa</label>
+                        <label id="emailError" class="float-right text-danger d-none">Pogrešan format!</label>
+                        <input type="text" [(ngModel)]="email" name="email" class="form-control" id="emailTextbox" placeholder="E-mail">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="inlineFormCustomSelect">Odjel</label>
+                        <label id="odjelError" class="float-right text-danger d-none">Obavezan odabir!</label>
+                        <br>
+                        <select class="custom-select" [(ngModel)]="odjel" name="odjel" id="odjelDropbox">
+                            <option value="1">Prvi odjel</option>
+                            <option value="2">Drugi odjel</option>
+                            <option value="3">Treći odjel</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-link" [routerLink]="['/login']">Nazad</a>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary float-right">Registracija</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

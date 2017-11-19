@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { ValidateService } from '../../services/validate.service';
 import { Router } from '@angular/router';
-import { FlashMessagesService } from 'angular2-flash-messages';
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
     korisnicko_ime: String;
     lozinka: String;
 
-    constructor(private authService: AuthService, private router: Router, private flashMessagesService: FlashMessagesService) { }
+    constructor(private authService: AuthService, private validateService: ValidateService, private router: Router) { }
 
     ngOnInit() {
     }
@@ -23,16 +24,32 @@ export class LoginComponent implements OnInit {
             lozinka: this.lozinka
         }
 
+        // Validacija unesenih vrijednosti
+        if(!this.validateService.validateLogin(user)) {
+            return false;
+        }
+
         this.authService.authenticateUser(user).subscribe(data => {
             if(data.success) {
+                swal({
+                    type: 'info',
+                    title: 'Dobro došli ' + data.user.ime,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
                 this.authService.storeUserData(data.token, data.user);
-                this.flashMessagesService.show('Uspješno prijavljeno!', {cssClass: 'alert-success', timeout: 3000});
                 this.router.navigate(['/']);
             } else {
-                this.flashMessagesService.show('Greška prilikom prijave! ' + data.msg, {cssClass: 'alert-danger', timeout: 3000});
+                swal({
+                    title: 'Greška!',
+                    text: data.msg,
+                    type: 'error',
+                    confirmButtonText: 'Uredu'
+                })
+
                 this.router.navigate(['/login']);
             }
         });
     }
-
 }

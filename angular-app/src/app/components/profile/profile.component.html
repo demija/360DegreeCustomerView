@@ -1,7 +1,11 @@
-<div *ngIf="user">
-    <h2 class="page-header">{{ user.ime_prezime }}</h2>
-    <ul class="list-group">
-        <li class="list-group-item">{{ user.korisnicko_ime }}</li>
-        <li class="list-group-item">{{ user.email }}</li>
-    </ul>
+<app-navbar></app-navbar>
+<div class="container">
+    <div *ngIf="user">
+        <h2>Profil</h2>
+        <h2 class="page-header">{{ user.ime_prezime }}</h2>
+        <ul class="list-group">
+            <li class="list-group-item">{{ user.korisnicko_ime }}</li>
+            <li class="list-group-item">{{ user.email }}</li>
+        </ul>
+    </div>
 </div>

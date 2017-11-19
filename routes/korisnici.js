@@ -8,10 +8,16 @@ const Korisnik = require('../models/korisnik');
 // Registracija korisnik
 router.post('/registracija', (req, res, next) => {
     let noviKorisnik = new Korisnik({
-        ime_prezime: req.body.ime_prezime,
+        //ime_prezime: req.body.ime_prezime,
+        id_uposlenika: req.body.id_uposlenika,
+        ime: req.body.ime,
+        prezime: req.body.prezime,
         email: req.body.email,
         korisnicko_ime: req.body.korisnicko_ime,
-        lozinka: req.body.lozinka
+        lozinka: req.body.lozinka,
+        odjel: req.body.odjel,
+        datum_registracije: Date.now(),
+        broj_telefona: ''
     });
 
     Korisnik.addUser(noviKorisnik, (err, user) => {
@@ -59,7 +65,8 @@ router.post('/autentifikacija', (req, res, next) => {
                             token: 'JWT ' + token,
                             user: {
                                 id: user._id,
-                                ime_prezime: user.ime_prezime,
+                                ime: user.ime,
+                                prezime: user.prezime,
                                 korisnicko_ime: user.korisnicko_ime,
                                 email: user.email
                             }
