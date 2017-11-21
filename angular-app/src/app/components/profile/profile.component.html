@@ -1,11 +1,92 @@
 <app-navbar></app-navbar>
-<div class="container">
-    <div *ngIf="user">
-        <h2>Profil</h2>
-        <h2 class="page-header">{{ user.ime_prezime }}</h2>
-        <ul class="list-group">
-            <li class="list-group-item">{{ user.korisnicko_ime }}</li>
-            <li class="list-group-item">{{ user.email }}</li>
-        </ul>
+<div class="container-fluid">
+    <div class="row">
+        <div class="sideBr">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="container" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+            <div id="section1" class="container-fluid">
+                <div class="card card-1">
+                    <h2 class="page-header">Moj profil</h2>
+                    <div *ngIf="user">
+                        <form>
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="idUposlenikaTextbox">ID uposlenika</label>
+                                            <input type="text" [(ngModel)]="user.id_uposlenika" name="id_uposlenika" class="form-control" id="idUposlenikaTextbox" readonly>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="korisnickoimeTextbox">Korisničko ime</label>
+                                            <input type="text" [(ngModel)]="user.korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" readonly>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="imeTextbox">Ime</label>
+                                            <input type="text" [(ngModel)]="user.ime" name="ime" class="form-control" id="imeTextbox" readonly>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="prezimeTextbox">Prezime</label>
+                                            <input type="text" [(ngModel)]="user.prezime" name="prezime" class="form-control" id="prezimeTextbox" readonly>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="lozinkaTextbox">Nova lozinka</label>
+                                            <label id="lozinkaError" class="float-right text-danger d-none">Obavezan unos!</label>
+                                            <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Lozinka">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="potvrdaLozinkeTextbox">Potvrda nove lozinke</label>
+                                            <label id="potvrdaLozinkeError" class="float-right text-danger d-none">Lozinke nisu iste!</label>
+                                            <input type="password" [(ngModel)]="potvrdaLozinke" name="potvrdaLozinke" class="form-control" id="potvrdaLozinkeTextbox" placeholder="Potvrda lozinke">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="emailTextbox">Email adresa</label>
+                                            <input type="text" [(ngModel)]="user.email" name="email" class="form-control" id="emailTextbox" readonly>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="inlineFormCustomSelect">Odjel</label>
+                                            <label id="odjelError" class="float-right text-danger d-none">Obavezan odabir!</label>
+                                            <br>
+                                            <select class="custom-select" [(ngModel)]="odjel" name="odjel" id="odjelDropbox">
+                                                <option value="1">Prvi odjel</option>
+                                                <option value="2">Drugi odjel</option>
+                                                <option value="3">Treći odjel</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-outline-primary float-right">Sačuvaj izmjene</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

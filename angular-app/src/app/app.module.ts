@@ -11,7 +11,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
-import { FlashMessagesModule } from 'angular2-flash-messages';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -51,8 +50,7 @@ const appRoutes: Routes = [
         BrowserModule,
         FormsModule,
         HttpModule,
-        RouterModule.forRoot(appRoutes),
-        FlashMessagesModule
+        RouterModule.forRoot(appRoutes)
     ],
     providers: [ValidateService, AuthService, AuthGuard],
     bootstrap: [AppComponent]

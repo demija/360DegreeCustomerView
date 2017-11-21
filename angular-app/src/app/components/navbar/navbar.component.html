@@ -1,10 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-faded">   
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light card-1" style="background-color: #FFFFFF;">
+    <img src="../../assets/small.png" alt="app" height="100px;">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="padding-top:10px; padding-left:50px;">
+        <div class="navbar-nav">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Matični broj klijenta" aria-label="Search">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Traži</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup" style="padding-top:10px;">
         <div class="navbar-nav">
             <a class="nav-item nav-link" [routerLink]="['/']" *ngIf="authService.loggedIn()">Početna stranica</a>
             <a class="nav-item nav-link" [routerLink]="['/profile']" *ngIf="authService.loggedIn()">Moj profil</a>
             <a class="nav-item nav-link" (click)="onLogoutClick()" href="#" *ngIf="authService.loggedIn()">Odjava</a>
         </div>
+        <span>{{ datum }}</span>
     </div>
 </nav>
 
