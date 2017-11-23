@@ -1,6 +1,8 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light card-1" style="background-color: #FFFFFF;">
-    <img src="../../assets/small.png" alt="app" height="100px;">
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="padding-top:10px; padding-left:50px;">
+    <div class="media">
+        <img class="align-self-center mr-3" src="../../assets/small.png" alt="Application image" height="64px;">
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="margin-top: 10px; margin-left: 5%;">
         <div class="navbar-nav">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Matični broj klijenta" aria-label="Search">
@@ -16,13 +18,7 @@
             <a class="nav-item nav-link" (click)="onLogoutClick()" href="#" *ngIf="authService.loggedIn()">Odjava</a>
         </div>
         <span>{{ datum }}</span>
+        <span>{{ korisnickoime }}</span>
+        <span>{{ imePrezime }}</span>
     </div>
 </nav>
-
-<!--<nav class="nav">
-    <a class="nav-link active" [routerLink]="['/']" *ngIf="authService.loggedIn()">Home</a>
-    <a class="nav-link" [routerLink]="['/login']" *ngIf="!authService.loggedIn()">Login</a>
-    <a class="nav-link" [routerLink]="['/register']" *ngIf="!authService.loggedIn()">Register</a>
-    <a class="nav-link" [routerLink]="['/profile']" *ngIf="authService.loggedIn()">Profile</a>
-    <a class="nav-link" (click)="onLogoutClick()" href="#" *ngIf="authService.loggedIn()">Odjava</a>
-</nav>-->
