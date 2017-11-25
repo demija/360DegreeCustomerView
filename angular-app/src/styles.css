@@ -1,11 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
-
 body {
     background-color: #F1F4F7;
-
+    color: #374664;
     background-image: url('/assets/gray-wallpaper.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
+}
+
+.btn-outline-primary {
+    color: #374664;
+    background-color: transparent;
+    background-image: none;
+    border-color: #374664;
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #374664;
+    border-color: #374664;
+}
+
+.nav-link {
+    color: #374664;
+}
+
+.btn-link {
+    color: #374664;
 }
 
 .container {

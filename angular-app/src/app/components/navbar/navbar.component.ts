@@ -12,15 +12,13 @@ export class NavbarComponent implements OnInit {
     mjesec = new Date().getUTCMonth() + 1;
     godina = new Date().getUTCFullYear();
     datum = this.dan + "/" + this.mjesec + "/" + this.godina;
-    korisnickoime: String;
-    imePrezime: String;
+    user: Object;
 
     constructor(private authService: AuthService, private router: Router) { }
 
     ngOnInit() {
         this.authService.getProfile().subscribe(profile => {
-            this.imePrezime = profile.user.ime + " " + profile.user.prezime;
-            this.korisnickoime = profile.user.korisnicko_ime;
+            this.user = profile.user;
         }, err => {
             console.log('greška!');
             return false;
