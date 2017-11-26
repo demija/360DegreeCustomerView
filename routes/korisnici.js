@@ -8,7 +8,6 @@ const Korisnik = require('../models/korisnik');
 // Registracija korisnik
 router.post('/registracija', (req, res, next) => {
     let noviKorisnik = new Korisnik({
-        //ime_prezime: req.body.ime_prezime,
         id_uposlenika: req.body.id_uposlenika,
         ime: req.body.ime,
         prezime: req.body.prezime,

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { NavhomeService } from '../../services/navhome.service';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-navbar',
@@ -12,13 +14,14 @@ export class NavbarComponent implements OnInit {
     mjesec = new Date().getUTCMonth() + 1;
     godina = new Date().getUTCFullYear();
     datum = this.dan + "/" + this.mjesec + "/" + this.godina;
-    user: Object;
+    korisnik: Object;
+    maticni_broj_search: String;
 
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(private authService: AuthService, private navhomeService: NavhomeService, private router: Router) { }
 
     ngOnInit() {
         this.authService.getProfile().subscribe(profile => {
-            this.user = profile.user;
+            this.korisnik = profile.user;
         }, err => {
             console.log('greška!');
             return false;
@@ -29,5 +32,24 @@ export class NavbarComponent implements OnInit {
         this.authService.logout();
         this.router.navigate(['/login']);
         return false;
+    }
+
+    onSearchClick() {
+        const data = {
+            maticni_broj: this.maticni_broj_search
+        }
+
+        this.navhomeService.getClientData(data).subscribe(client => {
+            if(client.success) {
+                this.navhomeService.changeClient(client.client);
+            } else {
+                swal({
+                    title: 'Greška!',
+                    text: client.msg,
+                    type: 'error',
+                    confirmButtonText: 'Uredu'
+                })
+            }
+        });
     }
 }

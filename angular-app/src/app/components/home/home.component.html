@@ -12,51 +12,51 @@
                         <tbody>
                             <tr>
                                 <td>Ime i prezime</td>
-                                <th>Adem Gabela</th>
+                                <th>{{ klijent.ime }} {{ klijent.prezime }}</th>
                                 <td>JMBG</td>
-                                <th>1706986170077</th>
+                                <th>{{ klijent.maticni_broj }}</th>
                                 <td>CRK saglasnost</td>
-                                <th class="table-success">Da</th>
+                                <th [ngClass]="{Da:'table-success', Ne:'table-danger'}[klijent.saglasnost_za_crk]">{{ klijent.saglasnost_za_crk }}</th>
                             </tr>
                             <tr>
                                 <td>Broj lične karte</td>
-                                <th>09BQH1700</th>
+                                <th>{{ klijent.broj_lk }}</th>
                                 <td>Datum izdavanja</td>
-                                <th>11.09.2009</th>
+                                <th>{{ klijent.datum_izdavanja_lk }}</th>
                                 <td>Datum važenja</td>
-                                <th>11.09.2019</th>
+                                <th>{{ klijent.datum_vazenja_lk }}</th>
                             </tr>
                             <tr>
                                 <td>Segment</td>
-                                <th>sgm</th>
+                                <th>{{ klijent.segment_klijenta }}</th>
                                 <td>Rejting</td>
-                                <th>1</th>
+                                <th>{{ klijent.rejting_klijenta }}</th>
                                 <td>Klasifikacija</td>
-                                <th>Da</th>
+                                <th>{{ klijent.cb_klasifikacija }}</th>
                             </tr>
                             <tr>
                                 <td>Adresa</td>
-                                <th>Hifzi Bjelevca 160</th>
+                                <th>{{ klijent.adresa?.ulica_i_broj }}</th>
                                 <td>Grad</td>
-                                <th>Sarajevo</th>
+                                <th>{{ klijent.adresa?.grad }}</th>
                                 <td>Kanton</td>
-                                <th>Sarajevo</th>
+                                <th>{{ klijent.adresa?.kanton }}</th>
                             </tr>
                             <tr>
                                 <td>E-mail</td>
-                                <th>adem.gabela@gmail.com</th>
+                                <th>{{ klijent.mail_adresa }}</th>
                                 <td>Fiksni telefon</td>
-                                <th>033/634-644</th>
+                                <th>{{ klijent.kucni_telefon }}</th>
                                 <td>Mobilni telefon</td>
-                                <th>061/377104</th>
+                                <th>{{ klijent.mobilni_telefon }}</th>
                             </tr>
                             <tr>
                                 <td>Radni status</td>
-                                <th>Zaposlen</th>
+                                <th>{{ klijent.radni_status }}</th>
                                 <td>Firma zaposlenja</td>
-                                <th>OSB Engineering</th>
+                                <th>{{ klijent.firma_zaposlenja?.naziv }}</th>
                                 <td>Klijent prima platu</td>
-                                <th class="table-success">Da</th>
+                                <th>{{ klijent.primanja_zadnji_mjesec }}</th>
                             </tr>
                         </tbody>
                     </table>
@@ -76,11 +76,11 @@
                                 <td>Stanje na računu</td>
                             </tr>
                             <tr>
-                                <th>1436598459451564</th>
-                                <th>1</th>
-                                <th>23.12.2014</th>
-                                <th>977</th>
-                                <th>9,48</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </tbody>
                     </table>

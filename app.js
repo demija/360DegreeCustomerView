@@ -17,6 +17,7 @@ mongoose.connection.on('connected', () => {
 const app = express();
 
 const korisnici = require('./routes/korisnici');
+const klijenti = require('./routes/klijenti');
 
 // port
 const port = 3000;
@@ -37,6 +38,7 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/korisnici', korisnici);
+app.use('/klijenti', klijenti);
 
 // Index ruta
 app.get('/', (req, res) => {
