@@ -8,12 +8,17 @@ import { NavhomeService } from '../../services/navhome.service';
 })
 export class HomeComponent implements OnInit {
     klijent: Object;
+    racuni: Object;
 
     constructor(private navhomeService: NavhomeService) { }
 
     ngOnInit() {
-        this.navhomeService.currentKlijent.subscribe(client => {
-            this.klijent = client;
+        this.navhomeService.currentKlijent.subscribe(klijent => {
+            this.klijent = klijent;
+        });
+
+        this.navhomeService.currentRacun.subscribe(racuni => {
+            this.racuni = racuni;
         });
     }
 }

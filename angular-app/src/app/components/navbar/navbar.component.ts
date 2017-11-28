@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
     datum = this.dan + "/" + this.mjesec + "/" + this.godina;
     korisnik: Object;
     maticni_broj_search: String;
+    klijent_id: String;
 
     constructor(private authService: AuthService, private navhomeService: NavhomeService, private router: Router) { }
 
@@ -39,6 +40,26 @@ export class NavbarComponent implements OnInit {
             maticni_broj: this.maticni_broj_search
         }
 
+        this.navhomeService.getClientData(data).subscribe((klijent: any) => {
+            if(klijent.success) {
+                this.navhomeService.changeClient(klijent.client);
+                this.navhomeService.changeRacun(klijent.racuni);
+            } else {
+                swal({
+                    title: 'Greška!',
+                    text: klijent.msg,
+                    type: 'error',
+                    confirmButtonText: 'Uredu'
+                })
+            }
+        });
+    }
+
+    /*onSearchClick() {
+        const data = {
+            maticni_broj: this.maticni_broj_search
+        }
+
         this.navhomeService.getClientData(data).subscribe(client => {
             if(client.success) {
                 this.navhomeService.changeClient(client.client);
@@ -51,5 +72,5 @@ export class NavbarComponent implements OnInit {
                 })
             }
         });
-    }
+    }*/
 }

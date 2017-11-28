@@ -70,17 +70,15 @@
                         <tbody>
                             <tr>
                                 <td>Račun</td>
-                                <td>Broj aktivnih partija</td>
+                                <td>Partija</td>
                                 <td>Datum ugovora</td>
-                                <td>Šifra valute</td>
                                 <td>Stanje na računu</td>
                             </tr>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                            <tr *ngFor="let rcn of racuni.data">
+                                <th>{{ rcn.opis_tipa_ugovora }}</th>
+                                <th>{{ rcn.partija }}</th>
+                                <th>{{ rcn.datum_otvaranja }}</th>
+                                <th>{{ rcn.stanje_racuna_ekv }}</th>
                             </tr>
                         </tbody>
                     </table>
@@ -97,8 +95,8 @@
                                 <th>Datum ugovora</th>
                             </tr>
                             <tr>
-                                <td>Smart plus</td>
-                                <td>23.12.2014</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -116,9 +114,9 @@
                                 <td>Odobreni iznos</td>
                             </tr>
                             <tr>
-                                <th>Tip ugovora</th>
-                                <th>23.12.2014</th>
-                                <th>2.000,00</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </tbody>
                     </table>
@@ -140,13 +138,13 @@
                                 <td>Anuitet</td>
                             </tr>
                             <tr>
-                                <th>Gotovisnki kredit</th>
-                                <th>23.12.2014</th>
-                                <th>23.12.2019</th>
-                                <th>17.000,00</th>
-                                <th>9,48</th>
-                                <th>9.315,48</th>
-                                <th>9,48</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </tbody>
                     </table>
