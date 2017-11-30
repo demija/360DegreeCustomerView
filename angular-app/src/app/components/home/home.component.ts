@@ -9,6 +9,7 @@ import { NavhomeService } from '../../services/navhome.service';
 export class HomeComponent implements OnInit {
     klijent: Object;
     racuni: Object;
+    depoziti: Object;
 
     constructor(private navhomeService: NavhomeService) { }
 
@@ -19,6 +20,10 @@ export class HomeComponent implements OnInit {
 
         this.navhomeService.currentRacun.subscribe(racuni => {
             this.racuni = racuni;
+        });
+
+        this.navhomeService.currentDepozit.subscribe(depoziti => {
+            this.depoziti = depoziti;
         });
     }
 }

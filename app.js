@@ -20,6 +20,10 @@ const korisnici = require('./routes/korisnici');
 const klijenti = require('./routes/klijenti');
 const racuni = require('./routes/racuni');
 
+//
+const depoziti = require('./routes/depoziti');
+//
+
 // port
 const port = 3000;
 
@@ -41,6 +45,10 @@ require('./config/passport')(passport);
 app.use('/korisnici', korisnici);
 app.use('/klijenti', klijenti);
 app.use('/racuni', racuni);
+
+//
+app.use('/depoziti', depoziti);
+//
 
 // Index ruta
 app.get('/', (req, res) => {

@@ -44,6 +44,7 @@ export class NavbarComponent implements OnInit {
             if(klijent.success) {
                 this.navhomeService.changeClient(klijent.client);
                 this.navhomeService.changeRacun(klijent.racuni);
+                this.navhomeService.changeDeposit(klijent.depoziti);
             } else {
                 swal({
                     title: 'Greška!',
@@ -54,23 +55,4 @@ export class NavbarComponent implements OnInit {
             }
         });
     }
-
-    /*onSearchClick() {
-        const data = {
-            maticni_broj: this.maticni_broj_search
-        }
-
-        this.navhomeService.getClientData(data).subscribe(client => {
-            if(client.success) {
-                this.navhomeService.changeClient(client.client);
-            } else {
-                swal({
-                    title: 'Greška!',
-                    text: client.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                })
-            }
-        });
-    }*/
 }
