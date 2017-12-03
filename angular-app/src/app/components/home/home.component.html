@@ -137,12 +137,12 @@
                                 <td>Ostatak duga</td>
                                 <td>Anuitet</td>
                             </tr>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                            <tr *ngFor="let kredit of krediti.data">
+                                <th>{{ kredit.opis_tipa_ugovora }}</th>
+                                <th>{{ kredit.datum_ugovora }}</th>
+                                <th>{{ kredit.datum_kraja_vazenja_ugovora }}</th>
+                                <th>{{ kredit.odobreni_iznos }}</th>
+                                <th>{{ kredit.stopa }}</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -161,14 +161,14 @@
                                 <td>Vrsta kartice</td>
                                 <td>Tip kartice</td>
                                 <td>Datum važenja</td>
-                                <td>Odobreni iznos</td>
+                                <td>Stanje</td>
                             </tr>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                            <tr *ngFor="let kartica of kartice.data">
+                                <th>{{ kartica.opis }}</th>
+                                <th>{{ kartica.vrsta_kartice }}</th>
+                                <th>{{ kartica.tip_kartice }}</th>
+                                <th>{{ kartica.datum_vazenja }}</th>
+                                <th>{{ kartica.stanje }}</th>
                             </tr>
                         </tbody>
                     </table>
@@ -202,13 +202,6 @@
             <div id="ostale_usluge" class="container-fluid">
                 <div class="card card-1">
                     <h2 class="page-header">Ostale usluge</h2>
-                    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-                </div>
-            </div>
-
-            <div id="izvodi" class="container-fluid">
-                <div class="card card-1">
-                    <h2 class="page-header">Izvodi</h2>
                     <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
                 </div>
             </div>

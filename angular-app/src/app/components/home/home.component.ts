@@ -10,6 +10,8 @@ export class HomeComponent implements OnInit {
     klijent: Object;
     racuni: Object;
     depoziti: Object;
+    kartice: Object;
+    krediti: Object;
 
     constructor(private navhomeService: NavhomeService) { }
 
@@ -24,6 +26,14 @@ export class HomeComponent implements OnInit {
 
         this.navhomeService.currentDepozit.subscribe(depoziti => {
             this.depoziti = depoziti;
+        });
+
+        this.navhomeService.currentKartica.subscribe(kartice => {
+            this.kartice = kartice;
+        });
+
+        this.navhomeService.currentKredit.subscribe(krediti => {
+            this.krediti = krediti;
         });
     }
 }

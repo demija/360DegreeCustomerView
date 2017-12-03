@@ -16,6 +16,12 @@ export class NavhomeService {
     private depozisSource = new BehaviorSubject<Object>({});
     currentDepozit = this.depozisSource.asObservable();
 
+    private karticaSource = new BehaviorSubject<Object>({});
+    currentKartica = this.karticaSource.asObservable();
+
+    private kreditSource = new BehaviorSubject<Object>({});
+    currentKredit = this.kreditSource.asObservable();
+
     constructor(private http: Http) { }
 
     getClientData(data): Observable<any> {
@@ -32,14 +38,22 @@ export class NavhomeService {
                 return Observable.forkJoin(
                     Observable.of(klijent_rezultat),
                     this.http.post('http://localhost:3000/racuni/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
-                    this.http.post('http://localhost:3000/depoziti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json())
+                    this.http.post('http://localhost:3000/depoziti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/kartice/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/krediti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json())
                 )
                 .map((data: any[]) => {
                     let klijent_rezultat = data[0];
                     let racuni = data[1];
                     let depoziti = data[2];
+                    let kartice = data[3];
+                    let krediti = data[4];
+
                     klijent_rezultat.racuni = racuni;
                     klijent_rezultat.depoziti = depoziti;
+                    klijent_rezultat.kartice = kartice;
+                    klijent_rezultat.krediti = krediti;
+
                     return klijent_rezultat;
                 });
             });
@@ -55,5 +69,13 @@ export class NavhomeService {
 
     changeDeposit(depozit) {
         this.depozisSource.next(depozit);
+    }
+
+    changeKartice(kartica) {
+        this.karticaSource.next(kartica);
+    }
+
+    changeKredite(kredit) {
+        this.kreditSource.next(kredit);
     }
 }

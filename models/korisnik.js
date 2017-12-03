@@ -45,6 +45,10 @@ const userSchema = mongoose.Schema({
 
     broj_telefona: {
         type: String
+    },
+
+    aktivan: {
+        type: Boolean
     }
 });
 
