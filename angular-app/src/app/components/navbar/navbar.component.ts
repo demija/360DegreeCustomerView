@@ -24,7 +24,6 @@ export class NavbarComponent implements OnInit {
         this.authService.getProfile().subscribe(profile => {
             this.korisnik = profile.user;
         }, err => {
-            console.log('greška!');
             return false;
         });
     }

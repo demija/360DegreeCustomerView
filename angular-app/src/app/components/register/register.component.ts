@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidateService } from '../../services/validate.service';
+import { NavhomeService } from '../../services/navhome.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
@@ -17,12 +18,16 @@ export class RegisterComponent implements OnInit {
     korisnicko_ime: String;
     lozinka: String;
     potvrdaLozinke: String;
-    odjel: String;
+    odjel: Object;
     datum_registracije: Date;
+    odjeliLista: Object;
 
-    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router) { }
+    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService) { }
 
     ngOnInit() {
+        this.navhomeService.getOdjeli().subscribe(odjeli => {
+            this.odjeliLista = odjeli;
+        })
     }
 
     onRegisterSubmit() {
@@ -35,7 +40,8 @@ export class RegisterComponent implements OnInit {
             lozinka: this.lozinka,
             potvrdaLozinke: this.potvrdaLozinke,
             odjel: this.odjel,
-            datum_registracije: this.datum_registracije
+            aktivan: true,
+            administrator: false
         }
 
         // Validacija unesenih vrijednosti
@@ -49,19 +55,19 @@ export class RegisterComponent implements OnInit {
                 swal({
                     //position: 'top-right',
                     type: 'success',
-                    title: 'Registracija uspješna',
+                    title: data.msg,
                     showConfirmButton: false,
                     timer: 1500
-                })
+                });
 
                 this.router.navigate(['/login']);
             } else {
                 swal({
                     title: 'Greška!',
-                    text: 'Problem prilikom registracije',
+                    text: data.msg,
                     type: 'error',
                     confirmButtonText: 'Uredu'
-                })
+                });
 
                 this.router.navigate(['/registracija']);
             }

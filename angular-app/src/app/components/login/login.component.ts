@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
             if(data.success) {
                 swal({
                     type: 'info',
-                    title: 'Dobro došli ' + data.user.ime,
+                    title: 'Dobro došli ' + data.user.ime + ' ' + data.user.prezime + '!',
                     showConfirmButton: false,
                     timer: 2000
                 })

@@ -22,6 +22,7 @@ const racuni = require('./routes/racuni');
 const depoziti = require('./routes/depoziti');
 const kartice = require('./routes/kartice');
 const krediti = require('./routes/krediti');
+const odjeli = require('./routes/odjeli');
 
 // port
 const port = 3000;
@@ -47,6 +48,7 @@ app.use('/racuni', racuni);
 app.use('/depoziti', depoziti);
 app.use('/kartice', kartice);
 app.use('/krediti', krediti);
+app.use('/odjeli', odjeli);
 
 // Index ruta
 app.get('/', (req, res) => {

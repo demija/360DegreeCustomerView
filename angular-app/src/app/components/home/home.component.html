@@ -7,202 +7,332 @@
         <div class="container" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
             <div id="svakodnevno_bankarstvo" class="container-fluid">
                 <div class="card card-1 animated fadeIn">
-                    <h2 class="page-header">Svakodnevno bankarstvo</h2>
-                    <table class="table table-responsive-lg table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Ime i prezime</td>
-                                <th>{{ klijent.ime }} {{ klijent.prezime }}</th>
-                                <td>JMBG</td>
-                                <th>{{ klijent.maticni_broj }}</th>
-                                <td>CRK saglasnost</td>
-                                <th [ngClass]="{Da:'table-success', Ne:'table-danger'}[klijent.saglasnost_za_crk]">{{ klijent.saglasnost_za_crk }}</th>
-                            </tr>
-                            <tr>
-                                <td>Broj lične karte</td>
-                                <th>{{ klijent.broj_lk }}</th>
-                                <td>Datum izdavanja</td>
-                                <th>{{ klijent.datum_izdavanja_lk }}</th>
-                                <td>Datum važenja</td>
-                                <th>{{ klijent.datum_vazenja_lk }}</th>
-                            </tr>
-                            <tr>
-                                <td>Segment</td>
-                                <th>{{ klijent.segment_klijenta }}</th>
-                                <td>Rejting</td>
-                                <th>{{ klijent.rejting_klijenta }}</th>
-                                <td>Klasifikacija</td>
-                                <th>{{ klijent.cb_klasifikacija }}</th>
-                            </tr>
-                            <tr>
-                                <td>Adresa</td>
-                                <th>{{ klijent.adresa?.ulica_i_broj }}</th>
-                                <td>Grad</td>
-                                <th>{{ klijent.adresa?.grad }}</th>
-                                <td>Kanton</td>
-                                <th>{{ klijent.adresa?.kanton }}</th>
-                            </tr>
-                            <tr>
-                                <td>E-mail</td>
-                                <th>{{ klijent.mail_adresa }}</th>
-                                <td>Fiksni telefon</td>
-                                <th>{{ klijent.kucni_telefon }}</th>
-                                <td>Mobilni telefon</td>
-                                <th>{{ klijent.mobilni_telefon }}</th>
-                            </tr>
-                            <tr>
-                                <td>Radni status</td>
-                                <th>{{ klijent.radni_status }}</th>
-                                <td>Firma zaposlenja</td>
-                                <th>{{ klijent.firma_zaposlenja?.naziv }}</th>
-                                <td>Klijent prima platu</td>
-                                <th>{{ klijent.primanja_zadnji_mjesec }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1 class="display-4">Svakodnevno bankarstvo</h1>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Ime i prezime</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">JMBG</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">CRK saglasnost</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="h5">{{ klijent.ime }} {{ klijent.prezime }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.maticni_broj }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5" [ngClass]="{Da:'table-success', Ne:'table-danger'}[klijent.saglasnost_za_crk]">{{ klijent.saglasnost_za_crk }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Broj lične karte</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Datum izdavanja</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Datum važenja</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="h5">{{ klijent.broj_lk }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.datum_izdavanja_lk }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.datum_vazenja_lk }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Segment</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Rejting</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Klasifikacija</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="h5">{{ klijent.segment_klijenta }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.rejting_klijenta }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.cb_klasifikacija }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Adresa</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Grad</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Kanton</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="h5">{{ klijent.adresa?.ulica_i_broj }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.adresa?.grad }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.adresa?.kanton }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">E-mail</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Fiksni telefon</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Mobilni telefon</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="h5">{{ klijent.mail_adresa }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.kucni_telefon }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.mobilni_telefon }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Radni status</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Firma zaposlenja</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Klijent prima platu</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="h5">{{ klijent.radni_status }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.firma_zaposlenja?.naziv }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ klijent.primanja_zadnji_mjesec }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="transakcijsko_poslovanje" class="container-fluid">
                 <div class="card card-1">
-                    <h2 class="page-header">Transakcijsko poslovanje</h2>
-                    <table class="table table-responsive-lg table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Račun</td>
-                                <td>Partija</td>
-                                <td>Datum ugovora</td>
-                                <td>Stanje na računu</td>
-                            </tr>
-                            <tr *ngFor="let rcn of racuni.data">
-                                <th>{{ rcn.opis_tipa_ugovora }}</th>
-                                <th>{{ rcn.partija }}</th>
-                                <th>{{ rcn.datum_otvaranja }}</th>
-                                <th>{{ rcn.stanje_racuna_ekv }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1 class="display-4">Transakcijsko poslovanje</h1>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Račun</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Partija</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Datum ugovora</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Stanje na računu</small>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let rcn of racuni.data">
+                        <div class="col">
+                            <p class="h5">{{ rcn.opis_tipa_ugovora }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ rcn.partija }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ rcn.datum_otvaranja }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ rcn.stanje_racuna_ekv }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="paketi" class="container-fluid">
                 <div class="card card-1">
-                    <h2 class="page-header">Paketi</h2>
-                    <table class="table table-responsive-lg table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <th>Proizvod</th>
-                                <th>Datum ugovora</th>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="prekoracenje" class="container-fluid">
-                <div class="card card-1">
-                    <h2 class="page-header">Prekoračenje</h2>
-                    <table class="table table-responsive-lg table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Opis tipa ugovora</td>
-                                <td>Datum otvaranja</td>
-                                <td>Odobreni iznos</td>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1 class="display-4">Paketi</h1>
+                    <div class="row">
+                        <div class="col">
+                            <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="krediti" class="container-fluid">
                 <div class="card card-1">
-                    <h2 class="page-header">Krediti</h2>
-                    <table class="table table-responsive-lg table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Naziv</td>
-                                <td>Datum ugovora</td>
-                                <td>Datum dospjeća</td>
-                                <td>Odobreni iznos</td>
-                                <td>Kamatna stopa</td>
-                                <td>Ostatak duga</td>
-                                <td>Anuitet</td>
-                            </tr>
-                            <tr *ngFor="let kredit of krediti.data">
-                                <th>{{ kredit.opis_tipa_ugovora }}</th>
-                                <th>{{ kredit.datum_ugovora }}</th>
-                                <th>{{ kredit.datum_kraja_vazenja_ugovora }}</th>
-                                <th>{{ kredit.odobreni_iznos }}</th>
-                                <th>{{ kredit.stopa }}</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1 class="display-4">Krediti</h1>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Naziv</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Datum ugovora</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Datum dospjeća</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Odobreni iznos</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Kamatna stopa</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Ostatak duga</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Anuitet</small>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let kredit of krediti.data">
+                        <div class="col">
+                            <p class="h5">{{ kredit.opis_tipa_ugovora }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kredit.datum_ugovora }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kredit.datum_kraja_vazenja_ugovora }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kredit.odobreni_iznos }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kredit.stopa }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5"></p>
+                        </div>
+                        <div class="col">
+                            <p class="h5"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="karticno_poslovanje" class="container-fluid">
                 <div class="card card-1">
-                    <h2 class="page-header">Kartično poslovanje</h2>
-                    <table class="table table-responsive-lg table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Naziv</td>
-                                <td>Vrsta kartice</td>
-                                <td>Tip kartice</td>
-                                <td>Datum važenja</td>
-                                <td>Stanje</td>
-                            </tr>
-                            <tr *ngFor="let kartica of kartice.data">
-                                <th>{{ kartica.opis }}</th>
-                                <th>{{ kartica.vrsta_kartice }}</th>
-                                <th>{{ kartica.tip_kartice }}</th>
-                                <th>{{ kartica.datum_vazenja }}</th>
-                                <th>{{ kartica.stanje }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1 class="display-4">Kartično poslovanje</h1>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Naziv</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Vrsta kartice</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Tip kartice</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Datum važenja</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Stanje</small>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let kartica of kartice.data">
+                        <div class="col">
+                            <p class="h5">{{ kartica.opis }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kartica.vrsta_kartice }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kartica.tip_kartice }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kartica.datum_vazenja }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ kartica.stanje }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="depoziti" class="container-fluid">
                 <div class="card card-1">
-                    <h2 class="page-header">Depoziti</h2>
-                    <table class="table table-responsive-lg table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Naziv</td>
-                                <td>Datum ugovora</td>
-                                <td>Datum dospjeća</td>
-                                <td>Kamatna stopa</td>
-                                <td>Iznos oročenja (KM)</td>
-                            </tr>
-                            <tr *ngFor="let dpz of depoziti.data">
-                                <th>{{ dpz.opis_tipa_ugovora }}</th>
-                                <th>{{ dpz.datum_otvaranja }}</th>
-                                <th>{{ dpz.kraj_vazenja }}</th>
-                                <th>{{ dpz.stopa }}</th>
-                                <th>{{ dpz.stanje_racuna }}</th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1 class="display-4">Depoziti</h1>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Naziv</small>
+                        </div>
+                        <div class="col" >
+                            <small class="text-muted">Datum ugovora</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Datum dospjeća</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Kamatna stopa</small>
+                        </div>
+                        <div class="col">
+                            <small class="text-muted">Iznos oročenja (KM)</small>
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let dpz of depoziti.data">
+                        <div class="col">
+                            <p class="h5">{{ dpz.opis_tipa_ugovora }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ dpz.datum_otvaranja }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ dpz.kraj_vazenja }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ dpz.stopa }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="h5">{{ dpz.stanje_racuna }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="ostale_usluge" class="container-fluid">
                 <div class="card card-1">
-                    <h2 class="page-header">Ostale usluge</h2>
-                    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+                    <h1 class="display-4">Ostale usluge</h1>
+                    <div class="row">
+                        <div class="col">
+                            <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

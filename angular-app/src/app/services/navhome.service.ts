@@ -78,4 +78,8 @@ export class NavhomeService {
     changeKredite(kredit) {
         this.kreditSource.next(kredit);
     }
+
+    getOdjeli() {
+        return this.http.get('http://localhost:3000/odjeli/vratisvepodatke').map((res: any) => res.json());
+    }
 }

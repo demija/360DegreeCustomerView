@@ -92,7 +92,9 @@ userSchema.set('collection', 'klijenti');
 const Klijent = module.exports = mongoose.model('Klijent', userSchema);
 
 module.exports.getDataByMaticniBroj = function(maticni_broj, callback) {
-    const query = { maticni_broj: maticni_broj }
+    const query = {
+        maticni_broj: maticni_broj
+    }
     
     Klijent.findOne(query, callback);
 }

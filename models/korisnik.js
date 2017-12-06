@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
     },
 
     odjel: {
-        type: String,
+        type: Object,
         required: true
     },
 
@@ -43,12 +43,14 @@ const userSchema = mongoose.Schema({
         type: Date
     },
 
-    broj_telefona: {
-        type: String
+    aktivan: {
+        type: Boolean,
+        required: true
     },
 
-    aktivan: {
-        type: Boolean
+    administrator: {
+        type: Boolean,
+        required: true
     }
 });
 
@@ -61,7 +63,9 @@ module.exports.getUserById = function(id, callback) {
 }
 
 module.exports.getUserByUsername = function(korisnicko_ime, callback) {
-    const query = { korisnicko_ime: korisnicko_ime }
+    const query = {
+        korisnicko_ime: korisnicko_ime
+    }
     
     Korisnik.findOne(query, callback);
 }

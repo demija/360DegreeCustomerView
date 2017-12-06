@@ -43,7 +43,9 @@ const Kartica = module.exports = mongoose.model('Kartica', userSchema);
 
 module.exports.getDataById = function(id, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
-    const query = { klijent: new ObjectId(id) };
+    const query = {
+        klijent: new ObjectId(id)
+    };
     
     Kartica.find(query, callback);
 }

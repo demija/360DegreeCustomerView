@@ -43,7 +43,9 @@ const Depozit = module.exports = mongoose.model('Depozit', userSchema);
 
 module.exports.getDataById = function(id, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
-    const query = { klijent: new ObjectId(id) };
+    const query = {
+        klijent: new ObjectId(id)
+    };
     
     Depozit.find(query, callback);
 }

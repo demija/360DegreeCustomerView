@@ -16,20 +16,34 @@ router.post('/registracija', (req, res, next) => {
         lozinka: req.body.lozinka,
         odjel: req.body.odjel,
         datum_registracije: Date.now(),
-        broj_telefona: ''
+        aktivan: true,
+        administrator: false
     });
 
-    Korisnik.addUser(noviKorisnik, (err, user) => {
+    Korisnik.getUserByUsername(noviKorisnik.korisnicko_ime, (err, user) => {
         if(err) {
-            res.json({
-                success: false,
-                msg: 'Failed to register user'
-            });
+            throw err;
         } else {
-            res.json({
-                success: true,
-                msg: 'User added'
-            });
+            if(!user) {
+                Korisnik.addUser(noviKorisnik, (err, user) => {
+                    if(err) {
+                        res.json({
+                            success: false,
+                            msg: 'Greška prilikom registracije!'
+                        });
+                    } else {
+                        res.json({
+                            success: true,
+                            msg: 'Korisnik uspješno registrovan!'
+                        });
+                    }
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Korisničko ime postoji!'
+                });
+            }
         }
     });
 });
@@ -43,10 +57,10 @@ router.post('/autentifikacija', (req, res, next) => {
         if(err) {
             throw err;
         } else {
-            if(!user) {
+            if(!user || !user.aktivan) {
                 return res.json({
                     success: false,
-                    msg: 'User not found'
+                    msg: 'Korisnik ne postoji ili nije aktivan'
                 });
             }
 
@@ -73,7 +87,7 @@ router.post('/autentifikacija', (req, res, next) => {
                     } else {
                         return res.json({
                             success: false,
-                            msg: 'Wrong password'
+                            msg: 'Pogrešna lozinka'
                         });
                     }
                 }
