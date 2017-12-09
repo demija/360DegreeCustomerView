@@ -21,13 +21,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p class="h5">{{ klijent.ime }} {{ klijent.prezime }}</p>
+                            <p class="h6">{{ klijent.ime }} {{ klijent.prezime }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.maticni_broj }}</p>
+                            <p class="h6">{{ klijent.maticni_broj }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5" [ngClass]="{Da:'table-success', Ne:'table-danger'}[klijent.saglasnost_za_crk]">{{ klijent.saglasnost_za_crk }}</p>
+                            <p class="h6" [ngClass]="{Da:'text-success', Ne:'text-danger'}[klijent.saglasnost_za_crk]">{{ klijent.saglasnost_za_crk }}</p>
                         </div>
                     </div>
 
@@ -44,13 +44,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p class="h5">{{ klijent.broj_lk }}</p>
+                            <p class="h6">{{ klijent.broj_lk }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.datum_izdavanja_lk }}</p>
+                            <p class="h6">{{ klijent.datum_izdavanja_lk }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.datum_vazenja_lk }}</p>
+                            <p class="h6">{{ klijent.datum_vazenja_lk }}</p>
                         </div>
                     </div>
 
@@ -67,13 +67,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p class="h5">{{ klijent.segment_klijenta }}</p>
+                            <p class="h6">{{ klijent.segment_klijenta }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.rejting_klijenta }}</p>
+                            <p class="h6">{{ klijent.rejting_klijenta }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.cb_klasifikacija }}</p>
+                            <p class="h6">{{ klijent.cb_klasifikacija }}</p>
                         </div>
                     </div>
 
@@ -90,13 +90,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p class="h5">{{ klijent.adresa?.ulica_i_broj }}</p>
+                            <p class="h6">{{ klijent.adresa?.ulica_i_broj }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.adresa?.grad }}</p>
+                            <p class="h6">{{ klijent.adresa?.grad }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.adresa?.kanton }}</p>
+                            <p class="h6">{{ klijent.adresa?.kanton }}</p>
                         </div>
                     </div>
 
@@ -113,13 +113,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p class="h5">{{ klijent.mail_adresa }}</p>
+                            <p class="h6">{{ klijent.mail_adresa }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.kucni_telefon }}</p>
+                            <p class="h6">{{ klijent.kucni_telefon }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.mobilni_telefon }}</p>
+                            <p class="h6">{{ klijent.mobilni_telefon }}</p>
                         </div>
                     </div>
 
@@ -136,13 +136,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p class="h5">{{ klijent.radni_status }}</p>
+                            <p class="h6">{{ klijent.radni_status }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.firma_zaposlenja?.naziv }}</p>
+                            <p class="h6">{{ klijent.firma_zaposlenja?.naziv }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ klijent.primanja_zadnji_mjesec }}</p>
+                            <p class="h6">{{ klijent.primanja_zadnji_mjesec }}</p>
                         </div>
                     </div>
                 </div>
@@ -152,42 +152,31 @@
                 <div class="card card-1">
                     <h1 class="display-4">Transakcijsko poslovanje</h1>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-5">
                             <small class="text-muted">Račun</small>
                         </div>
-                        <div class="col" >
+                        <div class="col-3" >
                             <small class="text-muted">Partija</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Datum ugovora</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Stanje na računu</small>
                         </div>
                     </div>
                     <div class="row" *ngFor="let rcn of racuni.data">
-                        <div class="col">
-                            <p class="h5">{{ rcn.opis_tipa_ugovora }}</p>
+                        <div class="col-5">
+                            <p class="h6">{{ rcn.opis_tipa_ugovora }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ rcn.partija }}</p>
+                        <div class="col-3">
+                            <p class="h6">{{ rcn.partija }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ rcn.datum_otvaranja }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ rcn.datum_otvaranja }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ rcn.stanje_racuna_ekv }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="paketi" class="container-fluid">
-                <div class="card card-1">
-                    <h1 class="display-4">Paketi</h1>
-                    <div class="row">
-                        <div class="col">
-                            <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+                        <div class="col-2">
+                            <p class="h6">{{ rcn.stanje_racuna_ekv }}</p>
                         </div>
                     </div>
                 </div>
@@ -197,7 +186,7 @@
                 <div class="card card-1">
                     <h1 class="display-4">Krediti</h1>
                     <div class="row">
-                        <div class="col">
+                        <div class="col ">
                             <small class="text-muted">Naziv</small>
                         </div>
                         <div class="col" >
@@ -221,25 +210,25 @@
                     </div>
                     <div class="row" *ngFor="let kredit of krediti.data">
                         <div class="col">
-                            <p class="h5">{{ kredit.opis_tipa_ugovora }}</p>
+                            <p class="h6">{{ kredit.opis_tipa_ugovora }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ kredit.datum_ugovora }}</p>
+                            <p class="h6">{{ kredit.datum_ugovora }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ kredit.datum_kraja_vazenja_ugovora }}</p>
+                            <p class="h6">{{ kredit.datum_kraja_vazenja_ugovora }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ kredit.odobreni_iznos }}</p>
+                            <p class="h6">{{ kredit.odobreni_iznos }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5">{{ kredit.stopa }}</p>
+                            <p class="h6">{{ kredit.stopa }}</p>
                         </div>
                         <div class="col">
-                            <p class="h5"></p>
+                            <p class="h6"></p>
                         </div>
                         <div class="col">
-                            <p class="h5"></p>
+                            <p class="h6"></p>
                         </div>
                     </div>
                 </div>
@@ -249,37 +238,37 @@
                 <div class="card card-1">
                     <h1 class="display-4">Kartično poslovanje</h1>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-4">
                             <small class="text-muted">Naziv</small>
                         </div>
-                        <div class="col" >
+                        <div class="col-2" >
                             <small class="text-muted">Vrsta kartice</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Tip kartice</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Datum važenja</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Stanje</small>
                         </div>
                     </div>
                     <div class="row" *ngFor="let kartica of kartice.data">
-                        <div class="col">
-                            <p class="h5">{{ kartica.opis }}</p>
+                        <div class="col-4">
+                            <p class="h6">{{ kartica.opis }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ kartica.vrsta_kartice }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ kartica.vrsta_kartice }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ kartica.tip_kartice }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ kartica.tip_kartice }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ kartica.datum_vazenja }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ kartica.datum_vazenja }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ kartica.stanje }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ kartica.stanje }}</p>
                         </div>
                     </div>
                 </div>
@@ -289,37 +278,37 @@
                 <div class="card card-1">
                     <h1 class="display-4">Depoziti</h1>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-4">
                             <small class="text-muted">Naziv</small>
                         </div>
-                        <div class="col" >
+                        <div class="col-2">
                             <small class="text-muted">Datum ugovora</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Datum dospjeća</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Kamatna stopa</small>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <small class="text-muted">Iznos oročenja (KM)</small>
                         </div>
                     </div>
                     <div class="row" *ngFor="let dpz of depoziti.data">
-                        <div class="col">
-                            <p class="h5">{{ dpz.opis_tipa_ugovora }}</p>
+                        <div class="col-4">
+                            <p class="h6">{{ dpz.opis_tipa_ugovora }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ dpz.datum_otvaranja }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ dpz.datum_otvaranja }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ dpz.kraj_vazenja }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ dpz.kraj_vazenja }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ dpz.stopa }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ dpz.stopa }}</p>
                         </div>
-                        <div class="col">
-                            <p class="h5">{{ dpz.stanje_racuna }}</p>
+                        <div class="col-2">
+                            <p class="h6">{{ dpz.stanje_racuna }}</p>
                         </div>
                     </div>
                 </div>

@@ -46,10 +46,6 @@ export class NavbarComponent implements OnInit {
                 this.navhomeService.changeDeposit(klijent.depoziti);
                 this.navhomeService.changeKartice(klijent.kartice);
                 this.navhomeService.changeKredite(klijent.krediti);
-
-                //
-                console.log(klijent);
-                //
             } else {
                 swal({
                     title: 'Greška!',

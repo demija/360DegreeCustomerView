@@ -48,6 +48,33 @@ router.post('/registracija', (req, res, next) => {
     });
 });
 
+// Update korisnika
+router.post('/izmjenapodataka', (req, res, next) => {
+    let korisnik = new Korisnik({
+        _id: req.body._id,
+        ime: req.body.ime,
+        prezime: req.body.prezime,
+        email: req.body.email,
+        //lozinka: req.body.lozinka,
+        odjel: req.body.odjel,
+        datum_zadnje_izmjene: Date.now()
+    });
+
+    Korisnik.updateUser(korisnik, (err, user) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška, izmjene nisu sačuvane!'
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Izmjene sačuvane!'
+            });
+        }
+    });
+});
+
 // Autentifikacija korisnika
 router.post('/autentifikacija', (req, res, next) => {
     const username = req.body.korisnicko_ime;
@@ -78,10 +105,11 @@ router.post('/autentifikacija', (req, res, next) => {
                             token: 'JWT ' + token,
                             user: {
                                 id: user._id,
+                                korisnicko_ime: user.korisnicko_ime,
                                 ime: user.ime,
                                 prezime: user.prezime,
-                                korisnicko_ime: user.korisnicko_ime,
-                                email: user.email
+                                email: user.email,
+                                odjel: user.odjel
                             }
                         })
                     } else {

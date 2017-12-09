@@ -115,6 +115,48 @@ export class ValidateService {
         return valid;
     }
 
+    validateUpdate(user) {
+        let valid = true;
+
+        if(user.ime == undefined || user.ime == '') {
+            document.getElementById('imeTextbox').classList.add('is-invalid');
+            document.getElementById('imeError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('imeTextbox').classList.remove('is-invalid');
+            document.getElementById('imeError').classList.add('d-none');
+        }
+
+        if(user.prezime == undefined || user.prezime == '') {
+            document.getElementById('prezimeTextbox').classList.add('is-invalid');
+            document.getElementById('prezimeError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('prezimeTextbox').classList.remove('is-invalid');
+            document.getElementById('prezimeError').classList.add('d-none');
+        }
+
+        if(user.email == undefined || user.email == '' || !this.validateEmail(user.email)) {
+            document.getElementById('emailTextbox').classList.add('is-invalid');
+            document.getElementById('emailError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('emailTextbox').classList.remove('is-invalid');
+            document.getElementById('emailError').classList.add('d-none');
+        }
+
+        if(user.odjel == undefined) {
+            document.getElementById('odjelDropbox').classList.add('is-invalid');
+            document.getElementById('odjelError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('odjelDropbox').classList.remove('is-invalid');
+            document.getElementById('odjelError').classList.add('d-none');
+        }
+
+        return valid;
+    }
+
     validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 

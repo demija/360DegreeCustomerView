@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
         this.navhomeService.getOdjeli().subscribe(odjeli => {
             this.odjeliLista = odjeli;
-        })
+        });
     }
 
     onRegisterSubmit() {

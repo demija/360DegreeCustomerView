@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
                     title: 'Dobro došli ' + data.user.ime + ' ' + data.user.prezime + '!',
                     showConfirmButton: false,
                     timer: 2000
-                })
+                });
 
                 this.authService.storeUserData(data.token, data.user);
                 this.router.navigate(['/']);
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
                     text: data.msg,
                     type: 'error',
                     confirmButtonText: 'Uredu'
-                })
+                });
 
                 this.router.navigate(['/login']);
             }

@@ -43,6 +43,10 @@ const userSchema = mongoose.Schema({
         type: Date
     },
 
+    datum_zadnje_izmjene: {
+        type: Date
+    },
+
     aktivan: {
         type: Boolean,
         required: true
@@ -81,6 +85,15 @@ module.exports.addUser = function(noviKorisnik, callback) {
             }
         });
     });
+}
+
+module.exports.updateUser = function(korisnik, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        _id: new ObjectId(korisnik._id)
+    };
+
+    Korisnik.updateOne(query, korisnik, callback);
 }
 
 module.exports.comparePassword = function(candidatePassword, hash, callback) {

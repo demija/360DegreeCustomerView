@@ -17,11 +17,36 @@ export class AuthService {
         return this.http.post('http://localhost:3000/korisnici/registracija', user, {headers: headers}).map(res => res.json());
     }
 
-    authenticateUser(user) {
+    updateUser(user) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
-        return this.http.post('http://localhost:3000/korisnici/autentifikacija', user, {headers: headers}).map(res => res.json());
+        return this.http.post('http://localhost:3000/korisnici/izmjenapodataka', user, {headers: headers}).map(res => res.json());
+    }
+
+    authenticateUser(user) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.post('http://localhost:3000/korisnici/autentifikacija', user, {headers: headers})
+        .map(res => res.json())
+        .flatMap((data: any) => {
+            if(data.user) {
+                user.id_korisnika = data.user.id,
+                user.ime = data.user.ime,
+                user.prezime = data.user.prezime
+                user.email = data.user.email,
+                user.odjel = data.user.odjel
+            }
+            
+            user.success = data.success;
+            user.msg = data.msg;
+
+            return this.http.post('http://localhost:3000/arhiviranje/unosloga', user, {headers: headers})
+            .map((res: any) => {
+                return data;
+            });
+        });
     }
 
     getProfile() {
