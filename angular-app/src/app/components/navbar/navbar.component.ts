@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { NavhomeService } from '../../services/navhome.service';
+import { ValidateService } from '../../services/validate.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
@@ -14,15 +15,15 @@ export class NavbarComponent implements OnInit {
     mjesec = new Date().getUTCMonth() + 1;
     godina = new Date().getUTCFullYear();
     datum = this.dan + "/" + this.mjesec + "/" + this.godina;
-    korisnik: Object;
+    prijavljeni_korisnik: Object;
     maticni_broj_search: String;
     klijent_id: String;
 
-    constructor(private authService: AuthService, private navhomeService: NavhomeService, private router: Router) { }
+    constructor(private authService: AuthService, private navhomeService: NavhomeService, private validateService: ValidateService, private router: Router) { }
 
     ngOnInit() {
         this.authService.getProfile().subscribe(profile => {
-            this.korisnik = profile.user;
+            this.prijavljeni_korisnik = profile.user;
         }, err => {
             return false;
         });
@@ -35,11 +36,19 @@ export class NavbarComponent implements OnInit {
     }
 
     onSearchClick() {
-        const data = {
-            maticni_broj: this.maticni_broj_search
+        const pretraga = {
+            maticni_broj: this.maticni_broj_search,
+            id_prijavljenog_korisnika: this.prijavljeni_korisnik['_id'],
+            korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
         }
 
-        this.navhomeService.getClientData(data).subscribe((klijent: any) => {
+        //TODO
+        // Validacija matičnog broja
+        /*if(!this.validateService.validateSearch()) {
+            return false;
+        }*/
+
+        this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {
             if(klijent.success) {
                 this.navhomeService.changeClient(klijent.client);
                 this.navhomeService.changeRacun(klijent.racuni);
@@ -52,7 +61,7 @@ export class NavbarComponent implements OnInit {
                     text: klijent.msg,
                     type: 'error',
                     confirmButtonText: 'Uredu'
-                })
+                });
             }
         });
     }

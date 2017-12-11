@@ -24,13 +24,21 @@ export class NavhomeService {
 
     constructor(private http: Http) { }
 
-    getClientData(data): Observable<any> {
+    getClientData(pretraga): Observable<any> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this.http.post('http://localhost:3000/klijenti/vratipodatke', data, {headers: headers})
-            .map(res => res.json())
-            .flatMap(klijent_rezultat => {
+        return this.http.post('http://localhost:3000/klijenti/vratipodatke', pretraga, {headers: headers})
+        .map(res => res.json())
+        .flatMap(klijent_rezultat => {
+            if(!klijent_rezultat.success) {
+                return Observable.forkJoin(
+                    Observable.of(klijent_rezultat),
+                )
+                .map((data: any[]) => {
+                    return klijent_rezultat;
+                });
+            } else {
                 const klId = {
                     klijent_id: klijent_rezultat.client._id
                 }
@@ -40,7 +48,8 @@ export class NavhomeService {
                     this.http.post('http://localhost:3000/racuni/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/depoziti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/kartice/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
-                    this.http.post('http://localhost:3000/krediti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json())
+                    this.http.post('http://localhost:3000/krediti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/pretrage/unosPretrage', pretraga, {headers: headers}).map((res: any) => res.json())
                 )
                 .map((data: any[]) => {
                     let klijent_rezultat = data[0];
@@ -56,7 +65,8 @@ export class NavhomeService {
 
                     return klijent_rezultat;
                 });
-            });
+            }
+        });
     }
 
     changeRacun(racuni) {

@@ -20,7 +20,7 @@ router.post('/vratipodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoji klijent',
+                    msg: 'Ne postoji klijent sa traženim matičnim brojem',
                     client: null
                 });
             }
