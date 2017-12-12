@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Klijent - šema
@@ -84,6 +83,10 @@ const userSchema = mongoose.Schema({
 
     cb_klasifikacija: {
         type: String
+    },
+
+    datum_izmjene: {
+        type: Date
     }
 });
 
@@ -97,4 +100,13 @@ module.exports.getDataByMaticniBroj = function(maticni_broj, callback) {
     }
     
     Klijent.findOne(query, callback);
+}
+
+module.exports.updateKlijenta = function(klijent, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        _id: new ObjectId(klijent._id)
+    };
+
+    Klijent.updateOne(query, klijent, callback);
 }

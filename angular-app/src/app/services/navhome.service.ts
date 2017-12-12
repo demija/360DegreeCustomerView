@@ -22,6 +22,8 @@ export class NavhomeService {
     private kreditSource = new BehaviorSubject<Object>({});
     currentKredit = this.kreditSource.asObservable();
 
+    private client: any;
+
     constructor(private http: Http) { }
 
     getClientData(pretraga): Observable<any> {
@@ -91,5 +93,12 @@ export class NavhomeService {
 
     getOdjeli() {
         return this.http.get('http://localhost:3000/odjeli/vratisvepodatke').map((res: any) => res.json());
+    }
+
+    updateClient(client) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/klijenti/izmjenapodataka', client, {headers: headers}).map(res => res.json());
     }
 }

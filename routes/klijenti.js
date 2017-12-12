@@ -28,4 +28,24 @@ router.post('/vratipodatke', (req, res, next) => {
     });
 });
 
+// Update klijenta
+router.post('/izmjenapodataka', (req, res, next) => {
+    let klijent = req.body;
+    klijent.datum_izmjene = Date.now(),
+    
+    Klijent.updateKlijenta(klijent, (err, user) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška, izmjene nisu sačuvane!'
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Izmjene sačuvane!'
+            });
+        }
+    });
+});
+
 module.exports = router;
