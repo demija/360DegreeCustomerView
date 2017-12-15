@@ -101,4 +101,11 @@ export class NavhomeService {
         
         return this.http.post('http://localhost:3000/klijenti/izmjenapodataka', client, {headers: headers}).map(res => res.json());
     }
+
+    addClient(newClient) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/klijenti/dodaj', newClient, {headers: headers}).map(res => res.json());
+    }
 }

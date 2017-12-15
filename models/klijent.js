@@ -33,8 +33,8 @@ const userSchema = mongoose.Schema({
         required: true
     },
 
-    email: {
-        type: Date
+    mail_adresa: {
+        type: String
     },
 
     kucni_telefon: {
@@ -87,6 +87,10 @@ const userSchema = mongoose.Schema({
 
     datum_izmjene: {
         type: Date
+    },
+
+    datum_unosa: {
+        type: Date
     }
 });
 
@@ -109,4 +113,8 @@ module.exports.updateKlijenta = function(klijent, callback) {
     };
 
     Klijent.updateOne(query, klijent, callback);
+}
+
+module.exports.addKlijent = function(noviKlijent, callback) {
+    noviKlijent.save(callback);
 }

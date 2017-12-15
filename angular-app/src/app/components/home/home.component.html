@@ -5,6 +5,122 @@
             <app-sidebar></app-sidebar>
         </div>
         <div class="container" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#noviKlijent">Novi kontakt <i fa class="fa fa-user-plus"></i></button>
+            <!-- Korisnik Add Modal -->
+            <div class="modal fade bd-example-modal-lg" id="noviKlijent" tabindex="-1" role="dialog" aria-labelledby="noviKlijentLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <form (submit)="onAddSubmit()">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="noviKlijentLabel">Novi kontakt</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Ime</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="imeNew" name="imeNew" id="imeNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prezime</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="prezimeNew" name="prezimeNew" id="prezimeNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Matični broj</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="jmbgNew" name="jmbgNew" id="jmbgNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Broj lične karte</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="broj_lkNew" name="broj_lkNew" id="broj_lkNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Datum izdavanja</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="datum_izdavanja_lkNew" name="datum_izdavanja_lkNew" id="datum_izdavanja_lkNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Datum važenja</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="datum_vazenja_lkNew" name="datum_vazenja_lkNew" id="datum_vazenja_lkNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bračno stanje</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="bracno_stanjeNew" name="bracno_stanjeNew" id="bracno_stanjeNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Segment</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="segment_klijentaNew" name="segment_klijentaNew" id="segment_klijentaNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Klasifikacija</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="cb_klasifikacijaNew" name="cb_klasifikacijaNew" id="cb_klasifikacijaNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Adresa</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="ulica_i_brojNew" name="ulica_i_brojNew" id="ulica_i_brojNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Poštanski broj</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="postanski_brojNew" name="postanski_brojNew" id="postanski_brojNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Grad</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="gradNew" name="gradNew" id="gradNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kanton</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="kantonNew" name="kantonNew" id="kantonNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>E-mail</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="emailNew" name="emailNew" id="emailNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fiksni telefon</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="kucni_telNew" name="kucni_telNew" id="kucni_telNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobilni telefon</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="mobilni_telNew" name="mobilni_telNew" id="mobilni_telNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Radni status</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="radni_statusNew" name="radni_statusNew" id="radni_statusNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Šifra firme zaposlenja</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="sifra_firmeNew" name="sifra_firmeNew" id="sifra_firmeNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Firma zaposlenja</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="naziv_firmeNew" name="naziv_firmeNew" id="naziv_firmeNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Odjel</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="odjel_firmeNew" name="odjel_firmeNew" id="odjel_firmeNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kontakt telefon (posao)</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="tel_firmeNew" name="tel_firmeNew" id="tel_firmeNewTextbox"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CRK saglasnost</td>
+                                            <td><input type="text" class="form-control" [(ngModel)]="saglasnost_za_crkNew" name="saglasnost_za_crkNew" id="saglasnost_za_crkNewTextbox"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
+                                <button type="submit" class="btn btn-outline-success">Dodaj</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Kraj korisnik Modal -->
+
             <div id="svakodnevno_bankarstvo" class="container-fluid">
                 <div class="card card-1 animated fadeIn">
                     <h1 class="display-4">Svakodnevno bankarstvo</h1>
@@ -139,7 +255,7 @@
                             <p class="h6">{{ klijent.radni_status }}</p>
                         </div>
                         <div class="col">
-                            <p class="h6">{{ klijent.firma_zaposlenja?.naziv }}</p>
+                            <p class="h6">{{ klijent.firma_zaposlenja?.naziv }} {{ klijent.firma_zaposlenja?.odjel }}</p>
                         </div>
                         <div class="col">
                             <p class="h6">{{ klijent.primanja_zadnji_mjesec }}</p>

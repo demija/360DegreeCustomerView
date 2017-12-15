@@ -48,4 +48,24 @@ router.post('/izmjenapodataka', (req, res, next) => {
     });
 });
 
+// Dodavanje klijenta
+router.post('/dodaj', (req, res, next) => {
+    let noviKlijent = new Klijent(req.body);
+    noviKlijent.datum_unosa = Date.now();
+    
+    Klijent.addKlijent(noviKlijent, (err, user) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška!'
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Klijent uspješno dodan!'
+            });
+        }
+    });
+});
+
 module.exports = router;
