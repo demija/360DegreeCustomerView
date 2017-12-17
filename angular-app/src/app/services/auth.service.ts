@@ -80,4 +80,18 @@ export class AuthService {
         this.user = null;
         localStorage.clear();
     }
+
+    changeAdminRolle(korisnik) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/korisnici/adminrola', korisnik, {headers: headers}).map(res => res.json());
+    }
+
+    changeActivity(korisnik) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/korisnici/aktivankorisnik', korisnik, {headers: headers}).map(res => res.json());
+    }
 }

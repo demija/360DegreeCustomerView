@@ -105,3 +105,25 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
         }
     });
 }
+
+module.exports.getAllData = function(callback) {    
+    Korisnik.find(callback);
+}
+
+module.exports.adminRolle = function(korisnik, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        _id: new ObjectId(korisnik._id)
+    };
+
+    Korisnik.updateOne(query, {$set: {administrator:korisnik.administrator}}, callback);
+}
+
+module.exports.activeUser = function(korisnik, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        _id: new ObjectId(korisnik._id)
+    };
+
+    Korisnik.updateOne(query, {$set: {aktivan:korisnik.aktivan}}, callback);
+}

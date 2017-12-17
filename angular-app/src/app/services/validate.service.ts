@@ -39,7 +39,7 @@ export class ValidateService {
         } else {
             document.getElementById('idUposlenikaTextbox').classList.remove('is-invalid');
             document.getElementById('idUposlenikaError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         if(user.ime == undefined || user.ime == '') {
@@ -49,7 +49,7 @@ export class ValidateService {
         } else {
             document.getElementById('imeTextbox').classList.remove('is-invalid');
             document.getElementById('imeError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         if(user.prezime == undefined || user.prezime == '') {
@@ -59,7 +59,7 @@ export class ValidateService {
         } else {
             document.getElementById('prezimeTextbox').classList.remove('is-invalid');
             document.getElementById('prezimeError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         if(user.email == undefined || user.email == '' || !this.validateEmail(user.email)) {
@@ -69,7 +69,7 @@ export class ValidateService {
         } else {
             document.getElementById('emailTextbox').classList.remove('is-invalid');
             document.getElementById('emailError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         if(user.korisnicko_ime == undefined || user.korisnicko_ime == '' || user.korisnicko_ime.length < 5) {
@@ -79,7 +79,7 @@ export class ValidateService {
         } else {
             document.getElementById('korisnickoimeTextbox').classList.remove('is-invalid');
             document.getElementById('korisnickoimeError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         if(user.lozinka == undefined || user.lozinka == '') {
@@ -89,7 +89,7 @@ export class ValidateService {
         } else {
             document.getElementById('lozinkaTextbox').classList.remove('is-invalid');
             document.getElementById('lozinkaError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         if(user.potvrdaLozinke == undefined || user.potvrdaLozinke == '' || user.potvrdaLozinke != user.lozinka) {
@@ -99,7 +99,7 @@ export class ValidateService {
         } else {
             document.getElementById('potvrdaLozinkeTextbox').classList.remove('is-invalid');
             document.getElementById('potvrdaLozinkeError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         if(user.odjel == undefined) {
@@ -109,7 +109,7 @@ export class ValidateService {
         } else {
             document.getElementById('odjelDropbox').classList.remove('is-invalid');
             document.getElementById('odjelError').classList.add('d-none');
-            valid = true;
+            //valid = true;
         }
 
         return valid;

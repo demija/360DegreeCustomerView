@@ -16,6 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
+import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 
 const appRoutes: Routes = [
     {
@@ -35,6 +36,10 @@ const appRoutes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'adminpanel',
+        component: AdminpanelComponent,
     }
 ]
 
@@ -46,7 +51,8 @@ const appRoutes: Routes = [
         RegisterComponent,
         HomeComponent,
         ProfileComponent,
-        SidebarComponent
+        SidebarComponent,
+        AdminpanelComponent
     ],
     imports: [
         BrowserModule,

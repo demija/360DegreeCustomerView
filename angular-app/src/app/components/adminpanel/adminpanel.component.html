@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+<nav class="nav nav-tabs" id="myTab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-korisnici-tab" data-toggle="tab" href="#nav-korisnici" role="tab" aria-controls="nav-korisnici" aria-selected="true">
+        Korisnici
+    </a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+        Profile
+    </a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+        Contact
+    </a>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-korisnici" role="tabpanel" aria-labelledby="nav-korisnici-tab">
+        <h1 class="display-4">Pregled korisnika</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID uposlenika</th>
+                    <th scope="col">Ime i prezime</th>
+                    <th scope="col">Korisničko ime</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Odjel</th>
+                    <th acope="col">Administrator</th>
+                    <th scope="col">Datum registracije</th>
+                    <th scope="col">Aktivan korisnik</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let korisnik of korisnici">
+                    <th scope="row">1</th>
+                    <td>{{korisnik.id_uposlenika}}</td>
+                    <td>{{korisnik.ime}} {{korisnik.prezime}}</td>
+                    <td>{{korisnik.korisnicko_ime}}</td>
+                    <td>{{korisnik.email}}</td>
+                    <td>{{korisnik.odjel.organizaciona_jedinica}}</td>
+                    <td class="text-center"><input class="form-check-input position-static" type="checkbox" [(ngModel)]="korisnik.administrator" id="adminCheckbox" value="administrator" (ngModelChange)="toggleAdministrator($event, korisnik._id)"></td>
+                    <td>{{korisnik.datum_registracije}}</td>
+                    <td class="text-center"><input class="form-check-input position-static" type="checkbox" [(ngModel)]="korisnik.aktivan" id="activeCheckbox" value="aktivan" (ngModelChange)="toggleAktivan($event, korisnik._id)"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        prifil
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        kontakt
+    </div>
+</div>

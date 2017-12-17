@@ -131,4 +131,71 @@ router.get('/profil', passport.authenticate('jwt', {session:false}), (req, res, 
     });
 });
 
+// Vraćanje svih korisnika
+router.get('/vratisvepodatke', (req, res, next) => {
+    Korisnik.getAllData((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Ne postoje podaci',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
+// Update admin role korisnika
+router.post('/adminrola', (req, res, next) => {
+    let korisnik = {
+        _id: req.body._id,
+        administrator: req.body.administrator
+    };
+
+    Korisnik.adminRolle(korisnik, (err, user) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška, izmjene nisu sačuvane!'
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Izmjene sačuvane!'
+            });
+        }
+    });
+});
+
+// Update aktivnost korisnika
+router.post('/aktivankorisnik', (req, res, next) => {
+    let korisnik = {
+        _id: req.body._id,
+        aktivan: req.body.aktivan
+    };
+
+    Korisnik.activeUser(korisnik, (err, user) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška, izmjene nisu sačuvane!'
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Izmjene sačuvane!'
+            });
+        }
+    });
+});
+
 module.exports = router;

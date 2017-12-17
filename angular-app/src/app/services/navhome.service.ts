@@ -108,4 +108,8 @@ export class NavhomeService {
         
         return this.http.post('http://localhost:3000/klijenti/dodaj', newClient, {headers: headers}).map(res => res.json());
     }
+
+    getKorisnici() {
+        return this.http.get('http://localhost:3000/korisnici/vratisvepodatke').map((res: any) => res.json());
+    }
 }
