@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { NavhomeService } from './services/navhome.service';
+import { PonudeService } from './services/ponude.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -61,7 +62,13 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         Angular2FontawesomeModule
     ],
-    providers: [ValidateService, AuthService, NavhomeService, AuthGuard],
+    providers: [
+        ValidateService,
+        AuthService,
+        NavhomeService,
+        PonudeService,
+        AuthGuard
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
