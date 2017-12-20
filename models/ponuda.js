@@ -37,6 +37,14 @@ const ponudaSchema = mongoose.Schema({
 
     obrisana: {
         type: Boolean
+    },
+
+    izmjenio: {
+        type: Object
+    },
+
+    datum_izmjene: {
+        type: Date
     }
 });
 
@@ -58,7 +66,7 @@ module.exports.getAllData = function(callback) {
     Ponuda.find(query, callback);
 }
 
-//Vrati sve ponude
+//Obriši ponudu
 module.exports.deletePonuda = function(ponuda, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
@@ -68,6 +76,17 @@ module.exports.deletePonuda = function(ponuda, callback) {
     Ponuda.updateOne(query, {$set: {obrisana: true}}, callback);
 }
 
+//Izmjeni ponudu
+module.exports.editPonuda = function(ponuda, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        _id: new ObjectId(ponuda._id)
+    };
+
+    Ponuda.updateOne(query, {$set: { naziv_ponude: ponuda.naziv_ponude, sifra_ponude: ponuda.sifra_ponude, klasa_ponude: ponuda.klasa_ponude,
+        datum_od: ponuda.datum_od, datum_do: ponuda.datum_do, izmjenio: ponuda.izmjenio, datum_izmjene: ponuda.datum_izmjene }}, callback);
+}
+
 //Aktivna ponuda
 module.exports.activePonuda = function(ponuda, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
@@ -75,5 +94,5 @@ module.exports.activePonuda = function(ponuda, callback) {
         _id: new ObjectId(ponuda._id)
     };
 
-    Ponuda.updateOne(query, {$set: {aktivna:ponuda.aktivna}}, callback);
+    Ponuda.updateOne(query, {$set: { aktivna: ponuda.aktivna, izmjenio: ponuda.izmjenio, datum_izmjene: ponuda.datum_izmjene }}, callback);
 }

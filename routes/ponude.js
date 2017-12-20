@@ -79,11 +79,41 @@ router.post('/obrisi', (req, res, next) => {
     });
 });
 
+// Izmjeni ponudu
+router.post('/izmjeniponudu', (req, res, next) => {
+    let ponuda = new Ponuda({
+        _id: req.body._id,
+        naziv_ponude: req.body.naziv_ponude,
+        sifra_ponude: req.body.sifra_ponude,
+        klasa_ponude: req.body.klasa_ponude,
+        datum_od: req.body.datum_od,
+        datum_do: req.body.datum_do,
+        izmjenio: req.body.izmjenio,
+        datum_izmjene: Date.now()
+    });
+
+    Ponuda.editPonuda(ponuda, (err, user) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška prilikom registracije!'
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Ponuda uspješno obrisana!'
+            });
+        }
+    });
+});
+
 // Update aktivnost ponude
 router.post('/aktivnaponuda', (req, res, next) => {
     let ponuda = {
         _id: req.body._id,
-        aktivna: req.body.aktivna
+        aktivna: req.body.aktivna,
+        izmjenio: req.body.izmjenio,
+        datum_izmjene: Date.now()
     };
 
     Ponuda.activePonuda(ponuda, (err, user) => {

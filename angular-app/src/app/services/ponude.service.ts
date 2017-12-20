@@ -24,11 +24,17 @@ export class PonudeService {
         return this.http.post('http://localhost:3000/ponude/obrisi', ponuda, {headers: headers}).map(res => res.json());
     }
 
+    editPonudu(ponuda) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/ponude/izmjeniponudu', ponuda, {headers: headers}).map(res => res.json());
+    }
+
     changeActivity(ponuda) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
         return this.http.post('http://localhost:3000/ponude/aktivnaponuda', ponuda, {headers: headers}).map(res => res.json());
     }
-
 }

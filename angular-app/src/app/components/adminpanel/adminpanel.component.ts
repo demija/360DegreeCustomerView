@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavhomeService } from '../../services/navhome.service';
 import { AuthService } from '../../services/auth.service';
 import { PonudeService } from '../../services/ponude.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-adminpanel',
@@ -10,7 +11,7 @@ import { PonudeService } from '../../services/ponude.service';
 })
 export class AdminpanelComponent implements OnInit {
     korisnici: Object;
-    ponude: Object;
+    ponude: any;
     naziv_ponudeNew: String;
     sifra_ponudeNew: String;
     klasa_ponudeNew: String;
@@ -18,6 +19,17 @@ export class AdminpanelComponent implements OnInit {
     datum_do_ponudeNew: String;
     aktivna_ponudaNew: String;
     prijavljeni_korisnik: Object;
+
+    //
+    id_ponudeEdit: String;
+    naziv_ponudeEdit: String;
+    sifra_ponudeEdit: String;
+    klasa_ponudeEdit: String;
+    datum_odEdit: Date;
+    datum_doEdit: Date;
+    datum_izmjeneEdit: Date;
+    izmjenioEdit: Object;
+    //
 
     constructor(private navhomeService: NavhomeService, private authService: AuthService, private ponudeService: PonudeService) { }
 
@@ -126,10 +138,55 @@ export class AdminpanelComponent implements OnInit {
         this.getAllPonude();
     }
 
+    onEditClick(id) {
+        for(let p of this.ponude) {
+            if(p['_id'] == id) {
+                this.id_ponudeEdit = p._id;
+                this.naziv_ponudeEdit = p.naziv_ponude;
+                this.sifra_ponudeEdit = p.sifra_ponude;
+                this.klasa_ponudeEdit = p.klasa_ponude;
+                this.datum_odEdit = p.datum_od;
+                this.datum_doEdit = p.datum_do;
+            }
+        }
+    }
+
+    onEditSubmit() {
+        const ponudaEdit = {
+            _id: this.id_ponudeEdit,
+            naziv_ponude: this.naziv_ponudeEdit,
+            sifra_ponude: this.sifra_ponudeEdit,
+            klasa_ponude: this.klasa_ponudeEdit,
+            datum_od: this.datum_odEdit,
+            datum_do: this.datum_doEdit,
+            izmjenio: {
+                _id: this.prijavljeni_korisnik['_id'],
+                korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
+            }
+        }
+
+        this.ponudeService.editPonudu(ponudaEdit).subscribe(data => {
+            //TODO
+            //notification
+
+            if(data.success) {
+                console.log('OK');
+            } else {
+                console.log('Error');
+            }
+        });
+
+        this.getAllPonude();
+    }
+
     toggleAktivnaPonuda(e, id) {
         const ponuda = {
             _id: id,
-            aktivna: e
+            aktivna: e,
+            izmjenio: {
+                _id: this.prijavljeni_korisnik['_id'],
+                korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
+            }
         }
 
         this.ponudeService.changeActivity(ponuda).subscribe(data => {

@@ -38,7 +38,7 @@
                     <td class="text-center">
                         <input class="form-check-input position-static" type="checkbox" [(ngModel)]="korisnik.administrator" id="adminCheckbox" value="administrator" (ngModelChange)="toggleAdministrator($event, korisnik._id)">
                     </td>
-                    <td>{{korisnik.datum_registracije}}</td>
+                    <td>{{korisnik.datum_registracije | date:'dd/MM/yyyy'}}</td>
                     <td class="text-center">
                         <input class="form-check-input position-static" type="checkbox" [(ngModel)]="korisnik.aktivan" id="activeCheckbox" value="aktivan" (ngModelChange)="toggleAktivan($event, korisnik._id)">
                     </td>
@@ -48,6 +48,9 @@
     </div>
     <div class="tab-pane fade" id="nav-ponude" role="tabpanel" aria-labelledby="nav-ponude-tab">
         <h1 class="display-4">Pregled ponuda</h1>
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#novaPonuda"><i fa class="fa fa-plus"></i> Nova ponuda</button>
+        <br>
+        <br>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -69,21 +72,20 @@
                     <td>{{ponuda.naziv_ponude}}</td>
                     <td>{{ponuda.sifra_ponude}}</td>
                     <td>{{ponuda.klasa_ponude}}</td>
-                    <td>{{ponuda.datum_od}}</td>
-                    <td>{{ponuda.datum_do}}</td>
+                    <td>{{ponuda.datum_od | date:'dd/MM/yyyy'}}</td>
+                    <td>{{ponuda.datum_do | date:'dd/MM/yyyy'}}</td>
                     <td class="text-center">
                         <input class="form-check-input position-static" type="checkbox" [(ngModel)]="ponuda.aktivna" id="aktivnaPonudaCheckbox" value="aktivnaPonuda" (ngModelChange)="toggleAktivnaPonuda($event, ponuda._id)">
                     </td>
                     <td>{{ponuda.kreirao.korisnicko_ime}}</td>
-                    <td>{{ponuda.datum_kreiranja}}</td>
+                    <td>{{ponuda.datum_kreiranja | date:'dd/MM/yyyy'}}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-danger" (click)="onDeleteClick(ponuda._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#editPonude"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Obriši ponudu" (click)="onDeleteClick(ponuda._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Izmjeni ponudu" (click)="onEditClick(ponuda._id)" data-toggle="modal" data-target="#editPonude"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#novaPonuda"><i fa class="fa fa-plus"></i> Nova ponuda</button>
     </div>
     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
         kontakt
@@ -153,7 +155,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Naziv ponude</td>
+                                <td><input type="text" class="form-control" [(ngModel)]="naziv_ponudeEdit" name="naziv_ponudeEdit" id="naziv_ponudeEditTextbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Šifra</td>
+                                <td><input type="text" class="form-control" [(ngModel)]="sifra_ponudeEdit" name="sifra_ponudeEdit" id="sifra_ponudeEditTextbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Klasa</td>
+                                <td><input type="text" class="form-control" [(ngModel)]="klasa_ponudeEdit" name="klasa_ponudeEdit" id="klasa_ponudeEditTextbox"></td>
+                            </tr>
+                            <tr>
+                                <td>Datum od</td>
+                                <td><input type="date" class="form-control" [ngModel]="datum_odEdit | date:'yyyy-MM-dd'" name="datum_odEdit" id="datum_odEditTextbox" (ngModelChange)="datum_odEdit = $event"/></td>
+                            </tr>
+                            <tr>
+                                <td>Datum do</td>
+                                <td><input type="date" class="form-control" [ngModel]="datum_doEdit | date:'yyyy-MM-dd'" name="datum_doEdit" id="datum_doEditTextbox" (ngModelChange)="datum_doEdit = $event"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
