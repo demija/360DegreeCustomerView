@@ -1,8 +1,14 @@
 .container {
     margin-top: 100px;
-    width: 85% !important;
+    width: 70% !important;
 }
 
 .sideBr {
-    width: 15% !important;
+    width: 10% !important;
+}
+
+
+.uslugeKartica {
+    margin-top: 138px;
+    width: 20% !important;
 }

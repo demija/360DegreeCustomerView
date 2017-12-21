@@ -6,12 +6,13 @@
             <label id="korisnickoimeError" class="float-right text-danger d-none">Obavezan unos!</label>
             <input type="text" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" placeholder="Unesi korisničko ime">
         </div>
+
         <div class="form-group">
             <label for="lozinkaTextbox">Lozinka</label>
             <label id="lozinkaError" class="float-right text-danger d-none">Obavezan unos!</label>
             <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Unesi lozinku">
         </div>
-        <button type="submit" class="btn btn-outline-primary w-100">Prijavi se</button>
+        <button type="submit" class="btn btn-outline-info w-100">Prijavi se</button>
         <p class="text-center"><a class="nav-link" [routerLink]="['/register']">Novi korisnik? Registruj se ovdje</a></p>
     </form>
 </div>
