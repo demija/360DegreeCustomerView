@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-color: #F1F4F7;
+    background-color: #FFFFFF;
     color: #374664;
-    background-image: url('/assets/gray-wallpaper.jpg');
+    background-image: url('/assets/gray-wallpaperT.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -32,7 +32,7 @@ body {
     max-width: 100% !important;
 }
 
-.card {
+.cardE {
     background: #fff;
     border-radius: 2px;
     display: inline-block;

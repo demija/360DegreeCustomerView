@@ -44,9 +44,6 @@ export class NavbarComponent implements OnInit {
 
         //TODO
         // Validacija matičnog broja
-        /*if(!this.validateService.validateSearch()) {
-            return false;
-        }*/
 
         this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {
             if(klijent.success) {

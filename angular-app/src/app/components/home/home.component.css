@@ -1,13 +1,16 @@
 .container {
-    margin-top: 100px;
-    width: 70% !important;
+    margin-top: 90px;
+    margin-left: 2px;
+    width: 65% !important;
 }
 
 .sideBr {
-    width: 10% !important;
+    width: 15% !important;
 }
 
-.uslugeKarticaKlasa {
-    margin-top: 138px;
+.uslugeKartica {
+    position: fixed;
+    top: 113px;
+    right: 10px;
     width: 20% !important;
 }
