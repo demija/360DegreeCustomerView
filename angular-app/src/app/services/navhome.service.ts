@@ -22,6 +22,9 @@ export class NavhomeService {
     private kreditSource = new BehaviorSubject<Object>({});
     currentKredit = this.kreditSource.asObservable();
 
+    private timelineSource = new BehaviorSubject<Object>({});
+    currentTimeline = this.timelineSource.asObservable();
+
     private client: any;
 
     constructor(private http: Http) { }
@@ -89,6 +92,30 @@ export class NavhomeService {
 
     changeKredite(kredit) {
         this.kreditSource.next(kredit);
+    }
+
+    changeTimeline(klijent) {
+        var time_line = [];
+
+        for(let depoziti of klijent.depoziti.data) {
+            time_line.push(depoziti);
+        }
+
+        for(let kartice of klijent.kartice.data) {
+            time_line.push(kartice);
+        }
+
+        for(let krediti of klijent.krediti.data) {
+            time_line.push(krediti);
+        }
+
+        //TODO klijent.racuni
+
+        time_line.sort((a, b) => new Date(b.datum_ugovora).getTime() - new Date(a.datum_ugovora).getTime());
+
+        //time_line.push(klijent.client);
+
+        this.timelineSource.next(time_line);
     }
 
     getOdjeli() {

@@ -17,6 +17,10 @@ export class PonudeService {
         return this.http.get('http://localhost:3000/ponude/vratisvepodatke').map((res: any) => res.json());
     }
 
+    getAktivnePonude() {
+        return this.http.get('http://localhost:3000/ponude/vratiaktivneponude').map((res: any) => res.json());
+    }
+
     obrisiPonudu(ponuda) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');

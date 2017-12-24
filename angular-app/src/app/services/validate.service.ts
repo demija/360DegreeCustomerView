@@ -8,6 +8,8 @@ export class ValidateService {
     validateLogin(user) {
         let valid = true;
 
+        document.getElementById('loginSpinner').classList.remove('invisible');
+
         if(user.korisnicko_ime == undefined || user.korisnicko_ime == '') {
             document.getElementById('korisnickoimeTextbox').classList.add('is-invalid');
             document.getElementById('korisnickoimeError').classList.remove('d-none');

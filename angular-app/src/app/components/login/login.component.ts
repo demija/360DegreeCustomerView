@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
         this.authService.authenticateUser(user).subscribe(data => {
             if(data.success) {
                 swal({
+                    //position: 'top-right',
                     type: 'info',
                     title: 'Dobro došli ' + data.user.ime + ' ' + data.user.prezime + '!',
                     showConfirmButton: false,

@@ -66,6 +66,16 @@ module.exports.getAllData = function(callback) {
     Ponuda.find(query, callback);
 }
 
+//Vrati aktivne ponude
+module.exports.getAciveData = function(callback) {
+    const query = {
+        obrisana: false,
+        aktivna: true
+    };
+
+    Ponuda.find(query, callback);
+}
+
 //Obriši ponudu
 module.exports.deletePonuda = function(ponuda, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 

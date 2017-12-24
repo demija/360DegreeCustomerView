@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavhomeService } from '../../services/navhome.service';
+import { PonudeService } from '../../services/ponude.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -13,6 +14,9 @@ export class HomeComponent implements OnInit {
     depoziti: Object;
     kartice: Object;
     krediti: Object;
+    ponude: Object;
+    time_line: Object;
+
     imeNew: String;
     prezimeNew: String;
     jmbgNew: String;
@@ -36,7 +40,7 @@ export class HomeComponent implements OnInit {
     cb_klasifikacijaNew: String;
     emailNew: String;
 
-    constructor(private navhomeService: NavhomeService) { }
+    constructor(private navhomeService: NavhomeService, private ponudeService: PonudeService) { }
 
     ngOnInit() {
         this.navhomeService.currentKlijent.subscribe(klijent => {
@@ -57,6 +61,16 @@ export class HomeComponent implements OnInit {
 
         this.navhomeService.currentKredit.subscribe(krediti => {
             this.krediti = krediti;
+        });
+
+        this.navhomeService.currentTimeline.subscribe(timeline => {
+            if(Object.keys(timeline).length > 0) {
+                this.time_line = timeline;
+            }
+        });
+
+        this.ponudeService.getAktivnePonude().subscribe(ponude => {
+            this.ponude = ponude.data;
         });
     }
 
@@ -136,5 +150,10 @@ export class HomeComponent implements OnInit {
                 });
             }
         });
+    }
+
+    //TODO
+    onCardClick() {
+        console.log('klik na karticu');
     }
 }

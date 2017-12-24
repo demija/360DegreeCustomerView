@@ -58,6 +58,29 @@ router.get('/vratisvepodatke', (req, res, next) => {
     });
 });
 
+// Vrati aktivne ponude
+router.get('/vratiaktivneponude', (req, res, next) => {
+    Ponuda.getAciveData((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Ne postoje podaci',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
 // Obirši ponudu
 router.post('/obrisi', (req, res, next) => {
     let ponuda = new Ponuda({
