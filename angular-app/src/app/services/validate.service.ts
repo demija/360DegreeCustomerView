@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, transition } from '@angular/core';
 
 @Injectable()
 export class ValidateService {
@@ -160,9 +160,17 @@ export class ValidateService {
     }
 
     //TODO
-    //validateSearch() {
+    validateSearch() {
+        let valid = true;
+        let searchMaricniBroj = (<HTMLInputElement>document.getElementById('jmbgSearch')).value;
 
-    //}
+        if(searchMaricniBroj.length < 13 || searchMaricniBroj.length > 13) {
+            console.log('\n\nGREŠKA');
+            valid = false;
+        }
+
+        return valid;
+    }
 
     validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

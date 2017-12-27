@@ -3,6 +3,7 @@ import { NavhomeService } from '../../services/navhome.service';
 import { AuthService } from '../../services/auth.service';
 import { PonudeService } from '../../services/ponude.service';
 import { DatePipe } from '@angular/common';
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-adminpanel',
@@ -116,26 +117,46 @@ export class AdminpanelComponent implements OnInit {
     }
 
     onDeleteClick(id) {
-        //TODO
-        //tražiti povrdu
-
-        const ponuda = {
-            _id: id
-        }
-
-        //Unos nove usluge
-        this.ponudeService.obrisiPonudu(ponuda).subscribe(data => {
-            //TODO
-            //notification
-
-            if(data.success) {
-                console.log('OK');
-            } else {
-                console.log('Error');
+        swal({
+            title: 'Jeste li sigurni?',
+            //text: "You won't be able to revert this!",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#149A80',
+            cancelButtonColor: '#E12E1C',
+            confirmButtonText: 'Da',
+            cancelButtonText: 'Ne'
+        }).then((result) => {
+            if (result.value) {
+                const ponuda = {
+                    _id: id
+                }
+                
+                this.ponudeService.obrisiPonudu(ponuda).subscribe(data => {
+                    if(data.success) {
+                        swal({
+                            position: 'top-right',
+                            //title: 'Greška!',
+                            text: data.msg,
+                            type: 'success',
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    } else {
+                        swal({
+                            position: 'top-right',
+                            //title: 'Greška!',
+                            text: data.msg,
+                            type: 'error',
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    }
+                });
+        
+                this.getAllPonude();
             }
         });
-
-        this.getAllPonude();
     }
 
     onEditClick(id) {

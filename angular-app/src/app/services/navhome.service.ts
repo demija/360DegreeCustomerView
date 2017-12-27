@@ -97,23 +97,27 @@ export class NavhomeService {
     changeTimeline(klijent) {
         var time_line = [];
 
+        for(let racuni of klijent.racuni.data) {
+            racuni.type = 'racun';
+            time_line.push(racuni);
+        }
+
         for(let depoziti of klijent.depoziti.data) {
+            depoziti.type = 'depozit';
             time_line.push(depoziti);
         }
 
         for(let kartice of klijent.kartice.data) {
+            kartice.type = 'kartica';
             time_line.push(kartice);
         }
 
         for(let krediti of klijent.krediti.data) {
+            krediti.type = 'kredit';
             time_line.push(krediti);
         }
 
-        //TODO klijent.racuni
-
         time_line.sort((a, b) => new Date(b.datum_ugovora).getTime() - new Date(a.datum_ugovora).getTime());
-
-        //time_line.push(klijent.client);
 
         this.timelineSource.next(time_line);
     }

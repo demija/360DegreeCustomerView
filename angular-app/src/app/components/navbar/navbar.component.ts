@@ -42,25 +42,33 @@ export class NavbarComponent implements OnInit {
             korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
         }
 
-        //TODO
-        // Validacija matičnog broja
-
-        this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {
-            if(klijent.success) {
-                this.navhomeService.changeClient(klijent.client);
-                this.navhomeService.changeRacun(klijent.racuni);
-                this.navhomeService.changeDeposit(klijent.depoziti);
-                this.navhomeService.changeKartice(klijent.kartice);
-                this.navhomeService.changeKredite(klijent.krediti);
-                this.navhomeService.changeTimeline(klijent);
-            } else {
-                swal({
-                    title: 'Greška!',
-                    text: klijent.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
-            }
-        });
+        if(!this.validateService.validateSearch()) {
+            swal({
+                //position: 'top-right',
+                title: 'Greška!',
+                text: 'Unesi ispravan matični broj',
+                type: 'warning',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        } else {
+            this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {
+                if(klijent.success) {
+                    this.navhomeService.changeClient(klijent.client);
+                    this.navhomeService.changeRacun(klijent.racuni);
+                    this.navhomeService.changeDeposit(klijent.depoziti);
+                    this.navhomeService.changeKartice(klijent.kartice);
+                    this.navhomeService.changeKredite(klijent.krediti);
+                    this.navhomeService.changeTimeline(klijent);
+                } else {
+                    swal({
+                        title: 'Greška!',
+                        text: klijent.msg,
+                        type: 'error',
+                        confirmButtonText: 'Uredu'
+                    });
+                }
+            });
+        }
     }
 }

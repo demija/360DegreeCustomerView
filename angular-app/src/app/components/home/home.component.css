@@ -153,6 +153,10 @@
     background-color: #d9534f !important;
 }
 
+.timeline-badge.secondary {
+    background-color: #18BC9C !important;
+}
+
 .timeline-badge.info {
     background-color: #5bc0de !important;
 }

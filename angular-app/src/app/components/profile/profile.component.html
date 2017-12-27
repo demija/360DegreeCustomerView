@@ -5,65 +5,67 @@
             <app-sidebar></app-sidebar>
         </div>
         <div class="container">
-            <div class="card card-1 animated fadeIn">
-                <h1 class="display-4">Moj profil</h1>
-                <div *ngIf="user">
-                    <form (submit)="onProfileSubmit()">
-                        <div class="row">
-                            <div class="col form-group">
-                                <label for="idUposlenikaTextbox">ID uposlenika</label>
-                                <input type="text" [(ngModel)]="user.id_uposlenika" name="id_uposlenika" class="form-control" id="idUposlenikaTextbox" readonly>
+            <div class="card">
+                <h3 class="card-header">Moj profil</h3>
+                <div class="card-body">
+                    <div *ngIf="user">
+                        <form (submit)="onProfileSubmit()">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="idUposlenikaTextbox">ID uposlenika</label>
+                                    <input type="text" [(ngModel)]="user.id_uposlenika" name="id_uposlenika" class="form-control" id="idUposlenikaTextbox" readonly>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="korisnickoimeTextbox">Korisničko ime</label>
+                                    <input type="text" [(ngModel)]="user.korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" readonly>
+                                </div>
                             </div>
-                            <div class="col form-group">
-                                <label for="korisnickoimeTextbox">Korisničko ime</label>
-                                <input type="text" [(ngModel)]="user.korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" readonly>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="imeTextbox">Ime</label>
+                                    <label id="imeError" class="float-right text-danger d-none">Obavezan unos!</label>
+                                    <input type="text" [(ngModel)]="user.ime" name="ime" class="form-control" id="imeTextbox">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="prezimeTextbox">Prezime</label>
+                                    <label id="prezimeError" class="float-right text-danger d-none">Obavezan unos!</label>
+                                    <input type="text" [(ngModel)]="user.prezime" name="prezime" class="form-control" id="prezimeTextbox">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col form-group">
-                                <label for="imeTextbox">Ime</label>
-                                <label id="imeError" class="float-right text-danger d-none">Obavezan unos!</label>
-                                <input type="text" [(ngModel)]="user.ime" name="ime" class="form-control" id="imeTextbox">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="lozinkaTextbox">Nova lozinka</label>
+                                    <label id="lozinkaError" class="float-right text-danger d-none">Obavezan unos!</label>
+                                    <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Lozinka">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="potvrdaLozinkeTextbox">Potvrda nove lozinke</label>
+                                    <label id="potvrdaLozinkeError" class="float-right text-danger d-none">Lozinke nisu iste!</label>
+                                    <input type="password" [(ngModel)]="potvrdaLozinke" name="potvrdaLozinke" class="form-control" id="potvrdaLozinkeTextbox" placeholder="Potvrda lozinke">
+                                </div>
                             </div>
-                            <div class="col form-group">
-                                <label for="prezimeTextbox">Prezime</label>
-                                <label id="prezimeError" class="float-right text-danger d-none">Obavezan unos!</label>
-                                <input type="text" [(ngModel)]="user.prezime" name="prezime" class="form-control" id="prezimeTextbox">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="emailTextbox">Email adresa</label>
+                                    <label id="emailError" class="float-right text-danger d-none">Pogrešan format!</label>
+                                    <input type="text" [(ngModel)]="user.email" name="email" class="form-control" id="emailTextbox">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="inlineFormCustomSelect">Odjel</label>
+                                    <label id="odjelError" class="float-right text-danger d-none">Obavezan odabir!</label>
+                                    <br>
+                                    <select [(ngModel)]="user.odjel" class="w-100 custom-select" name="odjel" id="odjelDropbox">
+                                        <option *ngFor="let o of odjeliLista?.data" [ngValue]="o">{{ o.organizaciona_jedinica }}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col form-group">
-                                <label for="lozinkaTextbox">Nova lozinka</label>
-                                <label id="lozinkaError" class="float-right text-danger d-none">Obavezan unos!</label>
-                                <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Lozinka">
+                            <div class="row">
+                                <div class="col">                           
+                                    <button type="submit"  class="btn btn-outline-primary float-right">Sačuvaj izmjene</button>
+                                </div>
                             </div>
-                            <div class="col form-group">
-                                <label for="potvrdaLozinkeTextbox">Potvrda nove lozinke</label>
-                                <label id="potvrdaLozinkeError" class="float-right text-danger d-none">Lozinke nisu iste!</label>
-                                <input type="password" [(ngModel)]="potvrdaLozinke" name="potvrdaLozinke" class="form-control" id="potvrdaLozinkeTextbox" placeholder="Potvrda lozinke">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col form-group">
-                                <label for="emailTextbox">Email adresa</label>
-                                <label id="emailError" class="float-right text-danger d-none">Pogrešan format!</label>
-                                <input type="text" [(ngModel)]="user.email" name="email" class="form-control" id="emailTextbox">
-                            </div>
-                            <div class="col form-group">
-                                <label for="inlineFormCustomSelect">Odjel</label>
-                                <label id="odjelError" class="float-right text-danger d-none">Obavezan odabir!</label>
-                                <br>
-                                <select [(ngModel)]="user.odjel" class="w-100 custom-select" name="odjel" id="odjelDropbox">
-                                    <option *ngFor="let o of odjeliLista?.data" [ngValue]="o">{{ o.organizaciona_jedinica }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <button type="submit"  class="btn btn-outline-primary float-right">Sačuvaj izmjene</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

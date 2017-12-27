@@ -49,10 +49,10 @@
                                 <p class="text-primary">{{ klijent.broj_lk }}</p>
                             </div>
                             <div class="col">
-                                <p class="text-primary">{{ klijent.datum_izdavanja_lk }}</p>
+                                <p class="text-primary">{{ klijent.datum_izdavanja_lk | date:'dd/MM/yyyy' }}</p>
                             </div>
                             <div class="col">
-                                <p class="text-primary">{{ klijent.datum_vazenja_lk }}</p>
+                                <p class="text-primary">{{ klijent.datum_vazenja_lk | date:'dd/MM/yyyy' }}</p>
                             </div>
                         </div>
     
@@ -272,7 +272,6 @@
             </div>
             <!-- Kraj korisnik Modal -->
     
-
             <!-- Korisnik Edit Modal -->
             <div class="modal fade bd-example-modal-lg" id="izmjenaPodatakaKlijenta" tabindex="-1" role="dialog" aria-labelledby="izmjenaPodatakaKlijentaLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -385,33 +384,26 @@
                 <div class="card">
                     <h3 class="card-header">Transakcijsko poslovanje</h3>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-5">
-                                <h6 class="card-subtitle mb-2 text-muted">Račun</h6>
+                        <div *ngFor="let rcn of racuni.data">
+                            <div class="row" >
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Račun</p>
+                                    <p class="text-primary">{{ rcn.opis_tipa_ugovora }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Partija</p>
+                                    <p class="text-primary">{{ rcn.partija }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
+                                    <p class="text-primary">{{ rcn.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Stanje na računu</p>
+                                    <p class="text-primary">{{ rcn.stanje_racuna_ekv }} BAM</p>
+                                </div>
                             </div>
-                            <div class="col-3" >
-                                <h6 class="card-subtitle mb-2 text-muted">Partija</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="card-subtitle mb-2 text-muted">Datum ugovora</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="card-subtitle mb-2 text-muted">Stanje na računu</h6>
-                            </div>
-                        </div>
-                        <div class="row" *ngFor="let rcn of racuni.data">
-                            <div class="col-5">
-                                <p class="text-primary">{{ rcn.opis_tipa_ugovora }}</p>
-                            </div>
-                            <div class="col-3">
-                                <p class="text-primary">{{ rcn.partija }}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="text-primary">{{ rcn.datum_otvaranja }}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="text-primary">{{ rcn.stanje_racuna_ekv }}</p>
-                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -421,51 +413,32 @@
                 <div class="card">
                     <h3 class="card-header">Krediti</h3>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col ">
-                                <h6 class="card-subtitle mb-2 text-muted">Naziv</h6>
+                        <div *ngFor="let kredit of krediti.data">
+                            <div class="row" >
+                                <div class="col-4">
+                                    <p class="card-subtitle mb-2 text-muted">Opis</p>
+                                    <p class="text-primary">{{ kredit.opis_tipa_ugovora }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
+                                    <p class="text-primary">{{ kredit.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
+                                    <p class="text-primary">{{ kredit.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Odobreni iznos</p>
+                                    <p class="text-primary">{{ kredit.odobreni_iznos }} BAM</p>
+                                    <p class="card-subtitle mb-2 text-muted">Kamatna stopa</p>
+                                    <p class="text-primary">{{ kredit.stopa }} %</p>
+                                </div>
+                                <div class="col-2">
+                                    <p class="card-subtitle mb-2 text-muted">Ostatak duga</p>
+                                    <p class="text-primary">ostatak</p>
+                                    <p class="card-subtitle mb-2 text-muted">Anuitet</p>
+                                    <p class="text-primary">anuitet</p>
+                                </div>
                             </div>
-                            <div class="col" >
-                                <h6 class="card-subtitle mb-2 text-muted">Datum ugovora</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Datum važenja</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Odobreni iznos</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Kamatna stopa</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Ostatak duga</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Anuitet</h6>
-                            </div>
-                        </div>
-                        <div class="row" *ngFor="let kredit of krediti.data">
-                            <div class="col">
-                                <p class="text-primary">{{ kredit.opis_tipa_ugovora }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kredit.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kredit.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kredit.odobreni_iznos }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kredit.stopa }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary"></p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary"></p>
-                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -475,45 +448,37 @@
                 <div class="card">
                     <h3 class="card-header">Kartično poslovanje</h3>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Naziv</h6>
+                        <div *ngFor="let kartica of kartice.data">
+                            <div class="row" >
+                                <div class="col-4">
+                                    <p class="card-subtitle mb-2 text-muted">Opis</p>
+                                    <p class="text-primary">{{ kartica.opis }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora</p>
+                                    <p class="text-primary">{{ kartica.opis_tipa_ugovora }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Vrsta kartice</p>
+                                    <p class="text-primary">{{ kartica.vrsta_kartice }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Tip kartice</p>
+                                    <p class="text-primary">{{ kartica.tip_kartice }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
+                                    <p class="text-primary">{{ kartica.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
+                                    <p class="text-primary">{{ kartica.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                </div>
+                                <div class="col-2">
+                                    <p class="card-subtitle mb-2 text-muted">Stanje</p>
+                                    <div *ngIf="kartica.stanje < 0">
+                                        <p class="text-danger">{{ kartica.stanje }} BAM</p>
+                                    </div>
+                                    <div *ngIf="kartica.stanje >= 0">
+                                        <p class="text-primary">{{ kartica.stanje }} BAM</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Vrsta kartice</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Tip kartice</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Datum ugovora</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Datum važenja</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Stanje</h6>
-                            </div>
-                        </div>
-                        <div class="row" *ngFor="let kartica of kartice.data">
-                            <div class="col">
-                                <p class="text-primary">{{ kartica.opis }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kartica.vrsta_kartice }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kartica.tip_kartice }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kartica.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kartica.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ kartica.stanje }}</p>
-                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -523,39 +488,26 @@
                 <div class="card">
                     <h3 class="card-header">Depoziti</h3>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <h6 class="card-subtitle mb-2 text-muted">Naziv</h6>
+                        <div *ngFor="let dpz of depoziti.data">
+                            <div class="row" >
+                                <div class="col-6">
+                                    <p class="card-subtitle mb-2 text-muted">Opis</p>
+                                    <p class="text-primary">{{ dpz.opis_tipa_ugovora }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
+                                    <p class="text-primary">{{ dpz.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
+                                    <p class="text-primary">{{ dpz.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                </div>
+                                <div class="col-3">
+                                    <p class="card-subtitle mb-2 text-muted">Iznos oročenja</p>
+                                    <p class="text-primary">{{ dpz.stanje_racuna }} BAM</p>
+                                    <p class="card-subtitle mb-2 text-muted">Kamatna stopa</p>
+                                    <p class="text-primary">{{ dpz.stopa }} %</p>
+                                </div>
                             </div>
-                            <div class="col-2">
-                                <h6 class="card-subtitle mb-2 text-muted">Datum ugovora</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="card-subtitle mb-2 text-muted">Datum važenja</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="card-subtitle mb-2 text-muted">Kamatna stopa</h6>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="card-subtitle mb-2 text-muted">Iznos oročenja (KM)</h6>
-                            </div>
-                        </div>
-                        <div class="row" *ngFor="let dpz of depoziti.data">
-                            <div class="col-4">
-                                <p class="text-primary">{{ dpz.opis_tipa_ugovora }}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="text-primary">{{ dpz.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="text-primary">{{ dpz.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="text-primary">{{ dpz.stopa }}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="text-primary">{{ dpz.stanje_racuna }}</p>
-                            </div>
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -584,21 +536,18 @@
                 <div class="card">
                     <h3 class="card-header">Vremenska linija korisnika</h3>
                     <div class="card-body">
-
-                        <div *ngFor="let timel of time_line">
-                            {{timel | json}}
-                        </div>
-
                         <ul class="timeline" *ngFor="let timel of time_line; let even = even; let odd = odd">
                             <li [ngClass]="{true: 'timeline-inverted', false: ''}[even]">
-                                <div class="timeline-badge info"><i class="fa fa-user-plus" aria-hidden="true"></i></div>
+                                <div class="timeline-badge" [ngClass]="{kartica: 'info', depozit: 'warning', kredit: 'primary', racun: 'secondary'}[timel.type]"><i [ngClass]="{kartica: 'fa fa-credit-card', depozit: 'fa fa-line-chart', kredit: 'fa fa-file-text-o', racun: 'fa fa-handshake-o'}[timel.type]" aria-hidden="true"></i></div>
+                                
                                 <div class="timeline-panel">
                                     <div class="timeline-heading">
                                         <h4 class="timeline-title">{{ timel.opis_tipa_ugovora }}</h4>
                                         <p class="text-muted">{{ timel.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     </div>
                                     <div class="timeline-body">
-                                        <p>Kontakt kreirao</p>
+                                        {{ timel.opis }}
+                                        <p *ngIf="timel.odobreni_iznos">Odobren iznos: {{ timel.odobreni_iznos }} KM</p>
                                     </div>
                                 </div>
                             </li>
@@ -610,9 +559,6 @@
                                     <div class="timeline-heading">
                                         <h4 class="timeline-title">Evidencija klijenta</h4>
                                         <p class="text-muted">{{ klijent.datum_evidentiranja | date:'dd/MM/yyyy' }}</p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>Kontakt kreirao {{ klijent.kreirao?.korisnicko_ime }}</p>
                                     </div>
                                 </div>
                             </li>
