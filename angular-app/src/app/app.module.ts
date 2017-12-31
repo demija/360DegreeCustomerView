@@ -13,11 +13,14 @@ import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { NavhomeService } from './services/navhome.service';
 import { PonudeService } from './services/ponude.service';
+import { DepozitService } from './services/depozit.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
+import { ReportComponent } from './components/report/report.component';
+import { ChartsModule } from 'ng2-charts';
 
 const appRoutes: Routes = [
     {
@@ -41,6 +44,10 @@ const appRoutes: Routes = [
     {
         path: 'adminpanel',
         component: AdminpanelComponent,
+    },
+    {
+        path: 'report',
+        component: ReportComponent
     }
 ]
 
@@ -53,20 +60,23 @@ const appRoutes: Routes = [
         HomeComponent,
         ProfileComponent,
         SidebarComponent,
-        AdminpanelComponent
+        AdminpanelComponent,
+        ReportComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
         RouterModule.forRoot(appRoutes),
-        Angular2FontawesomeModule
+        Angular2FontawesomeModule,
+        ChartsModule
     ],
     providers: [
         ValidateService,
         AuthService,
         NavhomeService,
         PonudeService,
+        DepozitService,
         AuthGuard
     ],
     bootstrap: [AppComponent]

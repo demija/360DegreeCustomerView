@@ -400,7 +400,7 @@
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Stanje na računu</p>
-                                    <p class="text-primary">{{ rcn.stanje_racuna_ekv }} BAM</p>
+                                    <p class="text-primary">{{ rcn.stanje_racuna_ekv | number:'.2' }} BAM</p>
                                 </div>
                             </div>
                             <hr>
@@ -427,7 +427,7 @@
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Odobreni iznos</p>
-                                    <p class="text-primary">{{ kredit.odobreni_iznos }} BAM</p>
+                                    <p class="text-primary">{{ kredit.odobreni_iznos | number:'.2' }} BAM</p>
                                     <p class="card-subtitle mb-2 text-muted">Kamatna stopa</p>
                                     <p class="text-primary">{{ kredit.stopa }} %</p>
                                 </div>
@@ -471,10 +471,10 @@
                                 <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Stanje</p>
                                     <div *ngIf="kartica.stanje < 0">
-                                        <p class="text-danger">{{ kartica.stanje }} BAM</p>
+                                        <p class="text-danger">{{ kartica.stanje | number:'.2' }} BAM</p>
                                     </div>
                                     <div *ngIf="kartica.stanje >= 0">
-                                        <p class="text-primary">{{ kartica.stanje }} BAM</p>
+                                        <p class="text-primary">{{ kartica.stanje | number:'.2' }} BAM</p>
                                     </div>
                                 </div>
                             </div>
@@ -502,7 +502,7 @@
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Iznos oročenja</p>
-                                    <p class="text-primary">{{ dpz.stanje_racuna }} BAM</p>
+                                    <p class="text-primary">{{ dpz.stanje_racuna | number:'.2' }} BAM</p>
                                     <p class="card-subtitle mb-2 text-muted">Kamatna stopa</p>
                                     <p class="text-primary">{{ dpz.stopa }} %</p>
                                 </div>

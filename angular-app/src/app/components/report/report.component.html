@@ -1,0 +1,128 @@
+<app-navbar></app-navbar>
+<div class="card">
+    <h3 class="card-header">Pregled poslovanja</h3>
+    <div class="card-body">
+        <nav class="nav nav-tabs" id="myTab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true">
+                Depoziti
+            </a>
+            <a class="nav-item nav-link" id="nav-kartice-tab" data-toggle="tab" href="#nav-kartice" role="tab" aria-controls="nav-kartice" aria-selected="false">
+                Kartice
+            </a>
+            <a class="nav-item nav-link" id="nav-krediti-tab" data-toggle="tab" href="#nav-krediti" role="tab" aria-controls="nav-krediti" aria-selected="false">
+                Krediti
+            </a>
+            <a class="nav-item nav-link" id="nav-racuni-tab" data-toggle="tab" href="#nav-racuni" role="tab" aria-controls="nav-racuni" aria-selected="false">
+                Računi
+            </a>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="code">Datum ugovora od:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumOd" name="datum_od_depoziti" id="datum_od_depoziti">
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Datum ugovora do:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumDo" name="datum_od_depoziti" id="datum_od_depoziti">
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Vrsta depozita:</label>
+                                <ul>
+                                    <li>
+                                        <label class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll()">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description"></span>
+                                            Svi tipovi
+                                        </label>
+                                    </li>
+                                    <li *ngFor="let o of tipoviDepozita">
+                                        <label class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" type="checkbox" [(ngModel)]="o.selected" (change)="checkIfAllSelected()">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description"></span>
+                                            {{o._id.opis_tipa_ugovora}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-primary" (click)="traziDepozite()">Traži</button>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Klijent</th>
+                                            <th>Tip ugovora</th>
+                                            <th>Opis tipa ugovora</th>
+                                            <th>Partija</th>
+                                            <th>Stopa</th>
+                                            <th>Stanje računa</th>
+                                            <th>Datum ugovora</th>
+                                            <th>Datum važenja</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let d of depozitiResult; let myIndex = index">
+                                        <tr>
+                                            <td>{{ myIndex + 1 }}</td>
+                                            <td>{{ d.klijent }}</td>
+                                            <td>{{ d.tip_ugovora }}</td>
+                                            <td>{{ d.opis_tipa_ugovora }}</td>
+                                            <td>{{ d.partija }}</td>
+                                            <td>{{ d.stopa }} %</td>
+                                            <td>{{ d.stanje_racuna | number:'.2' }}</td>
+                                            <td>{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</td>
+                                            <td>{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>      
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="display: block;">
+                                <canvas baseChart width="400" height="200"
+                                    [datasets]="lineChartData"
+                                    [labels]="lineChartLabels"
+                                    [options]="lineChartOptions"
+                                    [legend]="lineChartLegend"
+                                    [chartType]="lineChartType">
+                                </canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: block;">
+                                <canvas baseChart width="400" height="200"
+                                    [datasets]="lineChartData"
+                                    [labels]="lineChartLabels"
+                                    [options]="lineChartOptions"
+                                    [legend]="lineChartLegend"
+                                    [chartType]="lineChartType">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="tab-pane fade" id="nav-kartice" role="tabpanel" aria-labelledby="nav-kartice-tab">
+                Pregled kartica
+            </div>
+        
+            <div class="tab-pane fade" id="nav-krediti" role="tabpanel" aria-labelledby="nav-krediti-tab">
+                Pregled kredita
+            </div>
+            <div class="tab-pane fade" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">
+                Pregled računa
+            </div>
+        </div>
+    </div>
+</div>

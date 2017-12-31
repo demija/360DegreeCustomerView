@@ -49,3 +49,32 @@ module.exports.getDataById = function(id, callback) {
     
     Depozit.find(query, callback);
 }
+
+module.exports.getAllTypes = function(callback) {
+    Depozit.aggregate(
+        { $group: { _id: { tip_ugovora: "$tip_ugovora", opis_tipa_ugovora: "$opis_tipa_ugovora" }}},
+        callback
+    );
+}
+
+module.exports.getDepozitReport = function(pretraga, callback) {
+    let datumi = {}
+
+    const query = {
+        tip_ugovora: pretraga.tip_ugovora
+    };
+
+    if(pretraga.datum_od != '' && pretraga.datum_od != undefined) {
+        datumi.$gte = new Date(pretraga.datum_od);
+    }
+
+    if(pretraga.datum_do != '' && pretraga.datum_do != undefined) {
+        datumi.$lt = new Date(pretraga.datum_do);
+    }
+
+    if(Object.keys(datumi).length !== 0) {
+        query.datum_ugovora = datumi;
+    }
+    
+    Depozit.find(query, callback);
+}

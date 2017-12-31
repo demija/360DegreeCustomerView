@@ -88,7 +88,7 @@ module.exports.addUser = function(noviKorisnik, callback) {
 }
 
 module.exports.updateUser = function(korisnik, callback) {
-    const ObjectId = require('mongoose').Types.ObjectId; 
+    const ObjectId = require('mongoose').Types.ObjectId;
     const query = {
         _id: new ObjectId(korisnik._id)
     };

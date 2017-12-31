@@ -165,7 +165,6 @@ export class ValidateService {
         let searchMaricniBroj = (<HTMLInputElement>document.getElementById('jmbgSearch')).value;
 
         if(searchMaricniBroj.length < 13 || searchMaricniBroj.length > 13) {
-            console.log('\n\nGREŠKA');
             valid = false;
         }
 
