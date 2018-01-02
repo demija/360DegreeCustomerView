@@ -126,18 +126,18 @@ export class NavhomeService {
         return this.http.get('http://localhost:3000/odjeli/vratisvepodatke').map((res: any) => res.json());
     }
 
-    updateClient(client) {
+    updateClient(klijent) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
-        return this.http.post('http://localhost:3000/klijenti/izmjenapodataka', client, {headers: headers}).map(res => res.json());
+        return this.http.post('http://localhost:3000/klijenti/izmjena', klijent, {headers: headers}).map(res => res.json());
     }
 
-    addClient(newClient) {
+    addClient(klijent) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
-        return this.http.post('http://localhost:3000/klijenti/dodaj', newClient, {headers: headers}).map(res => res.json());
+        return this.http.post('http://localhost:3000/klijenti/dodaj', klijent, {headers: headers}).map(res => res.json());
     }
 
     getKorisnici() {

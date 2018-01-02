@@ -5,9 +5,9 @@ const Kredit = require('../models/kredit');
 
 // Vraćanje podataka racun
 router.post('/vratipodatke', (req, res, next) => {
-    const id = req.body.klijent_id;
+    const klijent_id = req.body.klijent_id;
 
-    Kredit.getDataById(id, (err, data) => {
+    Kredit.vratiKrediteKlijenta(klijent_id, (err, data) => {
         if(err) {
             throw err;
         } else {

@@ -5,7 +5,7 @@ const Odjel = require('../models/odjel');
 
 // Vraćanje podataka racun
 router.get('/vratisvepodatke', (req, res, next) => {
-    Odjel.getAllData((err, data) => {
+    Odjel.vratiSveZapise((err, data) => {
         if(err) {
             throw err;
         } else {

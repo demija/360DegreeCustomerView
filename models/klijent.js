@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require('../config/database');
 
 // Klijent - šema
-const userSchema = mongoose.Schema({
+const klijentSchema = mongoose.Schema({
     ime: {
         type: String,
         required: true
@@ -94,11 +94,11 @@ const userSchema = mongoose.Schema({
     }
 });
 
-userSchema.set('collection', 'klijenti');
+klijentSchema.set('collection', 'klijenti');
 
-const Klijent = module.exports = mongoose.model('Klijent', userSchema);
+const Klijent = module.exports = mongoose.model('Klijent', klijentSchema);
 
-module.exports.getDataByMaticniBroj = function(maticni_broj, callback) {
+module.exports.vratiPoMaticnombroju = function(maticni_broj, callback) {
     const query = {
         maticni_broj: maticni_broj
     }
@@ -106,7 +106,7 @@ module.exports.getDataByMaticniBroj = function(maticni_broj, callback) {
     Klijent.findOne(query, callback);
 }
 
-module.exports.updateKlijenta = function(klijent, callback) {
+module.exports.izmjena = function(klijent, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
         _id: new ObjectId(klijent._id)
@@ -115,6 +115,6 @@ module.exports.updateKlijenta = function(klijent, callback) {
     Klijent.updateOne(query, klijent, callback);
 }
 
-module.exports.addKlijent = function(noviKlijent, callback) {
+module.exports.dodaj = function(noviKlijent, callback) {
     noviKlijent.save(callback);
 }

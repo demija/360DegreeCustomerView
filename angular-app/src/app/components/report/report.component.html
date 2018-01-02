@@ -34,7 +34,7 @@
                                 <ul>
                                     <li>
                                         <label class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll()">
+                                            <input class="custom-control-input" type="checkbox" [(ngModel)]="selectedAll" (change)="selektujSveTipoveDepozita()">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description"></span>
                                             Svi tipovi
@@ -42,7 +42,7 @@
                                     </li>
                                     <li *ngFor="let o of tipoviDepozita">
                                         <label class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox" [(ngModel)]="o.selected" (change)="checkIfAllSelected()">
+                                            <input class="custom-control-input" type="checkbox" [(ngModel)]="o.selected" (change)="selektujTipDepozita()">
                                             <span class="custom-control-indicator"></span>
                                             <span class="custom-control-description"></span>
                                             {{o._id.opis_tipa_ugovora}}
@@ -55,59 +55,80 @@
                             </div>
                         </div>
                         <div class="col-10">
+                            <h3 class="card-header">Depoziti</h3>
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th></th>
                                             <th>Klijent</th>
-                                            <th>Tip ugovora</th>
-                                            <th>Opis tipa ugovora</th>
-                                            <th>Partija</th>
-                                            <th>Stopa</th>
-                                            <th>Stanje računa</th>
-                                            <th>Datum ugovora</th>
-                                            <th>Datum važenja</th>
+                                            <th>Ugovor</th>
+                                            <th>Ugovoreni iznos</th>
+                                            <th>Period ugovora</th>
                                         </tr>
                                     </thead>
                                     <tbody *ngFor="let d of depozitiResult; let myIndex = index">
                                         <tr>
                                             <td>{{ myIndex + 1 }}</td>
                                             <td>{{ d.klijent }}</td>
-                                            <td>{{ d.tip_ugovora }}</td>
-                                            <td>{{ d.opis_tipa_ugovora }}</td>
-                                            <td>{{ d.partija }}</td>
-                                            <td>{{ d.stopa }} %</td>
-                                            <td>{{ d.stanje_racuna | number:'.2' }}</td>
-                                            <td>{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</td>
-                                            <td>{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</td>
+                                            <td>
+                                                <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora (Tip ugovora)</p>
+                                                <p class="text-primary">{{ d.opis_tipa_ugovora }} ({{ d.tip_ugovora }})</p>
+                                                <p class="card-subtitle mb-2 text-muted">Partija</p>
+                                                <p class="text-primary">{{ d.partija }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="card-subtitle mb-2 text-muted">Iznos</p>
+                                                <p class="text-primary">{{ d.stanje_racuna | number:'.2' }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Stopa</p>
+                                                <p class="text-primary">{{ d.stopa }} %</p>
+                                            </td>
+                                            <td>
+                                                <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
+                                                <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
+                                                <p class="text-primary">{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
                             </div>
                         </div>      
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <div style="display: block;">
-                                <canvas baseChart width="400" height="200"
-                                    [datasets]="lineChartData"
-                                    [labels]="lineChartLabels"
-                                    [options]="lineChartOptions"
-                                    [legend]="lineChartLegend"
-                                    [chartType]="lineChartType">
+                            <div style="display: block">
+                                <canvas baseChart id="brojDepozitaGraph"
+                                    [datasets]="depozitBrojChartData"
+                                    [labels]="depozitBrojChartLabels"
+                                    [options]="depozitBrojChartOptions"
+                                    [legend]="depozitBrojChartLegend"
+                                    [chartType]="depozitBrojChartType">
                                 </canvas>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div style="display: block;">
-                                <canvas baseChart width="400" height="200"
-                                    [datasets]="lineChartData"
-                                    [labels]="lineChartLabels"
-                                    [options]="lineChartOptions"
-                                    [legend]="lineChartLegend"
-                                    [chartType]="lineChartType">
+                            <div style="display: block">
+                                <canvas baseChart id="kolicinaDepozitaGraph"
+                                    [datasets]="depozitKolicinaChartData"
+                                    [labels]="depozitKolicinaChartLabels"
+                                    [options]="depozitKolicinaChartOptions"
+                                    [legend]="depozitKolicinaChartLegend"
+                                    [chartType]="depozitKolicinaChartType">
                                 </canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-8">
+                            <div style="display: block">
+                                <canvas baseChart id="depozitiGraph"
+                                    [data]="doughnutChartData"
+                                    [labels]="doughnutChartLabels"
+                                    [options]="doughnutChartOptions"
+                                    [chartType]="doughnutChartType"></canvas>
                             </div>
                         </div>
                     </div>

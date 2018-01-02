@@ -1,48 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthService {
     authToken: any;
-    user: any;
+    korisnik: any;
 
     constructor(private http: Http) { }
 
-    registerUser(user) {
+    registracijaKorisnika(korisnik) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
-        return this.http.post('http://localhost:3000/korisnici/registracija', user, {headers: headers}).map(res => res.json());
+        return this.http.post('http://localhost:3000/korisnici/registracija', korisnik, {headers: headers}).map(res => res.json());
     }
 
-    updateUser(user) {
+    updateUser(korisnik) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
-        return this.http.post('http://localhost:3000/korisnici/izmjenapodataka', user, {headers: headers}).map(res => res.json());
+        return this.http.post('http://localhost:3000/korisnici/izmjena', korisnik, {headers: headers}).map(res => res.json());
     }
 
-    authenticateUser(user) {
+    autentifikacijaKorisnika(korisnik) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this.http.post('http://localhost:3000/korisnici/autentifikacija', user, {headers: headers})
+        return this.http.post('http://localhost:3000/korisnici/autentifikacija', korisnik, {headers: headers})
         .map(res => res.json())
         .flatMap((data: any) => {
             if(data.user) {
-                user.id_korisnika = data.user.id,
-                user.ime = data.user.ime,
-                user.prezime = data.user.prezime
-                user.email = data.user.email,
-                user.odjel = data.user.odjel
+                korisnik.id_korisnika = data.user.id,
+                korisnik.ime = data.user.ime,
+                korisnik.prezime = data.user.prezime
+                korisnik.email = data.user.email,
+                korisnik.odjel = data.user.odjel
             }
             
-            user.success = data.success;
-            user.msg = data.msg;
+            korisnik.success = data.success;
+            korisnik.msg = data.msg;
 
-            return this.http.post('http://localhost:3000/arhiviranje/unosloga', user, {headers: headers})
+            return this.http.post('http://localhost:3000/arhiviranje/unosloga', korisnik, {headers: headers})
             .map((res: any) => {
                 return data;
             });
@@ -58,12 +58,12 @@ export class AuthService {
         return this.http.get('http://localhost:3000/korisnici/profil', {headers: headers}).map(res => res.json());
     }
 
-    storeUserData(token, user) {
+    spasiPrijavljenogKorisnika(token, korisnik) {
         localStorage.setItem('id_token', token);
-        localStorage.setItem('user', JSON.stringify(user)); //make to string, to store in localStorage
+        localStorage.setItem('user', JSON.stringify(korisnik)); //make to string, to store in localStorage
 
         this.authToken = token;
-        this.user = user;
+        this.korisnik = korisnik;
     }
 
     loadToken() {
@@ -77,7 +77,7 @@ export class AuthService {
 
     logout() {
         this.authToken = null;
-        this.user = null;
+        this.korisnik = null;
         localStorage.clear();
     }
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require('../config/database');
 
 // Arhiva - šema
-const searchSchema = mongoose.Schema({
+const pretragaSchema = mongoose.Schema({
     id_korisnika: {
         type: String
     },
@@ -20,10 +20,10 @@ const searchSchema = mongoose.Schema({
     }
 });
 
-searchSchema.set('collection', 'pretrage_korisnika');
+pretragaSchema.set('collection', 'pretrage_korisnika');
 
-const Pretraga = module.exports = mongoose.model('Pretraga', searchSchema);
+const Pretraga = module.exports = mongoose.model('Pretraga', pretragaSchema);
 
-module.exports.addLog = function(log, callback) {
+module.exports.dodajLog = function(log, callback) {
     log.save(callback);
 }

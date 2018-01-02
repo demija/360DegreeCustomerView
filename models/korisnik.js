@@ -62,11 +62,11 @@ userSchema.set('collection', 'korisnici');
 
 const Korisnik = module.exports = mongoose.model('Korisnik', userSchema);
 
-module.exports.getUserById = function(id, callback) {
+module.exports.vratiPoId = function(id, callback) {
     Korisnik.findById(id, callback);
 }
 
-module.exports.getUserByUsername = function(korisnicko_ime, callback) {
+module.exports.vratiKorisnickoIme = function(korisnicko_ime, callback) {
     const query = {
         korisnicko_ime: korisnicko_ime
     }
@@ -74,7 +74,7 @@ module.exports.getUserByUsername = function(korisnicko_ime, callback) {
     Korisnik.findOne(query, callback);
 }
 
-module.exports.addUser = function(noviKorisnik, callback) {
+module.exports.dodaj = function(noviKorisnik, callback) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(noviKorisnik.lozinka, salt, (err, hash) => {
             if(err) {
@@ -87,7 +87,7 @@ module.exports.addUser = function(noviKorisnik, callback) {
     });
 }
 
-module.exports.updateUser = function(korisnik, callback) {
+module.exports.izmjena = function(korisnik, callback) {
     const ObjectId = require('mongoose').Types.ObjectId;
     const query = {
         _id: new ObjectId(korisnik._id)
@@ -96,7 +96,7 @@ module.exports.updateUser = function(korisnik, callback) {
     Korisnik.updateOne(query, korisnik, callback);
 }
 
-module.exports.comparePassword = function(candidatePassword, hash, callback) {
+module.exports.uporediLozinke = function(candidatePassword, hash, callback) {
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
         if(err) {
             throw err;
@@ -106,11 +106,11 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
     });
 }
 
-module.exports.getAllData = function(callback) {    
+module.exports.vratiSvePodatke = function(callback) {    
     Korisnik.find(callback);
 }
 
-module.exports.adminRolle = function(korisnik, callback) {
+module.exports.adminRola = function(korisnik, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
         _id: new ObjectId(korisnik._id)
@@ -119,7 +119,7 @@ module.exports.adminRolle = function(korisnik, callback) {
     Korisnik.updateOne(query, {$set: {administrator:korisnik.administrator}}, callback);
 }
 
-module.exports.activeUser = function(korisnik, callback) {
+module.exports.aktivanKorisnik = function(korisnik, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
         _id: new ObjectId(korisnik._id)

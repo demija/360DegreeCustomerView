@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Račun - šema
-const userSchema = mongoose.Schema({
+const racunSchema = mongoose.Schema({
     klijent: {
         type: Object
     },
@@ -41,14 +41,14 @@ const userSchema = mongoose.Schema({
     }
 });
 
-userSchema.set('collection', 'racuni');
+racunSchema.set('collection', 'racuni');
 
-const Racun = module.exports = mongoose.model('Racun', userSchema);
+const Racun = module.exports = mongoose.model('Racun', racunSchema);
 
-module.exports.getDataById = function(id, callback) {
+module.exports.vratiRacuneKlijenta = function(klijent_id, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
-        klijent: new ObjectId(id)
+        klijent: new ObjectId(klijent_id)
     };
     
     Racun.find(query, callback);

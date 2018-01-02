@@ -1,18 +1,17 @@
 const mongoose = require('mongoose');
-//const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Odjel - šema
-const userSchema = mongoose.Schema({
+const odjelSchema = mongoose.Schema({
     organizaciona_jedinica: {
         type: String
     }
 });
 
-userSchema.set('collection', 'odjeli');
+odjelSchema.set('collection', 'odjeli');
 
-const Odjel = module.exports = mongoose.model('Odjel', userSchema);
+const Odjel = module.exports = mongoose.model('Odjel', odjelSchema);
 
-module.exports.getAllData = function(callback) {    
+module.exports.vratiSveZapise = function(callback) {    
     Odjel.find(callback);
 }

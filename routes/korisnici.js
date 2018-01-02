@@ -20,12 +20,12 @@ router.post('/registracija', (req, res, next) => {
         administrator: false
     });
 
-    Korisnik.getUserByUsername(noviKorisnik.korisnicko_ime, (err, user) => {
+    Korisnik.vratiKorisnickoIme(noviKorisnik.korisnicko_ime, (err, user) => {
         if(err) {
             throw err;
         } else {
             if(!user) {
-                Korisnik.addUser(noviKorisnik, (err, user) => {
+                Korisnik.dodaj(noviKorisnik, (err, user) => {
                     if(err) {
                         res.json({
                             success: false,
@@ -49,7 +49,7 @@ router.post('/registracija', (req, res, next) => {
 });
 
 // Update korisnika
-router.post('/izmjenapodataka', (req, res, next) => {
+router.post('/izmjena', (req, res, next) => {
     let korisnik = new Korisnik({
         _id: req.body._id,
         ime: req.body.ime,
@@ -60,7 +60,7 @@ router.post('/izmjenapodataka', (req, res, next) => {
         datum_zadnje_izmjene: Date.now()
     });
 
-    Korisnik.updateUser(korisnik, (err, user) => {
+    Korisnik.izmjena(korisnik, (err, user) => {
         if(err) {
             res.json({
                 success: false,
@@ -77,10 +77,10 @@ router.post('/izmjenapodataka', (req, res, next) => {
 
 // Autentifikacija korisnika
 router.post('/autentifikacija', (req, res, next) => {
-    const username = req.body.korisnicko_ime;
-    const password = req.body.lozinka;
+    const korisnicko_ime = req.body.korisnicko_ime;
+    const lozinka = req.body.lozinka;
 
-    Korisnik.getUserByUsername(username, (err, user) => {
+    Korisnik.vratiKorisnickoIme(korisnicko_ime, (err, user) => {
         if(err) {
             throw err;
         } else {
@@ -91,7 +91,7 @@ router.post('/autentifikacija', (req, res, next) => {
                 });
             }
 
-            Korisnik.comparePassword(password, user.lozinka, (err, isMatch) => {
+            Korisnik.uporediLozinke(lozinka, user.lozinka, (err, isMatch) => {
                 if(err) {
                     throw err;
                 } else {
@@ -133,7 +133,7 @@ router.get('/profil', passport.authenticate('jwt', {session:false}), (req, res, 
 
 // Vraćanje svih korisnika
 router.get('/vratisvepodatke', (req, res, next) => {
-    Korisnik.getAllData((err, data) => {
+    Korisnik.vratiSvePodatke((err, data) => {
         if(err) {
             throw err;
         } else {
@@ -161,7 +161,7 @@ router.post('/adminrola', (req, res, next) => {
         administrator: req.body.administrator
     };
 
-    Korisnik.adminRolle(korisnik, (err, user) => {
+    Korisnik.adminRola(korisnik, (err, user) => {
         if(err) {
             res.json({
                 success: false,
@@ -183,7 +183,7 @@ router.post('/aktivankorisnik', (req, res, next) => {
         aktivan: req.body.aktivan
     };
 
-    Korisnik.activeUser(korisnik, (err, user) => {
+    Korisnik.aktivanKorisnik(korisnik, (err, user) => {
         if(err) {
             res.json({
                 success: false,

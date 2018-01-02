@@ -20,7 +20,7 @@ router.post('/dodaj', (req, res, next) => {
         obrisana: false
     });
 
-    Ponuda.addPonuda(novaPonuda, (err, user) => {
+    Ponuda.dodaj(novaPonuda, (err, user) => {
         if(err) {
             res.json({
                 success: false,
@@ -37,7 +37,7 @@ router.post('/dodaj', (req, res, next) => {
 
 // Vrati sve ne obrisane ponude
 router.get('/vratisvepodatke', (req, res, next) => {
-    Ponuda.getAllData((err, data) => {
+    Ponuda.vratiSveZapise((err, data) => {
         if(err) {
             throw err;
         } else {
@@ -60,7 +60,7 @@ router.get('/vratisvepodatke', (req, res, next) => {
 
 // Vrati aktivne ponude
 router.get('/vratiaktivneponude', (req, res, next) => {
-    Ponuda.getAciveData((err, data) => {
+    Ponuda.vratiAktivnePonude((err, data) => {
         if(err) {
             throw err;
         } else {
@@ -87,7 +87,7 @@ router.post('/obrisi', (req, res, next) => {
         _id: req.body._id
     });
 
-    Ponuda.deletePonuda(ponuda, (err, user) => {
+    Ponuda.obrisi(ponuda, (err, user) => {
         if(err) {
             res.json({
                 success: false,
@@ -115,7 +115,7 @@ router.post('/izmjeniponudu', (req, res, next) => {
         datum_izmjene: Date.now()
     });
 
-    Ponuda.editPonuda(ponuda, (err, user) => {
+    Ponuda.izmjeni(ponuda, (err, user) => {
         if(err) {
             res.json({
                 success: false,
@@ -139,7 +139,7 @@ router.post('/aktivnaponuda', (req, res, next) => {
         datum_izmjene: Date.now()
     };
 
-    Ponuda.activePonuda(ponuda, (err, user) => {
+    Ponuda.aktivnaPonuda(ponuda, (err, user) => {
         if(err) {
             res.json({
                 success: false,

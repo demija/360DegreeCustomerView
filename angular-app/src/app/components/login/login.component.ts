@@ -19,27 +19,28 @@ export class LoginComponent implements OnInit {
     }
 
     onLoginSubmit() {
-        const user = {
+        const korisnik = {
             korisnicko_ime: this.korisnicko_ime,
             lozinka: this.lozinka
         }
 
         // Validacija unesenih vrijednosti
-        if(!this.validateService.validateLogin(user)) {
+        if(!this.validateService.validacijaLogina(korisnik)) {
             return false;
         }
 
-        this.authService.authenticateUser(user).subscribe(data => {
+        // Autentifikacija
+        this.authService.autentifikacijaKorisnika(korisnik).subscribe(data => {
             if(data.success) {
                 swal({
-                    //position: 'top-right',
                     type: 'info',
                     title: 'Dobro došli ' + data.user.ime + ' ' + data.user.prezime + '!',
                     showConfirmButton: false,
                     timer: 2000
                 });
 
-                this.authService.storeUserData(data.token, data.user);
+                // Spašavanje podataka priajvljenog korisnika u local storage
+                this.authService.spasiPrijavljenogKorisnika(data.token, data.user);
                 this.router.navigate(['/']);
             } else {
                 swal({

@@ -76,5 +76,5 @@ module.exports.getDepozitReport = function(pretraga, callback) {
         query.datum_ugovora = datumi;
     }
     
-    Depozit.find(query, callback);
+    Depozit.find(query, callback).sort('datum_ugovora');
 }

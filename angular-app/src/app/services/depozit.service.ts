@@ -6,11 +6,11 @@ export class DepozitService {
 
     constructor(private http: Http) { }
 
-    getSveTipoveDepozita() {
+    vratiSveTipove() {
         return this.http.get('http://localhost:3000/depoziti/vratisvetipove').map((res: any) => res.json());
     }
 
-    getDepozite(depozit) {
+    pretraga(depozit) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         

@@ -53,12 +53,12 @@ ponudaSchema.set('collection', 'ponude');
 const Ponuda = module.exports = mongoose.model('Ponuda', ponudaSchema);
 
 //Dodavanje nove ponude
-module.exports.addPonuda = function(novaPonuda, callback) {
+module.exports.dodaj = function(novaPonuda, callback) {
     novaPonuda.save(callback);
 }
 
 //Vrati sve ponude
-module.exports.getAllData = function(callback) {
+module.exports.vratiSveZapise = function(callback) {
     const query = {
         obrisana: false
     };
@@ -67,7 +67,7 @@ module.exports.getAllData = function(callback) {
 }
 
 //Vrati aktivne ponude
-module.exports.getAciveData = function(callback) {
+module.exports.vratiAktivnePonude = function(callback) {
     const query = {
         obrisana: false,
         aktivna: true
@@ -77,7 +77,7 @@ module.exports.getAciveData = function(callback) {
 }
 
 //Obriši ponudu
-module.exports.deletePonuda = function(ponuda, callback) {
+module.exports.obrisi = function(ponuda, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
         _id: new ObjectId(ponuda._id)
@@ -87,7 +87,7 @@ module.exports.deletePonuda = function(ponuda, callback) {
 }
 
 //Izmjeni ponudu
-module.exports.editPonuda = function(ponuda, callback) {
+module.exports.izmjeni = function(ponuda, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
         _id: new ObjectId(ponuda._id)
@@ -98,7 +98,7 @@ module.exports.editPonuda = function(ponuda, callback) {
 }
 
 //Aktivna ponuda
-module.exports.activePonuda = function(ponuda, callback) {
+module.exports.aktivnaPonuda = function(ponuda, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
         _id: new ObjectId(ponuda._id)

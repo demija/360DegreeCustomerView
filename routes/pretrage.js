@@ -12,7 +12,7 @@ router.post('/unosPretrage', (req, res, next) => {
         datum_pretrage: Date.now()
     });
 
-    Pretraga.addLog(log, (err, user) => {
+    Pretraga.dodajLog(log, (err, user) => {
         if(err) {
             res.json({
                 success: false,

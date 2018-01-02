@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Kredit - šema
-const userSchema = mongoose.Schema({
+const kreditSchema = mongoose.Schema({
     klijent: {
         type: Object
     },
@@ -53,14 +53,14 @@ const userSchema = mongoose.Schema({
     }
 });
 
-userSchema.set('collection', 'krediti');
+kreditSchema.set('collection', 'krediti');
 
-const Kredit = module.exports = mongoose.model('Kredit', userSchema);
+const Kredit = module.exports = mongoose.model('Kredit', kreditSchema);
 
-module.exports.getDataById = function(id, callback) {
+module.exports.vratiKrediteKlijenta = function(klijent_id, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
-        klijent: new ObjectId(id)
+        klijent: new ObjectId(klijent_id)
     };
     
     Kredit.find(query, callback);

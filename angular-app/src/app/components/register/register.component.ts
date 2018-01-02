@@ -25,13 +25,13 @@ export class RegisterComponent implements OnInit {
     constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService) { }
 
     ngOnInit() {
-        this.navhomeService.getOdjeli().subscribe(odjeli => {
-            this.odjeliLista = odjeli;
+        this.navhomeService.getOdjeli().subscribe(data => {
+            this.odjeliLista = data;
         });
     }
 
     onRegisterSubmit() {
-        const user = {
+        const korisnik = {
             id_uposlenika: this.id_uposlenika,
             ime: this.ime,
             prezime: this.prezime,
@@ -45,12 +45,12 @@ export class RegisterComponent implements OnInit {
         }
 
         // Validacija unesenih vrijednosti
-        if(!this.validateService.validateRegister(user)) {
+        if(!this.validateService.validacijaRegistracije(korisnik)) {
             return false;
         }
 
         // Registracija korisnika
-        this.authService.registerUser(user).subscribe(data => {
+        this.authService.registracijaKorisnika(korisnik).subscribe(data => {
             if(data.success) {
                 swal({
                     //position: 'top-right',

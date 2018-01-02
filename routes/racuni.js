@@ -5,9 +5,9 @@ const Racun = require('../models/racun');
 
 // Vraćanje podataka racun
 router.post('/vratipodatke', (req, res, next) => {
-    const id = req.body.klijent_id;
+    const klijent_id = req.body.klijent_id;
 
-    Racun.getDataById(id, (err, data) => {
+    Racun.vratiRacuneKlijenta(klijent_id, (err, data) => {
         if(err) {
             throw err;
         } else {

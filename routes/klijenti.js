@@ -3,11 +3,11 @@ const router = express.Router();
 const config = require('../config/database');
 const Klijent = require('../models/klijent');
 
-// Vraćanje podataka klijent
+// Vraćanje podataka klijenta
 router.post('/vratipodatke', (req, res, next) => {
     const maticni_broj = req.body.maticni_broj;
 
-    Klijent.getDataByMaticniBroj(maticni_broj, (err, client) => {
+    Klijent.vratiPoMaticnombroju(maticni_broj, (err, client) => {
         if(err) {
             throw err;
         } else {
@@ -29,11 +29,11 @@ router.post('/vratipodatke', (req, res, next) => {
 });
 
 // Update klijenta
-router.post('/izmjenapodataka', (req, res, next) => {
+router.post('/izmjena', (req, res, next) => {
     let klijent = req.body;
     klijent.datum_izmjene = Date.now(),
     
-    Klijent.updateKlijenta(klijent, (err, user) => {
+    Klijent.izmjena(klijent, (err, user) => {
         if(err) {
             res.json({
                 success: false,
@@ -53,7 +53,7 @@ router.post('/dodaj', (req, res, next) => {
     let noviKlijent = new Klijent(req.body);
     noviKlijent.datum_unosa = Date.now();
     
-    Klijent.addKlijent(noviKlijent, (err, user) => {
+    Klijent.dodaj(noviKlijent, (err, user) => {
         if(err) {
             res.json({
                 success: false,

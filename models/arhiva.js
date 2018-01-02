@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require('../config/database');
 
 // Arhiva - šema
-const archiveSchema = mongoose.Schema({
+const arhivSchema = mongoose.Schema({
     id_korisnika: {
         type: String
     },
@@ -52,10 +52,10 @@ const archiveSchema = mongoose.Schema({
     }
 });
 
-archiveSchema.set('collection', 'arhiva_prijava');
+arhivSchema.set('collection', 'arhiva_prijava');
 
-const Arhiva = module.exports = mongoose.model('Arhiva', archiveSchema);
+const Arhiva = module.exports = mongoose.model('Arhiva', arhivSchema);
 
-module.exports.addLog = function(log, callback) {
+module.exports.upisLoga = function(log, callback) {
     log.save(callback);
 }

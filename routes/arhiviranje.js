@@ -32,7 +32,7 @@ router.post('/unosloga', (req, res, next) => {
         datum_prijave: Date.now()
     });
 
-    Arhiva.addLog(log, (err, user) => {
+    Arhiva.upisLoga(log, (err, user) => {
         if(err) {
             res.json({
                 success: false,
