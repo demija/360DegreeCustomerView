@@ -49,3 +49,32 @@ module.exports.vratiKarticeKlijenta = function(klijent_id, callback) {
     
     Kartica.find(query, callback);
 }
+
+module.exports.vratiSveTipove = function(callback) {
+    Kartica.aggregate(
+        { $group: { _id: { tip_ugovora: "$tip_ugovora", opis_tipa_ugovora: "$opis_tipa_ugovora", opis: "$opis" }}},
+        callback
+    );
+}
+
+module.exports.vratiKarticeReport = function(pretraga, callback) {
+    let datumi = {}
+
+    const query = {
+        tip_ugovora: pretraga.tip_ugovora
+    };
+
+    if(pretraga.datum_od != '' && pretraga.datum_od != undefined) {
+        datumi.$gte = new Date(pretraga.datum_od);
+    }
+
+    if(pretraga.datum_do != '' && pretraga.datum_do != undefined) {
+        datumi.$lt = new Date(pretraga.datum_do);
+    }
+
+    if(Object.keys(datumi).length !== 0) {
+        query.datum_ugovora = datumi;
+    }
+    
+    Kartica.find(query, callback).sort('datum_ugovora');
+}
