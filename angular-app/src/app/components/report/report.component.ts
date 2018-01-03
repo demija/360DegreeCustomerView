@@ -18,10 +18,16 @@ export class ReportComponent implements OnInit {
     datumDoDepozit: Date;
 
     //kartice
+    tipoviUgovoraKartica: any;
     tipoviKartica: any;
-    selectedAllKartice: any;
+    vrsteKartica: any;
+    tipKarticeRadio:any;
+    vrstaKarticeRadio: any;
+    selectedSviUgovoriKartica: any;
+    selectedSviTipoviKartica: any;
+    selectedSveVrsteKartica: any;
     karticeResult: any;
-    selektovaniTipoviKartica: Array<Object> = [];
+    selektovaniTipoviUgovoraKartica: Array<Object> = [];
     datumOdKartica: Date;
     datumDoKartica: Date;
 
@@ -171,52 +177,6 @@ export class ReportComponent implements OnInit {
                 }],
             yAxes: [{
                     display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Broj potpisanih ugovora'
-                    },
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
-                }]
-        }
-    };
-
-    // kolicina kartica graf
-    public karticaKolicinaChartData:any[] = [{data: [], label: ''}];
-    public karticaKolicinaChartLabels:string[] = [];
-    public karticaKolicinaChartLegend:boolean = true;
-    public karticaKolicinaChartType:string = 'line';
-    public karticaKolicinaChartOptions:any = {
-        scaleShowVerticalLines: false,
-        responsive: true,
-        title: {
-            display: true,
-            text: 'Tipovi potpisanih ugovora'
-        },
-        layout: {
-            padding: {
-                left: 0,
-                right: 0,
-                top: 50,
-                bottom: 0
-            }
-        },
-        scales: {
-            xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Period'
-                    }
-                }],
-            yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Tipovi potpisanih ugovora'
-                    },
                     ticks: {
                         beginAtZero: true,
                         stepSize: 1
@@ -236,8 +196,16 @@ export class ReportComponent implements OnInit {
             });
         });
 
-        this.karticaService.vratiSveTipove().subscribe(tipoviKartica => {
+        this.karticaService.tipoviUgovora().subscribe(tipoviUgovora => {
+            this.tipoviUgovoraKartica = tipoviUgovora.data;
+        });
+
+        this.karticaService.tipoviKartica().subscribe(tipoviKartica => {
             this.tipoviKartica = tipoviKartica.data;
+        });
+
+        this.karticaService.vrsteKartica().subscribe(vrsteKartica => {
+            this.vrsteKartica = vrsteKartica.data;
         });
     }
 
@@ -460,34 +428,36 @@ export class ReportComponent implements OnInit {
     /*
     *   KARTICE - metode
     */
-    selektujSveTipoveKartica() {
-        for (var i = 0; i < this.tipoviKartica.length; i++) {
-          this.tipoviKartica[i].selected = this.selectedAllKartice;
+    selektujSveTipoveUgovoraKartica() {
+        for (var i = 0; i < this.tipoviUgovoraKartica.length; i++) {
+          this.tipoviUgovoraKartica[i].selected = this.selectedSviUgovoriKartica;
         }
     }
 
-    selektujTipKartice() {
-        this.selectedAllKartice = this.tipoviKartica.every(function(item:any) {
+    selektujTipUgovoraKartice() {
+        this.selectedSviUgovoriKartica = this.tipoviUgovoraKartica.every(function(item:any) {
             return item.selected == true;
         });
     }
 
     traziKartice() {
-        this.selektovaniTipoviKartica = [];
+        this.selektovaniTipoviUgovoraKartica = [];
 
         this.resetKarticaGrafova();
 
-        for (var i = 0; i < this.tipoviKartica.length; i++) {
-            if(this.tipoviKartica[i].selected) {
-                this.selektovaniTipoviKartica.push(this.tipoviKartica[i]['_id']['tip_ugovora']);
+        for (var i = 0; i < this.tipoviUgovoraKartica.length; i++) {
+            if(this.tipoviUgovoraKartica[i].selected) {
+                this.selektovaniTipoviUgovoraKartica.push(this.tipoviUgovoraKartica[i]['_id']['tip_ugovora']);
             }
         }
 
-        if(this.selektovaniTipoviKartica.length > 0) {
+        if(this.selektovaniTipoviUgovoraKartica.length > 0) {
             this.pripremaKarticaGrafova();
             
             let search = {
-                tip_kartice: this.selektovaniTipoviKartica,
+                tip_ugovora: this.selektovaniTipoviUgovoraKartica,
+                tip_kartice: this.tipKarticeRadio,
+                vrsta_kartice: this.vrstaKarticeRadio,
                 datum_od: this.datumOdKartica,
                 datum_do: this.datumDoKartica
             }
@@ -495,36 +465,29 @@ export class ReportComponent implements OnInit {
             this.karticaService.pretraga(search).subscribe(kartice => {
                 if(kartice.success) {
                     this.karticeResult = kartice.data;
-    
+
                     this.generisanjePeriodaKarticaGrafa();
                     this.generisanjeBrojKarticaGrafa();
-                    this.generisanjeTipovaKarticanaGrafa();
                 } else {
                     this.pokreniSwal('Greška!', kartice.msg, 'error', 'Uredu');
                 }
             });
         } else {
-            this.pokreniSwal('Greška!', "Odaberi tip kartice!", 'warning', 'Uredu');
+            this.pokreniSwal('Greška!', "Odaberi tip ugovora!", 'warning', 'Uredu');
         }
     }
 
     resetKarticaGrafova() {
         // Reset chart labela
         this.karticaBrojChartLabels = [];
-        this.karticaKolicinaChartLabels = [];
 
         // Reset chart vrijednosti
         this.karticaBrojChartData.length = 1;
-        this.karticaKolicinaChartData.length = 1;
     }
 
     pripremaKarticaGrafova() {
-        while(this.karticaBrojChartData.length < this.selektovaniTipoviKartica.length) {
+        while(this.karticaBrojChartData.length < this.selektovaniTipoviUgovoraKartica.length) {
             this.karticaBrojChartData.push({ data: [], label: "" });
-        }
-
-        while(this.karticaKolicinaChartData.length < this.selektovaniTipoviKartica.length) {
-            this.karticaKolicinaChartData.push({ data: [], label: "" });
         }
     }
 
@@ -563,14 +526,13 @@ export class ReportComponent implements OnInit {
         this.periodKarticaGrafa.forEach(element => {
             let datum = element.mjesec + '. mjesec ' + element.godina;
             this.karticaBrojChartLabels.push(datum);
-            this.karticaKolicinaChartLabels.push(datum);
         });
     }
 
-    generisanjeBrojKarticaGrafa() {        
+    generisanjeBrojKarticaGrafa() {
         let clone = JSON.parse(JSON.stringify(this.karticaBrojChartData));
 
-        for(let i = 0; i < this.selektovaniTipoviKartica.length; i++) {
+        for(let i = 0; i < this.selektovaniTipoviUgovoraKartica.length; i++) {
             // računanje broja potpisanih ugovora po periodu
             let data = [];
             let labela = '';
@@ -579,7 +541,7 @@ export class ReportComponent implements OnInit {
                 let broj = 0;
 
                 this.karticeResult.forEach(elementKartica => {
-                    if(elementKartica.tip_ugovora == this.selektovaniTipoviKartica[i]) {
+                    if(elementKartica.tip_ugovora == this.selektovaniTipoviUgovoraKartica[i]) {
                         labela = elementKartica.opis_tipa_ugovora;
 
                         let datumUgovora = new Date(elementKartica.datum_ugovora);
@@ -599,41 +561,6 @@ export class ReportComponent implements OnInit {
 
         this.karticaBrojChartData = clone;
     }
-
-    generisanjeTipovaKarticanaGrafa() {
-        //TODO
-        /*let clone = JSON.parse(JSON.stringify(this.karticaKolicinaChartData));
-
-        for(let i = 0; i < this.selektovaniTipoviKartica.length; i++) {
-            // računanje iznosa potpisanih ugovora po periodu
-            let data = [];
-            let labela = '';
-
-            this.periodKarticaGrafa.forEach(element => {
-                let broj = 0.00;
-
-                this.karticeResult.forEach(elementKartica => {
-                    if(elementKartica.tip_ugovora == this.selektovaniTipoviKartica[i]) {
-                        labela = elementKartica.opis_tipa_ugovora;
-
-                        let datumUgovora = new Date(elementKartica.datum_ugovora);
-                        
-                        if(datumUgovora.getMonth() + 1 == element.mjesec && datumUgovora.getFullYear() == element.godina) {
-                            broj += Number(elementKartica.stanje_racuna);
-                        }
-                    }
-                });
-
-                data.push(broj.toFixed(2));
-            });
-
-            clone[i].data = data;
-            clone[i].label = labela;
-        }
-
-        this.karticaKolicinaChartData = clone;*/
-    }
-    //
     
     pokreniSwal(title, text, type, confirmButtonText) {
         swal({

@@ -50,19 +50,41 @@ module.exports.vratiKarticeKlijenta = function(klijent_id, callback) {
     Kartica.find(query, callback);
 }
 
-module.exports.vratiSveTipove = function(callback) {
+module.exports.tipoviUgovora = function(callback) {
     Kartica.aggregate(
-        { $group: { _id: { tip_ugovora: "$tip_ugovora", opis_tipa_ugovora: "$opis_tipa_ugovora", opis: "$opis" }}},
+        { $group: { _id: { tip_ugovora: "$tip_ugovora", opis_tipa_ugovora: "$opis_tipa_ugovora", opis: "$opis" } } },
         callback
     );
 }
 
-module.exports.vratiKarticeReport = function(pretraga, callback) {
+module.exports.tipoviKartica = function(callback) {
+    Kartica.aggregate(
+        { $group: { _id: { tip_kartice: "$tip_kartice" } } },
+        callback
+    );
+}
+
+module.exports.vrsteKartica = function(callback) {
+    Kartica.aggregate(
+        { $group: { _id: { vrsta_kartice: "$vrsta_kartice" } } },
+        callback
+    );
+}
+
+module.exports.pretragaReport = function(pretraga, callback) {
     let datumi = {}
 
     const query = {
         tip_ugovora: pretraga.tip_ugovora
     };
+
+    if(pretraga.tip_kartice) {
+        query.tip_kartice = pretraga.tip_kartice;
+    }
+
+    if(pretraga.vrsta_kartice) {
+        query.vrsta_kartice = pretraga.vrsta_kartice;
+    }
 
     if(pretraga.datum_od != '' && pretraga.datum_od != undefined) {
         datumi.$gte = new Date(pretraga.datum_od);

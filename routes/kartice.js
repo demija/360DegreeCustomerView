@@ -28,9 +28,55 @@ router.post('/vratipodatke', (req, res, next) => {
     });
 });
 
+// Vraćanje svih tipova ugovora
+router.get('/tipoviugovora', (req, res, next) => {
+    Kartica.tipoviUgovora((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Ne postoje podaci',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
 // Vraćanje svih tipova kartica
-router.get('/vratisvetipove', (req, res, next) => {
-    Kartica.vratiSveTipove((err, data) => {
+router.get('/tipovikartica', (req, res, next) => {
+    Kartica.tipoviKartica((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Ne postoje podaci',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
+// Vraćanje svih vrsta kartica
+router.get('/vrstekartica', (req, res, next) => {
+    Kartica.vrsteKartica((err, data) => {
         if(err) {
             throw err;
         } else {
@@ -52,14 +98,16 @@ router.get('/vratisvetipove', (req, res, next) => {
 });
 
 // Vraćanje kartica (pretraga)
-router.post('/vratikartice', (req, res, next) => {
+router.post('/pretragareport', (req, res, next) => {
     let pretraga = {
-        tip_ugovora: req.body.tip_kartice,
+        tip_ugovora: req.body.tip_ugovora,
+        tip_kartice: req.body.tip_kartice,
+        vrsta_kartice: req.body.vrsta_kartice,
         datum_od: req.body.datum_od,
         datum_do: req.body.datum_do
     };
 
-    Kartica.vratiKarticeReport(pretraga, (err, data) => {
+    Kartica.pretragaReport(pretraga, (err, data) => {
         if(err) {
             throw err;
         } else {
