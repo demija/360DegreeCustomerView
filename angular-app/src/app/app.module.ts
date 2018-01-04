@@ -15,6 +15,7 @@ import { NavhomeService } from './services/navhome.service';
 import { PonudeService } from './services/ponude.service';
 import { DepozitService } from './services/depozit.service';
 import { KarticaService } from './services/kartica.service';
+import { KreditService } from './services/kredit.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
         PonudeService,
         DepozitService,
         KarticaService,
+        KreditService,
         AuthGuard
     ],
     bootstrap: [AppComponent]

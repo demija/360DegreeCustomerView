@@ -1,5 +1,5 @@
 .container {
-    margin-top: 90px;
+    margin-top: 75px;
     margin-left: 2px;
     margin-bottom: 20px;
     width: 65% !important;
@@ -11,7 +11,7 @@
 
 .uslugeKartica {
     position: fixed;
-    top: 113px;
+    top: 98px;
     right: 10px;
     width: 20% !important;
 }

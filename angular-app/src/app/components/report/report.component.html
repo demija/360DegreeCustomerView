@@ -88,7 +88,7 @@
                                 <canvas baseChart id="brojDepozitaGraph"
                                     [datasets]="depozitBrojChartData"
                                     [labels]="depozitBrojChartLabels"
-                                    [options]="depozitBrojChartOptions"
+                                    [options]="lineBrojChartOptions"
                                     [legend]="depozitBrojChartLegend"
                                     [chartType]="depozitBrojChartType">
                                 </canvas>
@@ -99,7 +99,7 @@
                                 <canvas baseChart id="kolicinaDepozitaGraph"
                                     [datasets]="depozitKolicinaChartData"
                                     [labels]="depozitKolicinaChartLabels"
-                                    [options]="depozitKolicinaChartOptions"
+                                    [options]="lineKolicinaChartOptions"
                                     [legend]="depozitKolicinaChartLegend"
                                     [chartType]="depozitKolicinaChartType">
                                 </canvas>
@@ -213,7 +213,7 @@
                                 </table>
                                 <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
                             </div>
-                        </div>      
+                        </div>
                     </div>
                     <hr>
                     <div class="row justify-content-md-center">
@@ -222,7 +222,7 @@
                                 <canvas baseChart id="brojKarticaGraph"
                                     [datasets]="karticaBrojChartData"
                                     [labels]="karticaBrojChartLabels"
-                                    [options]="karticaBrojChartOptions"
+                                    [options]="lineBrojChartOptions"
                                     [legend]="karticaBrojChartLegend"
                                     [chartType]="karticaBrojChartType">
                                 </canvas>
@@ -233,7 +233,114 @@
             </div>
         
             <div class="tab-pane fade" id="nav-krediti" role="tabpanel" aria-labelledby="nav-krediti-tab">
-                Pregled kredita
+                <div class="container">
+                    <hr>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="code" class="text-muted">Datum ugovora od:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumOdKredit" name="datum_od_kredita" id="datum_od_kredita">
+                            </div>
+                            <div class="form-group">
+                                <label for="code" class="text-muted">Datum ugovora do:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumDoKredit" name="datum_od_kredita" id="datum_od_kredita">
+                            </div>
+                            <div class="form-group">
+                                <label for="code" class="text-muted">Tip ugovora:</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" id="tipKreditaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraKredita()" [(ngModel)]="selectedSviUgovoriKredita" >
+                                    <label class="custom-control-label" for="tipKreditaCheck">Svi tipovi</label>
+                                </div>
+                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraKredita">
+                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraKredita()" type="checkbox">
+                                    <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKredite()">Traži</button>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <h4 class="card-title">Krediti</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="card-subtitle mb-2 text-muted">Klijent</th>
+                                            <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
+                                            <th class="card-subtitle mb-2 text-muted">Odobreni iznos</th>
+                                            <th class="card-subtitle mb-2 text-muted">Glavnica</th>
+                                            <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let k of kreditiResult; let myIndex = index">
+                                        <tr>
+                                            <th>{{ myIndex + 1 }}</th>
+                                            <td>{{ k.klijent }}</td>
+                                            <td>
+                                                <p class="text-primary">{{ k.opis_tipa_ugovora }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Tip ugovora: {{ k.tip_ugovora }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ k.partija }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-primary">{{ k.odobreni_iznos | number:'.2' }} BAM</p>
+                                                <p class="card-subtitle mb-2 text-muted">Stopa: {{ k.stopa }} %</p>
+                                                <p class="card-subtitle mb-2 text-muted">Anuitet: {{ k.iznos_anuitet | number:'.2' }} BAM</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-primary">{{ k.dospjela_glavnica | number:'.2' }} BAM</p>
+                                                <p class="card-subtitle mb-2 text-muted">Nedospjela: {{ k.nedospjela_glavnica | number:'.2' }} BAM</p>
+                                                <p class="card-subtitle mb-2 text-muted">Ostatak: {{ k.glavnica_ostatak | number:'.2' }} BAM</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-primary">{{ k.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                <p class="text-primary">{{ k.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="display: block">
+                                <canvas baseChart id="brojKreditaGraph"
+                                    [datasets]="kreditBrojChartData"
+                                    [labels]="kreditBrojChartLabels"
+                                    [options]="lineBrojChartOptions"
+                                    [legend]="kreditBrojChartLegend"
+                                    [chartType]="kreditBrojChartType">
+                                </canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: block">
+                                <canvas baseChart id="kolicinaKreditaGraph"
+                                    [datasets]="kreditKolicinaChartData"
+                                    [labels]="kreditKolicinaChartLabels"
+                                    [options]="lineKolicinaChartOptions"
+                                    [legend]="kreditKolicinaChartLegend"
+                                    [chartType]="kreditKolicinaChartType">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-8">
+                            <div style="display: block">
+                                <canvas baseChart id="kreditiGraph"
+                                    [data]="kreditDoughnutChartData"
+                                    [labels]="kreditDoughnutChartLabels"
+                                    [options]="kreditDoughnutChartOptions"
+                                    [chartType]="kreditDoughnutChartType"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">

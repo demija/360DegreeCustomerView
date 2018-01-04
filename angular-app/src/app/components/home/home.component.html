@@ -571,26 +571,23 @@
             <div class="card border-success mb-3">
                 <h3 class="card-header">Preporučene usluge</h3>
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Ponuđeno</h6>
-                    <h6 class="card-subtitle mb-2 text-muted text-right">Ugovoreno</h6>
+                    <p><span class="text-muted">Ponuđeno</span><span class="text-muted float-right">Ugovoreno</span></p>
                     <div class="cardPonudaBody">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-sm">
                             <tbody *ngFor="let ponuda of ponude" class="scrollable" style="overflow-y:scroll;">
                                 <tr>
                                     <td>
-                                        <label class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox">
-                                            <span class="custom-control-indicator"></span>
-                                            <span class="custom-control-description"></span>
-                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="ponudjeno_{{ponuda._id}}" [(ngModel)]="ponuda.ponudjeno" (change)="selektujPonudu()" type="checkbox">
+                                            <label class="custom-control-label" for="ponudjeno_{{ponuda._id}}"></label>
+                                        </div>
                                     </td>
                                     <td class="text-center">{{ponuda.naziv_ponude}}</td>
                                     <td>
-                                        <label class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" type="checkbox">
-                                            <span class="custom-control-indicator"></span>
-                                            <span class="custom-control-description"></span>
-                                        </label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="ugovoreno_{{ponuda._id}}" [(ngModel)]="ponuda.ugovoreno" (change)="selektujPonudu()" type="checkbox">
+                                            <label class="custom-control-label" for="ugovoreno_{{ponuda._id}}"></label>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>

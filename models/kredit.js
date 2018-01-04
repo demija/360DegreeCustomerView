@@ -21,7 +21,7 @@ const kreditSchema = mongoose.Schema({
     },
 
     datum_ugovora: {
-        type: String
+        type: Date
     },
 
     datum_kraja_vazenja_ugovora: {
@@ -64,4 +64,33 @@ module.exports.vratiKrediteKlijenta = function(klijent_id, callback) {
     };
     
     Kredit.find(query, callback);
+}
+
+module.exports.tipoviUgovora = function(callback) {
+    Kredit.aggregate(
+        { $group: { _id: { tip_ugovora: "$tip_ugovora", opis_tipa_ugovora: "$opis_tipa_ugovora" } } },
+        callback
+    );
+}
+
+module.exports.pretragaReport = function(pretraga, callback) {
+    let datumi = {}
+
+    const query = {
+        tip_ugovora: pretraga.tip_ugovora
+    };
+
+    if(pretraga.datum_od != '' && pretraga.datum_od != undefined) {
+        datumi.$gte = new Date(pretraga.datum_od);
+    }
+
+    if(pretraga.datum_do != '' && pretraga.datum_do != undefined) {
+        datumi.$lt = new Date(pretraga.datum_do);
+    }
+
+    if(Object.keys(datumi).length !== 0) {
+        query.datum_ugovora = datumi;
+    }
+    
+    Kredit.find(query, callback).sort('datum_ugovora');
 }
