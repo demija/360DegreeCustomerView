@@ -3,8 +3,8 @@
     <h3 class="card-header">Pregled poslovanja</h3>
     <div class="card-body">
         <nav class="nav nav-pills" id="myTab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true">
-                Depoziti
+            <a class="nav-item nav-link active" id="nav-racuni-tab" data-toggle="tab" href="#nav-racuni" role="tab" aria-controls="nav-racuni" aria-selected="false">
+                Računi
             </a>
             <a class="nav-item nav-link" id="nav-kartice-tab" data-toggle="tab" href="#nav-kartice" role="tab" aria-controls="nav-kartice" aria-selected="false">
                 Kartice
@@ -12,41 +12,41 @@
             <a class="nav-item nav-link" id="nav-krediti-tab" data-toggle="tab" href="#nav-krediti" role="tab" aria-controls="nav-krediti" aria-selected="false">
                 Krediti
             </a>
-            <a class="nav-item nav-link" id="nav-racuni-tab" data-toggle="tab" href="#nav-racuni" role="tab" aria-controls="nav-racuni" aria-selected="false">
-                Računi
+            <a class="nav-item nav-link" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true">
+                Depoziti
             </a>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
+            <div class="tab-pane fade show active" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">
                 <div class="container">
                     <hr>
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
                                 <label for="code" class="text-muted">Datum ugovora od:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumOdDepozit" name="datum_od_depoziti" id="datum_od_depoziti">
+                                <input type="date" class="form-control" [(ngModel)]="datumOdRacun" name="datum_od_racuni" id="datum_od_racuni">
                             </div>
                             <div class="form-group">
                                 <label for="code" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoDepozit" name="datum_od_depoziti" id="datum_od_depoziti">
+                                <input type="date" class="form-control" [(ngModel)]="datumDoRacun" name="datum_od_racuni" id="datum_od_racuni">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Vrsta depozita:</label>
+                                <label for="code" class="text-muted">Tip ugovora:</label>
                                 <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="vrstaDepozitaCheck" type="checkbox" (change)="selektujSveTipoveDepozita()" [(ngModel)]="selectedAllDepozit">
-                                    <label class="custom-control-label" for="vrstaDepozitaCheck">Sve vrste</label>
+                                    <input class="custom-control-input" id="tipRacunaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraRacuna()" [(ngModel)]="selectedSviUgovoriRacuna" >
+                                    <label class="custom-control-label" for="tipRacunaCheck">Svi tipovi</label>
                                 </div>
-                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviDepozita">
-                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipDepozita()" type="checkbox">
+                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraRacuna">
+                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraRacuna()" type="checkbox">
                                     <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziDepozite()">Traži</button>
+                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziRacune()">Traži</button>
                             </div>
                         </div>
                         <div class="col-10">
-                            <h4 class="card-title">Depoziti</h4>
+                            <h4 class="card-title">Računi</h4>
                             <div class="table-responsive">
                                 <table class="table table-hover table-sm">
                                     <thead>
@@ -54,54 +54,61 @@
                                             <th></th>
                                             <th class="card-subtitle mb-2 text-muted">Klijent</th>
                                             <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                            <th class="card-subtitle mb-2 text-muted">Ugovoreni iznos</th>
-                                            <th class="card-subtitle mb-2 text-muted">Period ugovora</th>
+                                            <th class="card-subtitle mb-2 text-muted">Datum ugovora</th>
+                                            <th class="card-subtitle mb-2 text-muted">Stanje</th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngFor="let d of depozitiResult; let myIndex = index">
+                                    <tbody *ngFor="let r of racuniResult; let myIndex = index">
                                         <tr>
                                             <th>{{ myIndex + 1 }}</th>
-                                            <td>{{ d.klijent }}</td>
                                             <td>
-                                                <p class="text-primary">{{ d.opis_tipa_ugovora }} ({{ d.tip_ugovora }})</p>
-                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ d.partija }}</p>
+                                                <p class="text-primary">{{ r.klijent.ime }} {{ r.klijent.prezime }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">{{ r.klijent.maticni_broj }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-primary">{{ d.stanje_racuna | number:'.2' }} BAM</p>
-                                                <p class="text-primary">{{ d.stopa }} %</p>
+                                                <p class="text-primary">{{ r.ugovor.opis_tipa_ugovora }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ r.ugovor.partija }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                                <p class="text-primary">{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                <p class="text-primary">{{ r.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                <p class="text-primary">{{ r.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                            </td>
+                                            <td>
+                                                <div *ngIf="r.stanje_racuna < 0">
+                                                    <p class="text-danger">{{ r.stanje_racuna | number:'.2' }} BAM</p>
+                                                </div>
+                                                <div *ngIf="r.stanje_racuna >= 0">
+                                                    <p class="text-success">{{ r.stanje_racuna | number:'.2' }} BAM</p>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
                             </div>
-                        </div>      
+                        </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
                             <div style="display: block">
-                                <canvas baseChart id="brojDepozitaGraph"
-                                    [datasets]="depozitBrojChartData"
-                                    [labels]="depozitBrojChartLabels"
+                                <canvas baseChart id="brojRacunaGraph"
+                                    [datasets]="racunBrojChartData"
+                                    [labels]="racunBrojChartLabels"
                                     [options]="lineBrojChartOptions"
-                                    [legend]="depozitBrojChartLegend"
-                                    [chartType]="depozitBrojChartType">
+                                    [legend]="racunBrojChartLegend"
+                                    [chartType]="racunBrojChartType">
                                 </canvas>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div style="display: block">
-                                <canvas baseChart id="kolicinaDepozitaGraph"
-                                    [datasets]="depozitKolicinaChartData"
-                                    [labels]="depozitKolicinaChartLabels"
+                                <canvas baseChart id="kolicinaRacunaGraph"
+                                    [datasets]="racunKolicinaChartData"
+                                    [labels]="racunKolicinaChartLabels"
                                     [options]="lineKolicinaChartOptions"
-                                    [legend]="depozitKolicinaChartLegend"
-                                    [chartType]="depozitKolicinaChartType">
+                                    [legend]="racunKolicinaChartLegend"
+                                    [chartType]="racunKolicinaChartType">
                                 </canvas>
                             </div>
                         </div>
@@ -109,11 +116,12 @@
                     <div class="row justify-content-md-center">
                         <div class="col-md-8">
                             <div style="display: block">
-                                <canvas baseChart id="depozitiGraph"
-                                    [data]="doughnutChartData"
-                                    [labels]="doughnutChartLabels"
-                                    [options]="doughnutChartOptions"
-                                    [chartType]="doughnutChartType"></canvas>
+                                <canvas baseChart id="racuniGraph"
+                                    [data]="racunDoughnutChartData"
+                                    [labels]="racunDoughnutChartLabels"
+                                    [options]="racunDoughnutChartOptions"
+                                    [chartType]="racunDoughnutChartType">
+                                </canvas>
                             </div>
                         </div>
                     </div>
@@ -140,8 +148,8 @@
                                     <label class="custom-control-label" for="tipUgovoraCheck">Svi tipovi</label>
                                 </div>
                                 <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraKartica">
-                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraKartice()" type="checkbox">
-                                    <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
+                                    <input class="custom-control-input" id="{{o.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraKartice()" type="checkbox">
+                                    <label class="custom-control-label" for="{{o.opis_tipa_ugovora}}">{{o.opis_tipa_ugovora}}</label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -151,8 +159,8 @@
                                     <label class="custom-control-label" for="tip_kartice_svi">Svi tipovi</label>
                                 </div>
                                 <div class="custom-control custom-radio" *ngFor="let o of tipoviKartica">
-                                    <input id="tip_kartice_{{o._id.tip_kartice}}" [value]='o._id.tip_kartice' [(ngModel)]="tipKarticeRadio" name="tipKarticeRdb" class="custom-control-input" type="radio">
-                                    <label class="custom-control-label" for="tip_kartice_{{o._id.tip_kartice}}">{{o._id.tip_kartice}}</label>
+                                    <input id="tip_kartice_{{o}}" [value]='o' [(ngModel)]="tipKarticeRadio" name="tipKarticeRdb" class="custom-control-input" type="radio">
+                                    <label class="custom-control-label" for="tip_kartice_{{o}}">{{o}}</label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -162,8 +170,8 @@
                                     <label class="custom-control-label" for="vrsta_kartice_sve">Sve vrste</label>
                                 </div>
                                 <div class="custom-control custom-radio" *ngFor="let o of vrsteKartica">
-                                    <input id="vrsta_kartice_{{o._id.vrsta_kartice}}" [value]='o._id.vrsta_kartice' [(ngModel)]="vrstaKarticeRadio" name="vrstaKarticeRdb" class="custom-control-input" type="radio">
-                                    <label class="custom-control-label" for="vrsta_kartice_{{o._id.vrsta_kartice}}">{{o._id.vrsta_kartice}}</label>
+                                    <input id="vrsta_kartice_{{o}}" [value]='o' [(ngModel)]="vrstaKarticeRadio" name="vrstaKarticeRdb" class="custom-control-input" type="radio">
+                                    <label class="custom-control-label" for="vrsta_kartice_{{o}}">{{o}}</label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -181,31 +189,35 @@
                                             <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
                                             <th class="card-subtitle mb-2 text-muted">Vrsta/tip kartice</th>
                                             <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
-                                            <th class="card-subtitle mb-2 text-muted">Stanje</th>
+                                            <th class="card-subtitle mb-2 text-muted">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngFor="let d of karticeResult; let myIndex = index">
+                                    <tbody *ngFor="let k of karticeResult; let myIndex = index">
                                         <tr>
                                             <th>{{ myIndex + 1 }}</th>
-                                            <td>{{ d.klijent }}</td>
                                             <td>
-                                                <p class="text-primary">{{ d.opis_tipa_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">{{ d.tip_ugovora }} - {{ d.opis }}</p>
+                                                <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">{{ k.klijent.maticni_broj }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-primary">{{ d.vrsta_kartice }}</p>
-                                                <p class="text-primary">{{ d.tip_kartice }}</p>
+                                                <p class="text-primary">{{ k.kartica.ugovor.opis_tipa_ugovora }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">{{ k.ugovor.opis_tipa_ugovora }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">{{ k.ugovor.partija }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                                <p class="text-primary">{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                <p class="text-primary">{{ k.kartica.vrsta_kartice }}</p>
+                                                <p class="text-primary">{{ k.kartica.tip_kartice }}</p>
                                             </td>
                                             <td>
-                                                <div *ngIf="d.stanje < 0">
-                                                    <p class="text-danger">{{ d.stanje | number:'.2' }} BAM</p>
+                                                <p class="text-primary">{{ k.kartica.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                <p class="text-primary">{{ k.kartica.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                            </td>
+                                            <td>
+                                                <div *ngIf="k.kartica.aktivna_kartica">
+                                                    <p class="text-success">Aktivna kartica</p>
                                                 </div>
-                                                <div *ngIf="d.stanje >= 0">
-                                                    <p class="text-success">{{ d.stanje | number:'.2' }} BAM</p>
+                                                <div *ngIf="!k.kartica.aktivna_kartica">
+                                                    <p class="text-danger">Neaktivna kartica</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -231,7 +243,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="tab-pane fade" id="nav-krediti" role="tabpanel" aria-labelledby="nav-krediti-tab">
                 <div class="container">
                     <hr>
@@ -277,11 +289,13 @@
                                     <tbody *ngFor="let k of kreditiResult; let myIndex = index">
                                         <tr>
                                             <th>{{ myIndex + 1 }}</th>
-                                            <td>{{ k.klijent }}</td>
                                             <td>
-                                                <p class="text-primary">{{ k.opis_tipa_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Tip ugovora: {{ k.tip_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ k.partija }}</p>
+                                                <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">{{ k.klijent.maticni_broj }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-primary">{{ k.ugovor.opis_tipa_ugovora }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ k.ugovor.partija }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-primary">{{ k.odobreni_iznos | number:'.2' }} BAM</p>
@@ -343,8 +357,111 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">
-                Pregled računa
+            <div class="tab-pane fade show" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
+                <div class="container">
+                    <hr>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="code" class="text-muted">Datum ugovora od:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumOdDepozit" name="datum_od_depoziti" id="datum_od_depoziti">
+                            </div>
+                            <div class="form-group">
+                                <label for="code" class="text-muted">Datum ugovora do:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumDoDepozit" name="datum_od_depoziti" id="datum_od_depoziti">
+                            </div>
+                            <div class="form-group">
+                                <label for="code" class="text-muted">Vrsta depozita:</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" id="vrstaDepozitaCheck" type="checkbox" (change)="selektujSveTipoveDepozita()" [(ngModel)]="selectedAllDepozit">
+                                    <label class="custom-control-label" for="vrstaDepozitaCheck">Sve vrste</label>
+                                </div>
+                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviDepozita">
+                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipDepozita()" type="checkbox">
+                                    <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziDepozite()">Traži</button>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <h4 class="card-title">Depoziti</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="card-subtitle mb-2 text-muted">Klijent</th>
+                                            <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
+                                            <th class="card-subtitle mb-2 text-muted">Ugovoreni iznos</th>
+                                            <th class="card-subtitle mb-2 text-muted">Period ugovora</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let d of depozitiResult; let myIndex = index">
+                                        <tr>
+                                            <th>{{ myIndex + 1 }}</th>
+                                            <td>
+                                                <p class="text-primary">{{ d.klijent.ime }} {{ d.klijent.prezime }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">{{ d.klijent.maticni_broj }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-primary">{{ d.ugovor.opis_tipa_ugovora }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ d.ugovor.partija }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-primary">{{ d.stanje_racuna | number:'.2' }} BAM</p>
+                                                <p class="card-subtitle mb-2 text-muted">Stopa: {{ d.stopa }} %</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                <p class="text-primary">{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
+                            </div>
+                        </div>      
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="display: block">
+                                <canvas baseChart id="brojDepozitaGraph"
+                                    [datasets]="depozitBrojChartData"
+                                    [labels]="depozitBrojChartLabels"
+                                    [options]="lineBrojChartOptions"
+                                    [legend]="depozitBrojChartLegend"
+                                    [chartType]="depozitBrojChartType">
+                                </canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: block">
+                                <canvas baseChart id="kolicinaDepozitaGraph"
+                                    [datasets]="depozitKolicinaChartData"
+                                    [labels]="depozitKolicinaChartLabels"
+                                    [options]="lineKolicinaChartOptions"
+                                    [legend]="depozitKolicinaChartLegend"
+                                    [chartType]="depozitKolicinaChartType">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-8">
+                            <div style="display: block">
+                                <canvas baseChart id="depozitiGraph"
+                                    [data]="doughnutChartData"
+                                    [labels]="doughnutChartLabels"
+                                    [options]="doughnutChartOptions"
+                                    [chartType]="doughnutChartType">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

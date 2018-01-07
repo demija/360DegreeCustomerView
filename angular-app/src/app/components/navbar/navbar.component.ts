@@ -39,6 +39,9 @@ export class NavbarComponent implements OnInit {
         const pretraga = {
             maticni_broj: this.maticni_broj_search,
             id_prijavljenog_korisnika: this.prijavljeni_korisnik['_id'],
+            id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
+            ime: this.prijavljeni_korisnik['ime'],
+            prezime: this.prijavljeni_korisnik['prezime'],
             korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
         }
 

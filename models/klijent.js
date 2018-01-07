@@ -24,12 +24,12 @@ const klijentSchema = mongoose.Schema({
     },
 
     datum_izdavanja_lk: {
-        type: String,
+        type: Date,
         required: true
     },
 
     datum_vazenja_lk: {
-        type: String,
+        type: Date,
         required: true
     },
 
@@ -74,7 +74,7 @@ const klijentSchema = mongoose.Schema({
     },
 
     datum_rejtinga: {
-        type: String
+        type: Date
     },
 
     segment_klijenta: {
@@ -89,7 +89,7 @@ const klijentSchema = mongoose.Schema({
         type: Date
     },
 
-    datum_unosa: {
+    datum_evidentiranja: {
         type: Date
     }
 });

@@ -8,49 +8,41 @@ const kreditSchema = mongoose.Schema({
         type: Object
     },
 
-    opis_tipa_ugovora: {
-        type: String
-    },
-
-    tip_ugovora: {
-        type: String
-    },
-
-    partija: {
-        type: String
-    },
-
     datum_ugovora: {
         type: Date
     },
 
-    datum_kraja_vazenja_ugovora: {
-        type: String
-    },
-
     odobreni_iznos: {
-        type: String
+        type: Number
     },
 
     stopa: {
-        type: String
+        type: Number
     },
 
     iznos_anuitet: {
-        type: String
+        type: Number
     },
 
     dospjela_glavnica: {
-        type: String
+        type: Number
     },
 
     nedospjela_glavnica: {
-        type: String
+        type: Number
     },
 
     glavnica_ostatak: {
-        type: String
-    }
+        type: Number
+    },
+
+    datum_vazenja: {
+        type: Date
+    },
+
+    ugovor: {
+        type: Object
+    }    
 });
 
 kreditSchema.set('collection', 'krediti');
@@ -60,7 +52,7 @@ const Kredit = module.exports = mongoose.model('Kredit', kreditSchema);
 module.exports.vratiKrediteKlijenta = function(klijent_id, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
-        klijent: new ObjectId(klijent_id)
+        'klijent._id': new ObjectId(klijent_id)
     };
     
     Kredit.find(query, callback);
@@ -68,7 +60,7 @@ module.exports.vratiKrediteKlijenta = function(klijent_id, callback) {
 
 module.exports.tipoviUgovora = function(callback) {
     Kredit.aggregate(
-        { $group: { _id: { tip_ugovora: "$tip_ugovora", opis_tipa_ugovora: "$opis_tipa_ugovora" } } },
+        { $group: { _id: { tip_ugovora: "$ugovor.tip_ugovora", opis_tipa_ugovora: "$ugovor.opis_tipa_ugovora" } } },
         callback
     );
 }
@@ -77,7 +69,7 @@ module.exports.pretragaReport = function(pretraga, callback) {
     let datumi = {}
 
     const query = {
-        tip_ugovora: pretraga.tip_ugovora
+        'ugovor.tip_ugovora': { $in: pretraga.tip_ugovora }
     };
 
     if(pretraga.datum_od != '' && pretraga.datum_od != undefined) {

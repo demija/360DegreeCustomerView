@@ -8,24 +8,8 @@ const userSchema = mongoose.Schema({
         type: Object
     },
 
-    opis_tipa_ugovora: {
-        type: String
-    },
-
-    tip_ugovora: {
-        type: String
-    },
-
-    partija: {
-        type: String
-    },
-
-    datum_otvaranja: {
-        type: String
-    },
-
-    kraj_vazenja: {
-        type: String
+    ugovor: {
+        type: Object
     },
 
     stopa: {
@@ -33,7 +17,19 @@ const userSchema = mongoose.Schema({
     },
 
     stanje_racuna: {
-        type: String
+        type: Number
+    },
+
+    datum_ugovora: {
+        type: Date
+    },
+
+    datum_vazenja: {
+        type: Date
+    },
+
+    aktivan_racun: {
+        type: Boolean
     }
 });
 
@@ -44,7 +40,7 @@ const Depozit = module.exports = mongoose.model('Depozit', userSchema);
 module.exports.getDataById = function(id, callback) {
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
-        klijent: new ObjectId(id)
+        'klijent._id': new ObjectId(id)
     };
     
     Depozit.find(query, callback);
@@ -52,7 +48,7 @@ module.exports.getDataById = function(id, callback) {
 
 module.exports.getAllTypes = function(callback) {
     Depozit.aggregate(
-        { $group: { _id: { tip_ugovora: "$tip_ugovora", opis_tipa_ugovora: "$opis_tipa_ugovora" }}},
+        { $group: { _id: { tip_ugovora: "$ugovor.tip_ugovora", opis_tipa_ugovora: "$ugovor.opis_tipa_ugovora" }}},
         callback
     );
 }
@@ -61,7 +57,7 @@ module.exports.getDepozitReport = function(pretraga, callback) {
     let datumi = {}
 
     const query = {
-        tip_ugovora: pretraga.tip_ugovora
+        'ugovor.tip_ugovora': { $in: pretraga.tip_ugovora }
     };
 
     if(pretraga.datum_od != '' && pretraga.datum_od != undefined) {

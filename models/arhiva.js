@@ -28,7 +28,7 @@ const arhivSchema = mongoose.Schema({
     },
 
     uspjesan_login: {
-        type: String
+        type: Boolean
     },
 
     poruka: {

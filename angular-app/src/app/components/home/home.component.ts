@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
     klijent: Object;
     racuni: Object;
     depoziti: Object;
-    kartice: Object;
+    kartice: Array<Object> = [];
     krediti: Object;
     ponude: Object;
     time_line: Object;
@@ -56,7 +56,17 @@ export class HomeComponent implements OnInit {
         });
 
         this.navhomeService.currentKartica.subscribe(kartice => {
-            this.kartice = kartice;
+            let karticeTmp = [];
+            if(kartice['data']) {
+                kartice['data'].forEach(elementKrt => {
+                    elementKrt.kartica.forEach(element => {
+                        element.racunUgovor = elementKrt.ugovor;
+                        karticeTmp.push(element);
+                    });
+                });
+            }
+
+            this.kartice = karticeTmp;
         });
 
         this.navhomeService.currentKredit.subscribe(krediti => {

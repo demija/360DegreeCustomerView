@@ -388,19 +388,22 @@
                             <div class="row" >
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Račun</p>
-                                    <p class="text-primary">{{ rcn.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ rcn.ugovor.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ rcn.ugovor.tip_ugovora }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Partija</p>
-                                    <p class="text-primary">{{ rcn.partija }}</p>
+                                    <p class="text-primary">{{ rcn.ugovor.partija }}</p>
+                                    <p class="text-primary">{{ rcn.konto }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
                                     <p class="text-primary">{{ rcn.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                    <p class="text-primary">{{ rcn.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Stanje na računu</p>
-                                    <p class="text-primary">{{ rcn.stanje_racuna_ekv | number:'.2' }} BAM</p>
+                                    <p class="text-primary">{{ rcn.stanje_racuna | number:'.2' }} BAM</p>
                                 </div>
                             </div>
                             <hr>
@@ -417,7 +420,9 @@
                             <div class="row" >
                                 <div class="col-4">
                                     <p class="card-subtitle mb-2 text-muted">Opis</p>
-                                    <p class="text-primary">{{ kredit.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ kredit.ugovor.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ kredit.ugovor.tip_ugovora }}</p>
+                                    <p class="text-primary">{{ kredit.ugovor.partija }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
@@ -433,9 +438,11 @@
                                 </div>
                                 <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Ostatak duga</p>
-                                    <p class="text-primary">ostatak</p>
+                                    <p class="text-primary">{{ kredit.nedospjela_glavnica | number:'.2' }} BAM</p>
                                     <p class="card-subtitle mb-2 text-muted">Anuitet</p>
-                                    <p class="text-primary">anuitet</p>
+                                    <p class="text-primary">{{ kredit.iznos_anuitet | number:'.2' }} BAM</p>
+                                    <p class="text-primary">{{ kredit.gospjela_glavnica | number:'.2' }} BAM</p>
+                                    <p class="text-primary">{{ kredit.glavnica_ostatak | number:'.2' }} BAM</p>
                                 </div>
                             </div>
                             <hr>
@@ -448,34 +455,29 @@
                 <div class="card">
                     <h3 class="card-header">Kartično poslovanje</h3>
                     <div class="card-body">
-                        <div *ngFor="let kartica of kartice.data">
+                        <div *ngFor="let kart of kartice">
                             <div class="row" >
-                                <div class="col-4">
-                                    <p class="card-subtitle mb-2 text-muted">Opis</p>
-                                    <p class="text-primary">{{ kartica.opis }}</p>
+                                <div class="col">
                                     <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora</p>
-                                    <p class="text-primary">{{ kartica.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ kart.ugovor.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ kart.ugovor.tip_ugovora }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col">
+                                    <p class="card-subtitle mb-2 text-muted">Račun</p>
+                                    <p class="text-primary">{{ kart.racunUgovor.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ kart.racunUgovor.partija }}</p>
+                                </div>
+                                <div class="col">
                                     <p class="card-subtitle mb-2 text-muted">Vrsta kartice</p>
-                                    <p class="text-primary">{{ kartica.vrsta_kartice }}</p>
+                                    <p class="text-primary">{{ kart.vrsta_kartice }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Tip kartice</p>
-                                    <p class="text-primary">{{ kartica.tip_kartice }}</p>
+                                    <p class="text-primary">{{ kart.tip_kartice }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
-                                    <p class="text-primary">{{ kartica.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                    <p class="text-primary">{{ kart.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
-                                    <p class="text-primary">{{ kartica.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                                </div>
-                                <div class="col-2">
-                                    <p class="card-subtitle mb-2 text-muted">Stanje</p>
-                                    <div *ngIf="kartica.stanje < 0">
-                                        <p class="text-danger">{{ kartica.stanje | number:'.2' }} BAM</p>
-                                    </div>
-                                    <div *ngIf="kartica.stanje >= 0">
-                                        <p class="text-primary">{{ kartica.stanje | number:'.2' }} BAM</p>
-                                    </div>
+                                    <p class="text-primary">{{ kart.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
                             </div>
                             <hr>
@@ -492,7 +494,9 @@
                             <div class="row" >
                                 <div class="col-6">
                                     <p class="card-subtitle mb-2 text-muted">Opis</p>
-                                    <p class="text-primary">{{ dpz.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ dpz.ugovor.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ dpz.ugovor.tip_ugovora }}</p>
+                                    <p class="text-primary">{{ dpz.ugovor.partija }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
@@ -539,15 +543,21 @@
                         <ul class="timeline" *ngFor="let timel of time_line; let even = even; let odd = odd">
                             <li [ngClass]="{true: 'timeline-inverted', false: ''}[even]">
                                 <div class="timeline-badge" [ngClass]="{kartica: 'info', depozit: 'warning', kredit: 'primary', racun: 'secondary'}[timel.type]"><i [ngClass]="{kartica: 'fa fa-credit-card', depozit: 'fa fa-line-chart', kredit: 'fa fa-file-text-o', racun: 'fa fa-handshake-o'}[timel.type]" aria-hidden="true"></i></div>
-                                
                                 <div class="timeline-panel">
                                     <div class="timeline-heading">
-                                        <h4 class="timeline-title">{{ timel.opis_tipa_ugovora }}</h4>
-                                        <p class="text-muted">{{ timel.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        {{ timel.opis }}
-                                        <p *ngIf="timel.odobreni_iznos">Odobren iznos: {{ timel.odobreni_iznos }} BAM</p>
+                                        <h4 class="timeline-title">{{ timel.ugovor.opis_tipa_ugovora }}</h4>
+                                        <div *ngIf="timel.type == 'kartica'">
+                                            <p class="text-muted">Partija: {{ timel.racunUgovor.partija }}</p>
+                                            <div *ngIf="!timel.aktivna_kartica">
+                                                <p class="text-danger">Neaktivna kartica</p>
+                                            </div>
+                                            <div *ngIf="timel.aktivna_kartica">
+                                                <p class="text-success">Aktivna kartica</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-muted" *ngIf="timel.type != 'kartica'">Partija: {{ timel.ugovor.partija }}</p>
+                                        <p class="text-muted">Datum ugovora: {{ timel.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                        <p class="text-muted" *ngIf="timel.datum_vazenja">Datum važenja: {{ timel.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                     </div>
                                 </div>
                             </li>

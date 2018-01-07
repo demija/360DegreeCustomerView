@@ -52,7 +52,10 @@ export class NavhomeService {
                     Observable.of(klijent_rezultat),
                     this.http.post('http://localhost:3000/racuni/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/depoziti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
-                    this.http.post('http://localhost:3000/kartice/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
+                    
+                    this.http.post('http://localhost:3000/racuni/vratikartice', klId, {headers: headers}).map((res: any) => res.json()),
+                    //this.http.post('http://localhost:3000/kartice/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
+                    
                     this.http.post('http://localhost:3000/krediti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/pretrage/unosPretrage', pretraga, {headers: headers}).map((res: any) => res.json())
                 )
@@ -107,9 +110,12 @@ export class NavhomeService {
             time_line.push(depoziti);
         }
 
-        for(let kartice of klijent.kartice.data) {
-            kartice.type = 'kartica';
-            time_line.push(kartice);
+        for(let element of klijent.kartice.data) {
+            for(let kartica of element.kartica) {
+                kartica.type = 'kartica';
+                kartica.racunUgovor = element.ugovor;
+                time_line.push(kartica);
+            }
         }
 
         for(let krediti of klijent.krediti.data) {
