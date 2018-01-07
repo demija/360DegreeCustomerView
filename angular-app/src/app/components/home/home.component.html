@@ -4,6 +4,7 @@
         <div class="sideBr">
             <app-sidebar></app-sidebar>
         </div>
+
         <div class="container" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
             <br>
             <div id="svakodnevno_bankarstvo">
@@ -412,6 +413,41 @@
                 </div>
             </div>
             <br>
+            <div id="karticno_poslovanje">
+                <div class="card">
+                    <h3 class="card-header">Kartično poslovanje</h3>
+                    <div class="card-body">
+                        <div *ngFor="let kart of kartice">
+                            <div class="row" >
+                                <div class="col">
+                                    <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora</p>
+                                    <p class="text-primary">{{ kart.ugovor.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ kart.ugovor.tip_ugovora }}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-subtitle mb-2 text-muted">Račun</p>
+                                    <p class="text-primary">{{ kart.racunUgovor.opis_tipa_ugovora }}</p>
+                                    <p class="text-primary">{{ kart.racunUgovor.partija }}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-subtitle mb-2 text-muted">Vrsta kartice</p>
+                                    <p class="text-primary">{{ kart.vrsta_kartice }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Tip kartice</p>
+                                    <p class="text-primary">{{ kart.tip_kartice }}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
+                                    <p class="text-primary">{{ kart.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
+                                    <p class="text-primary">{{ kart.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
             <div id="krediti">
                 <div class="card">
                     <h3 class="card-header">Krediti</h3>
@@ -443,41 +479,6 @@
                                     <p class="text-primary">{{ kredit.iznos_anuitet | number:'.2' }} BAM</p>
                                     <p class="text-primary">{{ kredit.gospjela_glavnica | number:'.2' }} BAM</p>
                                     <p class="text-primary">{{ kredit.glavnica_ostatak | number:'.2' }} BAM</p>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div id="karticno_poslovanje">
-                <div class="card">
-                    <h3 class="card-header">Kartično poslovanje</h3>
-                    <div class="card-body">
-                        <div *ngFor="let kart of kartice">
-                            <div class="row" >
-                                <div class="col">
-                                    <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora</p>
-                                    <p class="text-primary">{{ kart.ugovor.opis_tipa_ugovora }}</p>
-                                    <p class="text-primary">{{ kart.ugovor.tip_ugovora }}</p>
-                                </div>
-                                <div class="col">
-                                    <p class="card-subtitle mb-2 text-muted">Račun</p>
-                                    <p class="text-primary">{{ kart.racunUgovor.opis_tipa_ugovora }}</p>
-                                    <p class="text-primary">{{ kart.racunUgovor.partija }}</p>
-                                </div>
-                                <div class="col">
-                                    <p class="card-subtitle mb-2 text-muted">Vrsta kartice</p>
-                                    <p class="text-primary">{{ kart.vrsta_kartice }}</p>
-                                    <p class="card-subtitle mb-2 text-muted">Tip kartice</p>
-                                    <p class="text-primary">{{ kart.tip_kartice }}</p>
-                                </div>
-                                <div class="col">
-                                    <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
-                                    <p class="text-primary">{{ kart.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                    <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
-                                    <p class="text-primary">{{ kart.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
                             </div>
                             <hr>
@@ -577,33 +578,43 @@
                 </div>
             </div>
         </div>
-        <div class="uslugeKartica">
-            <div class="card border-success mb-3">
-                <h3 class="card-header">Preporučene usluge</h3>
-                <div class="card-body">
+
+        <div class="rightPanel">
+            <div class="card border-success" style="height: 50%;">
+                <div class="card-header">Preporučene usluge</div>
+                <div class="card-body" style="overflow-y: auto">
                     <p><span class="text-muted">Ponuđeno</span><span class="text-muted float-right">Ugovoreno</span></p>
-                    <div class="cardPonudaBody">
-                        <table class="table table-hover table-sm">
-                            <tbody *ngFor="let ponuda of ponude" class="scrollable" style="overflow-y:scroll;">
-                                <tr>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" id="ponudjeno_{{ponuda._id}}" [(ngModel)]="ponuda.ponudjeno" (change)="selektujPonudu()" type="checkbox">
-                                            <label class="custom-control-label" for="ponudjeno_{{ponuda._id}}"></label>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">{{ponuda.naziv_ponude}}</td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input class="custom-control-input" id="ugovoreno_{{ponuda._id}}" [(ngModel)]="ponuda.ugovoreno" (change)="selektujPonudu()" type="checkbox">
-                                            <label class="custom-control-label" for="ugovoreno_{{ponuda._id}}"></label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <br>
+                    <table class="table table-hover table-sm">
+                        <tbody *ngFor="let ponuda of ponude" class="scrollable" style="overflow-y:scroll;">
+                            <tr>
+                                <td class="col-1">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="ponudjeno_{{ponuda._id}}" [(ngModel)]="ponuda.ponudjeno" (change)="selektujPonudu()" type="checkbox">
+                                        <label class="custom-control-label" for="ponudjeno_{{ponuda._id}}"></label>
+                                    </div>
+                                </td>
+                                <td class="col-5 text-center">{{ponuda.naziv_ponude}}</td>
+                                <td class="col-1">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" id="ugovoreno_{{ponuda._id}}" [(ngModel)]="ponuda.ugovoreno" (change)="selektujPonudu()" type="checkbox">
+                                        <label class="custom-control-label" for="ugovoreno_{{ponuda._id}}"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding:10px;">
+                    <a href="#" class="card-link" (click)="onCardClick()">Sačuvaj</a>
+                </div>
+            </div>
+            <div class="card border-warning mb-3" style="height:30%; margin-top:15px;">
+                <div class="card-header">Bilješke</div>
+                <div class="card-body text-warning" style="overflow-y: auto">
+                    <h4 class="card-title">Warning card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div style="padding:10px;">
                     <a href="#" class="card-link" (click)="onCardClick()">Sačuvaj</a>
                 </div>
             </div>

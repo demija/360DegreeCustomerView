@@ -9,20 +9,15 @@
     width: 15% !important;
 }
 
-.uslugeKartica {
+.rightPanel {
+    height: 100%;
+    width: 20% !important;
     position: fixed;
     top: 98px;
     right: 10px;
-    width: 20% !important;
-}
-
-.cardPonudaBody {
-    height: 400px;
-    overflow-y: auto;
 }
 
 /**/
-
 .timeline {
     list-style: none;
     padding: 20px 0 20px;
