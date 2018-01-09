@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavhomeService } from '../../services/navhome.service';
+import { AuthService } from '../../services/auth.service';
+import { ValidateService } from '../../services/validate.service';
 import { PonudeService } from '../../services/ponude.service';
-import swal from 'sweetalert2';
+import { BiljeskaService } from '../../services/biljeska.service';
+//import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-home',
@@ -9,11 +12,14 @@ import swal from 'sweetalert2';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+    prijavljeni_korisnik: Object;
+
     klijent: Object;
     racuni: Object;
     depoziti: Object;
     kartice: Array<Object> = [];
     krediti: Object;
+    biljeske: Object;
     ponude: Object;
     time_line: Object;
 
@@ -39,10 +45,19 @@ export class HomeComponent implements OnInit {
     segment_klijentaNew: String;
     cb_klasifikacijaNew: String;
     emailNew: String;
+    biljeskaTxt: String = "";
+    biljeskaNaslov: String = "";
+    biljeskaPrikaz: String = "";
 
-    constructor(private navhomeService: NavhomeService, private ponudeService: PonudeService) { }
+    constructor(private authService: AuthService, private valdateService: ValidateService, private navhomeService: NavhomeService, private ponudeService: PonudeService, private biljeskaService: BiljeskaService) { }
 
     ngOnInit() {
+        this.authService.getProfile().subscribe(profile => {
+            this.prijavljeni_korisnik = profile.user;
+        }, err => {
+            return false;
+        });
+
         this.navhomeService.currentKlijent.subscribe(klijent => {
             this.klijent = klijent;
         });
@@ -73,6 +88,10 @@ export class HomeComponent implements OnInit {
             this.krediti = krediti;
         });
 
+        this.navhomeService.currentBiljeska.subscribe(bilj => {
+            this.biljeske = bilj;
+        });
+
         this.navhomeService.currentTimeline.subscribe(timeline => {
             if(Object.keys(timeline).length > 0) {
                 this.time_line = timeline;
@@ -91,19 +110,9 @@ export class HomeComponent implements OnInit {
         // Update korisnika
         this.navhomeService.updateClient(this.klijent).subscribe(data => {
             if(data.success) {
-                swal({
-                    type: 'success',
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                this.valdateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
             } else {
-                swal({
-                    title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
+                this.valdateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
             }
         });
     }
@@ -144,20 +153,9 @@ export class HomeComponent implements OnInit {
         // Dodavanje korisnika
         this.navhomeService.addClient(noviKlijent).subscribe(data => {
             if(data.success) {
-                swal({
-                    //position: 'top-right',
-                    type: 'success',
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                this.valdateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
             } else {
-                swal({
-                    title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
+                this.valdateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
             }
         });
     }
@@ -165,5 +163,45 @@ export class HomeComponent implements OnInit {
     //TODO
     onCardClick() {
         console.log('klik na karticu');
+    }
+
+    onBiljeskeSacuvajClick() {
+        let bilj = {
+            klijent: {
+                _id: this.klijent['_id']
+            },
+            kreirao: {
+                _id: this.prijavljeni_korisnik['_id'],
+                id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
+                ime: this.prijavljeni_korisnik['ime'],
+                prezime: this.prijavljeni_korisnik['prezime'],
+                korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime'],
+            },
+            poruka: this.biljeskaTxt.trim()
+        }
+
+        if(!this.klijent['_id']) {
+            this.valdateService.pokreniSwal('Greška!', 'Odaberi klijenta', 'warning', 'Uredu');
+        } else {
+            if(bilj.poruka) {
+                this.biljeskaService.dodaj(bilj).subscribe(data => {
+                    if(data.success) {
+                        this.valdateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
+                        this.biljeskaTxt = "";
+                    } else {
+                        this.valdateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
+                    }
+                });
+            } else {
+                this.valdateService.pokreniSwal('Greška!', 'Unesi poruku', 'warning', 'Uredu');
+            }
+        }
+    }
+
+    showBiljeska(biljeska) {
+        let datumBiljeske = new Date(biljeska.datum_kreiranja).getUTCDate() + "/" + new Date(biljeska.datum_kreiranja).getUTCMonth() + 1 + "/" + new Date(biljeska.datum_kreiranja).getUTCFullYear();
+
+        this.biljeskaNaslov = biljeska.kreirao.ime + " " + biljeska.kreirao.prezime + " - " + datumBiljeske;
+        this.biljeskaPrikaz = biljeska.poruka;
     }
 }

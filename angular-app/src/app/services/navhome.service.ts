@@ -22,6 +22,9 @@ export class NavhomeService {
     private kreditSource = new BehaviorSubject<Object>({});
     currentKredit = this.kreditSource.asObservable();
 
+    private biljeskaSource = new BehaviorSubject<Object>({});
+    currentBiljeska = this.biljeskaSource.asObservable();
+
     private timelineSource = new BehaviorSubject<Object>({});
     currentTimeline = this.timelineSource.asObservable();
 
@@ -52,11 +55,9 @@ export class NavhomeService {
                     Observable.of(klijent_rezultat),
                     this.http.post('http://localhost:3000/racuni/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/depoziti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
-                    
                     this.http.post('http://localhost:3000/racuni/vratikartice', klId, {headers: headers}).map((res: any) => res.json()),
-                    //this.http.post('http://localhost:3000/kartice/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
-                    
                     this.http.post('http://localhost:3000/krediti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/biljeske/vratibiljeske', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/pretrage/unosPretrage', pretraga, {headers: headers}).map((res: any) => res.json())
                 )
                 .map((data: any[]) => {
@@ -65,11 +66,13 @@ export class NavhomeService {
                     let depoziti = data[2];
                     let kartice = data[3];
                     let krediti = data[4];
+                    let biljeske = data[5];
 
                     klijent_rezultat.racuni = racuni;
                     klijent_rezultat.depoziti = depoziti;
                     klijent_rezultat.kartice = kartice;
                     klijent_rezultat.krediti = krediti;
+                    klijent_rezultat.biljeske = biljeske;
 
                     return klijent_rezultat;
                 });
@@ -95,6 +98,10 @@ export class NavhomeService {
 
     changeKredite(kredit) {
         this.kreditSource.next(kredit);
+    }
+
+    changeBiljeske(biljeska) {
+        this.biljeskaSource.next(biljeska);
     }
 
     changeTimeline(klijent) {

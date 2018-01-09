@@ -532,7 +532,19 @@
                 <div class="card">
                     <h3 class="card-header">Bilješke</h3>
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <div class="row">
+                            <div class="col-sm">
+                                <ul *ngFor="let biljeska of biljeske.data">
+                                    <li>
+                                        <button type="button" class="btn btn-link" (click)="showBiljeska(biljeska)">{{ biljeska.kreirao.korisnicko_ime }}_{{ biljeska.datum_kreiranja }}</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <p class="text-muted">{{ biljeskaNaslov }}</p>
+                                <p>{{ biljeskaPrikaz }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -610,12 +622,11 @@
             </div>
             <div class="card border-warning mb-3" style="height:30%; margin-top:15px;">
                 <div class="card-header">Bilješke</div>
-                <div class="card-body text-warning" style="overflow-y: auto">
-                    <h4 class="card-title">Warning card title</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="card-body" style="overflow-y: auto">
+                    <textarea class="form-control" id="biljeskaTextarea" [(ngModel)]="biljeskaTxt" rows="6" style="border: none; box-shadow: none; resize:none;"></textarea>
                 </div>
                 <div style="padding:10px;">
-                    <a href="#" class="card-link" (click)="onCardClick()">Sačuvaj</a>
+                    <a href="#" class="card-link" (click)="onBiljeskeSacuvajClick()">Sačuvaj</a>
                 </div>
             </div>
         </div>

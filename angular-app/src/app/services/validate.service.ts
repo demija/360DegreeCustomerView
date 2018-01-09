@@ -1,4 +1,5 @@
 import { Injectable, transition } from '@angular/core';
+import swal from 'sweetalert2';
 
 @Injectable()
 export class ValidateService {
@@ -177,5 +178,14 @@ export class ValidateService {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         return re.test(email);
+    }
+
+    pokreniSwal(title, text, type, confirmButtonText) {
+        swal({
+            title: title,
+            text: text,
+            type: type,
+            confirmButtonText: confirmButtonText
+        });
     }
 }

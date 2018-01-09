@@ -62,6 +62,7 @@ export class NavbarComponent implements OnInit {
                     this.navhomeService.changeDeposit(klijent.depoziti);
                     this.navhomeService.changeKartice(klijent.kartice);
                     this.navhomeService.changeKredite(klijent.krediti);
+                    this.navhomeService.changeBiljeske(klijent.biljeske);
                     this.navhomeService.changeTimeline(klijent);
                 } else {
                     swal({
