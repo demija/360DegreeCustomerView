@@ -390,12 +390,10 @@
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Račun</p>
                                     <p class="text-primary">{{ rcn.ugovor.opis_tipa_ugovora }}</p>
-                                    <p class="text-primary">{{ rcn.ugovor.tip_ugovora }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ rcn.ugovor.partija }}</p>
-                                    <p class="text-primary">{{ rcn.konto }}</p>
                                 </div>
                                 <div class="col-3">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
@@ -422,11 +420,11 @@
                                 <div class="col">
                                     <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora</p>
                                     <p class="text-primary">{{ kart.ugovor.opis_tipa_ugovora }}</p>
-                                    <p class="text-primary">{{ kart.ugovor.tip_ugovora }}</p>
                                 </div>
                                 <div class="col">
                                     <p class="card-subtitle mb-2 text-muted">Račun</p>
                                     <p class="text-primary">{{ kart.racunUgovor.opis_tipa_ugovora }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ kart.racunUgovor.partija }}</p>
                                 </div>
                                 <div class="col">
@@ -440,6 +438,16 @@
                                     <p class="text-primary">{{ kart.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
                                     <p class="text-primary">{{ kart.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-subtitle mb-2 text-muted">Status kartice</p>
+                                    <div *ngIf="!kart.aktivna_kartica">
+                                        <p class="text-danger">Neaktivna kartica</p>
+                                    </div>
+                                    <div *ngIf="kart.aktivna_kartica">
+                                        <p class="text-success">Aktivna kartica</p>
+                                    </div>
+
                                 </div>
                             </div>
                             <hr>
@@ -600,16 +608,16 @@
                         <tbody *ngFor="let ponuda of ponude" class="scrollable" style="overflow-y:scroll;">
                             <tr>
                                 <td class="col-1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="ponudjeno_{{ponuda._id}}" [(ngModel)]="ponuda.ponudjeno" (change)="selektujPonudu()" type="checkbox">
-                                        <label class="custom-control-label" for="ponudjeno_{{ponuda._id}}"></label>
+                                    <div class="custom-control custom-radio">
+                                        <input id="p_{{ponuda._id}}" name="ponuda_{{ponuda._id}}" value="p" class="custom-control-input" type="radio" (click)="checkPonude($event, ponuda)" onfocus="this.oldvalue = this.checked;">
+                                        <label class="custom-control-label" for="p_{{ponuda._id}}"></label>
                                     </div>
                                 </td>
                                 <td class="col-5 text-center">{{ponuda.naziv_ponude}}</td>
                                 <td class="col-1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="ugovoreno_{{ponuda._id}}" [(ngModel)]="ponuda.ugovoreno" (change)="selektujPonudu()" type="checkbox">
-                                        <label class="custom-control-label" for="ugovoreno_{{ponuda._id}}"></label>
+                                    <div class="custom-control custom-radio">
+                                        <input id="u_{{ponuda._id}}" name="ponuda_{{ponuda._id}}" value="u" class="custom-control-input" type="radio" (click)="checkPonude($event, ponuda)" onfocus="this.oldvalue = this.checked;">
+                                        <label class="custom-control-label" for="u_{{ponuda._id}}"></label>
                                     </div>
                                 </td>
                             </tr>
@@ -620,6 +628,7 @@
                     <a href="#" class="card-link" (click)="onCardClick()">Sačuvaj</a>
                 </div>
             </div>
+
             <div class="card border-warning mb-3" style="height:30%; margin-top:15px;">
                 <div class="card-header">Bilješke</div>
                 <div class="card-body" style="overflow-y: auto">

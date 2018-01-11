@@ -4,7 +4,6 @@ import { AuthService } from '../../services/auth.service';
 import { ValidateService } from '../../services/validate.service';
 import { PonudeService } from '../../services/ponude.service';
 import { BiljeskaService } from '../../services/biljeska.service';
-//import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-home',
@@ -20,7 +19,7 @@ export class HomeComponent implements OnInit {
     kartice: Array<Object> = [];
     krediti: Object;
     biljeske: Object;
-    ponude: Object;
+    ponude: any;
     time_line: Object;
 
     imeNew: String;
@@ -48,6 +47,9 @@ export class HomeComponent implements OnInit {
     biljeskaTxt: String = "";
     biljeskaNaslov: String = "";
     biljeskaPrikaz: String = "";
+
+    ponudjeneUsluge: Array<any> = [];
+    ugovoreneUsluge: Array<any> = [];
 
     constructor(private authService: AuthService, private valdateService: ValidateService, private navhomeService: NavhomeService, private ponudeService: PonudeService, private biljeskaService: BiljeskaService) { }
 
@@ -160,9 +162,85 @@ export class HomeComponent implements OnInit {
         });
     }
 
+    checkPonude(event, ponuda) {
+        if(event.target.oldvalue){
+            if(event.target.value == 'p') {
+                this.ponudjeneUsluge.forEach(element => {
+                    if(element._id == ponuda._id) {
+                        this.ponudjeneUsluge.splice(this.ponudjeneUsluge.indexOf(element), 1);
+                    }
+                });
+            } else if(event.target.value == 'u') {
+                this.ugovoreneUsluge.forEach(element => {
+                    if(element._id == ponuda._id) {
+                        this.ugovoreneUsluge.splice(this.ugovoreneUsluge.indexOf(element), 1);
+                    }
+                });
+            }
+
+            event.target.checked = false;
+        } else {
+            if(event.target.value == 'p') {
+                let contains = false;
+
+                this.ponudjeneUsluge.forEach(element => {
+                    if(element._id == ponuda._id) {
+                        contains = true;
+                    }
+                });
+
+                if(!contains) {
+                    this.ponudjeneUsluge.push(ponuda);
+                }
+
+                this.ugovoreneUsluge.forEach(element => {
+                    if(element._id == ponuda._id) {
+                        this.ugovoreneUsluge.splice(this.ugovoreneUsluge.indexOf(element), 1);
+                    }
+                });
+            } else if(event.target.value == 'u') {
+                let contains = false;
+
+                this.ugovoreneUsluge.forEach(element => {
+                    if(element._id == ponuda._id) {
+                        contains = true;
+                    }
+                });
+
+                if(!contains) {
+                    this.ugovoreneUsluge.push(ponuda);
+                }
+
+                this.ponudjeneUsluge.forEach(element => {
+                    if(element._id == ponuda._id) {
+                        this.ponudjeneUsluge.splice(this.ponudjeneUsluge.indexOf(element), 1);
+                    }
+                });
+            }
+        }
+    }
+
     //TODO
-    onCardClick() {
-        console.log('klik na karticu');
+    onCardClick() {        
+        console.log('ponudjeno');
+        this.ponudjeneUsluge.forEach(elementPonuda => {
+            console.log(elementPonuda);
+        });
+
+        console.log('ugovoreno');
+        this.ugovoreneUsluge.forEach(elementUgovor => {
+            console.log(elementUgovor);
+        });
+
+        if(!this.klijent['_id']) {
+            this.valdateService.pokreniSwal('Greška!', 'Odaberi klijenta', 'warning', 'Uredu');
+        } else {
+            if(this.ponudjeneUsluge.length == 0 && this.ugovoreneUsluge.length == 0) {
+                this.valdateService.pokreniSwal('Greška!', 'Odaberi uslugu', 'warning', 'Uredu');
+            } else {
+                console.log('sve ok, spašavam usluge');
+            }
+        }
     }
 
     onBiljeskeSacuvajClick() {
