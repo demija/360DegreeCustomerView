@@ -33,10 +33,6 @@ const klijentSchema = mongoose.Schema({
         required: true
     },
 
-    mail_adresa: {
-        type: String
-    },
-
     kucni_telefon: {
         type: String
     },
@@ -49,20 +45,12 @@ const klijentSchema = mongoose.Schema({
         type: Object
     },
 
-    bracno_stanje: {
-        type: String
-    },
-
     radni_status: {
-        type: String
+        type: Boolean
     },
 
     firma_zaposlenja: {
         type: Object
-    },
-
-    primanja_zadnji_mjesec: {
-        type: String
     },
 
     saglasnost_za_crk: {
@@ -77,11 +65,7 @@ const klijentSchema = mongoose.Schema({
         type: Date
     },
 
-    segment_klijenta: {
-        type: String
-    },
-
-    cb_klasifikacija: {
+    mail_adresa: {
         type: String
     },
 
@@ -91,6 +75,14 @@ const klijentSchema = mongoose.Schema({
 
     datum_evidentiranja: {
         type: Date
+    },
+
+    kreirao: {
+        type: Object
+    },
+
+    izmjenio: {
+        type: Object
     }
 });
 
@@ -98,15 +90,19 @@ klijentSchema.set('collection', 'klijenti');
 
 const Klijent = module.exports = mongoose.model('Klijent', klijentSchema);
 
-module.exports.vratiPoMaticnombroju = function(maticni_broj, callback) {
-    const query = {
-        maticni_broj: maticni_broj
-    }
-    
-    Klijent.findOne(query, callback);
+module.exports.dodaj = function(noviKlijent, callback) {
+    noviKlijent.kreirao._id = mongoose.Types.ObjectId(noviKlijent.kreirao._id);
+    noviKlijent.save(callback);
 }
 
 module.exports.izmjena = function(klijent, callback) {
+    klijent.kreirao._id = mongoose.Types.ObjectId(klijent.kreirao._id);
+    klijent.izmjenio._id = mongoose.Types.ObjectId(klijent.izmjenio._id);
+
+    if(klijent.firma_zaposlenja._id) {
+        klijent.firma_zaposlenja._id = mongoose.Types.ObjectId(klijent.firma_zaposlenja._id);
+    }
+    
     const ObjectId = require('mongoose').Types.ObjectId; 
     const query = {
         _id: new ObjectId(klijent._id)
@@ -115,6 +111,14 @@ module.exports.izmjena = function(klijent, callback) {
     Klijent.updateOne(query, klijent, callback);
 }
 
-module.exports.dodaj = function(noviKlijent, callback) {
-    noviKlijent.save(callback);
+module.exports.vratiSveZapise = function(callback) {    
+    Klijent.find(callback);
+}
+
+module.exports.vratiPoMaticnombroju = function(maticni_broj, callback) {
+    const query = {
+        maticni_broj: maticni_broj
+    }
+    
+    Klijent.findOne(query, callback);
 }

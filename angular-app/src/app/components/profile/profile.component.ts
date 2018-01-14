@@ -17,19 +17,14 @@ export class ProfileComponent implements OnInit {
     constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService) { }
 
     ngOnInit() {
+        this.user = JSON.parse(localStorage.getItem('user'));
+
         this.navhomeService.getOdjeli().subscribe(odjeli => {
             this.odjeliLista = odjeli;
         });
-
-        this.authService.getProfile().subscribe(profile => {
-            this.user = profile.user;
-        }, err => {
-            console.log('greška!');
-            return false;
-        });
     }
 
-    onProfileSubmit() {
+    /*onProfileSubmit() {
         // Validacija unesenih vrijednosti
         if(!this.validateService.validateUpdate(this.user)) {
             return false;
@@ -53,5 +48,9 @@ export class ProfileComponent implements OnInit {
                 });
             }
         });
-    }
+    }*/
+
+    /*izmjenaKorisnika(user) {
+        console.log(user);
+    }*/
 }

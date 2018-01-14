@@ -11,6 +11,9 @@ import { BiljeskaService } from '../../services/biljeska.service';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+    // paging
+    biljeskePage: number = 1;
+
     prijavljeni_korisnik: Object;
 
     klijent: Object;
@@ -22,28 +25,6 @@ export class HomeComponent implements OnInit {
     ponude: any;
     time_line: Object;
 
-    imeNew: String;
-    prezimeNew: String;
-    jmbgNew: String;
-    broj_lkNew: String;
-    datum_izdavanja_lkNew: String;
-    datum_vazenja_lkNew: String;
-    kucni_telNew: String;
-    mobilni_telNew: String;
-    ulica_i_brojNew: String;
-    postanski_brojNew: String;
-    gradNew: String;
-    kantonNew: String;
-    bracno_stanjeNew: String;
-    radni_statusNew: String;
-    sifra_firmeNew: String;
-    naziv_firmeNew: String;
-    odjel_firmeNew: String;
-    tel_firmeNew: String;
-    saglasnost_za_crkNew: String;
-    segment_klijentaNew: String;
-    cb_klasifikacijaNew: String;
-    emailNew: String;
     biljeskaTxt: String = "";
     biljeskaNaslov: String = "";
     biljeskaPrikaz: String = "";
@@ -54,11 +35,7 @@ export class HomeComponent implements OnInit {
     constructor(private authService: AuthService, private valdateService: ValidateService, private navhomeService: NavhomeService, private ponudeService: PonudeService, private biljeskaService: BiljeskaService) { }
 
     ngOnInit() {
-        this.authService.getProfile().subscribe(profile => {
-            this.prijavljeni_korisnik = profile.user;
-        }, err => {
-            return false;
-        });
+        this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
 
         this.navhomeService.currentKlijent.subscribe(klijent => {
             this.klijent = klijent;
@@ -102,63 +79,6 @@ export class HomeComponent implements OnInit {
 
         this.ponudeService.getAktivnePonude().subscribe(ponude => {
             this.ponude = ponude.data;
-        });
-    }
-
-    onEditSubmit() {
-        //TODO
-        //Validacija unesenih vrijednosti
-
-        // Update korisnika
-        this.navhomeService.updateClient(this.klijent).subscribe(data => {
-            if(data.success) {
-                this.valdateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
-            } else {
-                this.valdateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
-            }
-        });
-    }
-
-    onAddSubmit() {
-        const noviKlijent = {
-            ime: this.imeNew,
-            prezime: this.prezimeNew,
-            maticni_broj: this.jmbgNew,
-            broj_lk: this.broj_lkNew,
-            datum_izdavanja_lk: this.datum_izdavanja_lkNew,
-            datum_vazenja_lk: this.datum_vazenja_lkNew,
-            mail_adresa: this.emailNew,
-            kucni_telefon: this.kucni_telNew,
-            mobilni_telefon: this.mobilni_telNew,
-            adresa: {
-                ulica_i_broj: this.ulica_i_brojNew,
-                postanski_broj: this.postanski_brojNew,
-                grad: this.gradNew,
-                kanton: this.kantonNew
-            },
-            bracno_stanje: this.bracno_stanjeNew,
-            radni_status: this.radni_statusNew,
-            firma_zaposlenja: {
-                sifra: this.sifra_firmeNew,
-                naziv: this.naziv_firmeNew,
-                odjel: this.odjel_firmeNew,
-                telefon: this.tel_firmeNew
-            },
-            saglasnost_za_crk: this.saglasnost_za_crkNew,
-            segment_klijenta: this.segment_klijentaNew,
-            cb_klasifikacija: this.cb_klasifikacijaNew
-        }
-
-        //TODO
-        // Validacija unesenih vrijednosti
-
-        // Dodavanje korisnika
-        this.navhomeService.addClient(noviKlijent).subscribe(data => {
-            if(data.success) {
-                this.valdateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
-            } else {
-                this.valdateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
-            }
         });
     }
 

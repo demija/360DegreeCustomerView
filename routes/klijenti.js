@@ -28,6 +28,29 @@ router.post('/vratipodatke', (req, res, next) => {
     });
 });
 
+// Vraćanje svih klijenata
+router.get('/vratisvezapise', (req, res, next) => {
+    Klijent.vratiSveZapise((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Ne postoje podaci',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
 // Update klijenta
 router.post('/izmjena', (req, res, next) => {
     let klijent = req.body;
@@ -51,7 +74,9 @@ router.post('/izmjena', (req, res, next) => {
 // Dodavanje klijenta
 router.post('/dodaj', (req, res, next) => {
     let noviKlijent = new Klijent(req.body);
-    noviKlijent.datum_unosa = Date.now();
+    noviKlijent.datum_evidentiranja = Date.now();
+
+    console.log(noviKlijent);
     
     Klijent.dodaj(noviKlijent, (err, user) => {
         if(err) {

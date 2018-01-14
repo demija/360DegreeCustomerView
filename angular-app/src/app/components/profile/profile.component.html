@@ -9,65 +9,73 @@
                 <h3 class="card-header">Moj profil</h3>
                 <div class="card-body">
                     <div *ngIf="user">
-                        <form (submit)="onProfileSubmit()">
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="idUposlenikaTextbox">ID uposlenika</label>
-                                    <input type="text" [(ngModel)]="user.id_uposlenika" name="id_uposlenika" class="form-control" id="idUposlenikaTextbox" readonly>
+                        <div class="row">
+                            <div class="col-4">
+                                <p class="card-subtitle mb-2 text-muted">Lični podaci</p>
+                                <hr>
+                                <br>
+                                <p class="text-center"><i class="fa fa-user-circle-o fa-5x" aria-hidden="true"></i></p>
+                                <span class="text-center"><h3>{{ user.ime }} {{ user.prezime }}</h3></span>
+                                <p class="text-muted text-center">{{ user.odjel.organizaciona_jedinica }}</p>
+                                <br>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="text-muted">ID poslenika</p>
+                                        <p class="text-primary">{{ user.id_uposlenika }}</p>
+                                        <p class="text-muted">Ime</p>
+                                        <p class="text-primary">{{ user.ime }}</p>
+                                        <p class="text-muted">E-mail</p>
+                                        <p class="text-primary">{{ user.email }}</p>
+                                        <p class="text-muted">Datum registracije</p>
+                                        <p class="text-primary">{{ user.datum_registracije | date:'dd/MM/yyyy' }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-muted">Korisničko ime</p>
+                                        <p class="text-primary">{{ user.korisnicko_ime }}</p>
+                                        <p class="text-muted">Prezime</p>
+                                        <p class="text-primary">{{ user.prezime }}</p>
+                                        <p class="text-muted">Odjel</p>
+                                        <p class="text-primary">{{ user.odjel.organizaciona_jedinica }}</p>
+                                    </div>
                                 </div>
-                                <div class="col form-group">
-                                    <label for="korisnickoimeTextbox">Korisničko ime</label>
-                                    <input type="text" [(ngModel)]="user.korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" readonly>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="imeTextbox">Ime</label>
-                                    <label id="imeError" class="float-right text-danger d-none">Obavezan unos!</label>
-                                    <input type="text" [(ngModel)]="user.ime" name="ime" class="form-control" id="imeTextbox">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="prezimeTextbox">Prezime</label>
-                                    <label id="prezimeError" class="float-right text-danger d-none">Obavezan unos!</label>
-                                    <input type="text" [(ngModel)]="user.prezime" name="prezime" class="form-control" id="prezimeTextbox">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="lozinkaTextbox">Nova lozinka</label>
-                                    <label id="lozinkaError" class="float-right text-danger d-none">Obavezan unos!</label>
-                                    <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Lozinka">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="potvrdaLozinkeTextbox">Potvrda nove lozinke</label>
-                                    <label id="potvrdaLozinkeError" class="float-right text-danger d-none">Lozinke nisu iste!</label>
-                                    <input type="password" [(ngModel)]="potvrdaLozinke" name="potvrdaLozinke" class="form-control" id="potvrdaLozinkeTextbox" placeholder="Potvrda lozinke">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="emailTextbox">Email adresa</label>
-                                    <label id="emailError" class="float-right text-danger d-none">Pogrešan format!</label>
-                                    <input type="text" [(ngModel)]="user.email" name="email" class="form-control" id="emailTextbox">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="inlineFormCustomSelect">Odjel</label>
-                                    <label id="odjelError" class="float-right text-danger d-none">Obavezan odabir!</label>
-                                    <br>
-                                    <select [(ngModel)]="user.odjel" class="w-100 custom-select" name="odjel" id="odjelDropbox">
-                                        <option *ngFor="let o of odjeliLista?.data" [ngValue]="o">{{ o.organizaciona_jedinica }}</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="col">
+                                        <span *ngIf="user.administrator" class="badge badge-info">Administrator</span>
+                                        <span *ngIf="user.aktivan" class="badge badge-success">Aktivan korisnik</span>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-link disabled float-right" data-toggle="tooltip" data-placement="top" title="Izmjena" data-toggle="modal" data-target="#editKorisnika"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">                           
-                                    <button type="submit"  class="btn btn-outline-primary float-right">Sačuvaj izmjene</button>
-                                </div>
+                            <div class="col-8">
+                                <p class="card-subtitle mb-2 text-muted">Statistika</p>
+                                <hr>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editKorisnika">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
         </div>
     </div>
 </div>

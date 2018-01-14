@@ -120,6 +120,102 @@ export class ValidateService {
         return valid;
     }
 
+    validacijaNoviKlijent(klijent) {
+        let valid = true;
+
+        if(klijent.ime == undefined || klijent.ime == '') {
+            document.getElementById('imeNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('imeNewTextbox').classList.remove('is-invalid');
+        }
+
+        if(klijent.prezime == undefined || klijent.prezime == '') {
+            document.getElementById('prezimeNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('prezimeNewTextbox').classList.remove('is-invalid');
+        }
+
+        if(klijent.maticni_broj == undefined || klijent.maticni_broj.length != 13 || isNaN(klijent.maticni_broj)) {
+            document.getElementById('jmbgNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('jmbgNewTextbox').classList.remove('is-invalid');
+        }
+
+        if(klijent.broj_lk == undefined || klijent.broj_lk.length != 9) {
+            document.getElementById('broj_lkNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('broj_lkNewTextbox').classList.remove('is-invalid');
+        }
+
+        if(!klijent.datum_izdavanja_lk) {
+            document.getElementById('datum_izdavanja_lkNewError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('datum_izdavanja_lkNewError').classList.add('d-none');
+        }
+
+        if(!klijent.datum_vazenja_lk) {
+            document.getElementById('datum_vazenja_lkNewError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('datum_vazenja_lkNewError').classList.add('d-none');
+        }
+
+        return valid;
+    }
+
+    validacijaIzmjeneKlijenta(klijent) {
+        let valid = true;
+
+        if(klijent.ime == undefined || klijent.ime == '') {
+            document.getElementById('imeEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('imeEditTextbox').classList.remove('is-invalid');
+        }
+
+        if(klijent.prezime == undefined || klijent.prezime == '') {
+            document.getElementById('prezimeEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('prezimeEditTextbox').classList.remove('is-invalid');
+        }
+
+        if(klijent.maticni_broj == undefined || klijent.maticni_broj.length != 13) {
+            document.getElementById('jmbgEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('jmbgEditTextbox').classList.remove('is-invalid');
+        }
+
+        if(klijent.broj_lk == undefined || klijent.broj_lk.length != 9) {
+            document.getElementById('broj_lkEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('broj_lkEditTextbox').classList.remove('is-invalid');
+        }
+
+        if(klijent.datum_izdavanja_lk == undefined || klijent.datum_izdavanja_lk == '') {
+            document.getElementById('datum_izdavanja_lkEditError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('datum_izdavanja_lkEditError').classList.add('d-none');
+        }
+
+        if(klijent.datum_vazenja_lk == undefined || klijent.datum_vazenja_lk == '') {
+            document.getElementById('datum_vazenja_lkEditError').classList.remove('d-none');
+            valid = false;
+        } else {
+            document.getElementById('datum_vazenja_lkEditError').classList.add('d-none');
+        }
+
+        return valid;
+    }
+
     validateUpdate(korisnik) {
         let valid = true;
 
@@ -162,7 +258,19 @@ export class ValidateService {
         return valid;
     }
 
-    //TODO
+    validacijaKompanije(kompanija) {
+        let valid = true;
+
+        if(kompanija.naziv == undefined || kompanija.naziv == '') {
+            document.getElementById('kompanijaNazivNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('kompanijaNazivNewTextbox').classList.remove('is-invalid');
+        }
+
+        return valid;
+    }
+
     validateSearch() {
         let valid = true;
         let searchMaricniBroj = (<HTMLInputElement>document.getElementById('jmbgSearch')).value;

@@ -49,15 +49,6 @@ export class AuthService {
         });
     }
 
-    getProfile() {
-        let headers = new Headers();
-        this.loadToken();
-        headers.append('Authorization', this.authToken);
-        headers.append('Content-Type', 'application/json');
-        
-        return this.http.get('http://localhost:3000/korisnici/profil', {headers: headers}).map(res => res.json());
-    }
-
     spasiPrijavljenogKorisnika(token, korisnik) {
         localStorage.setItem('id_token', token);
         localStorage.setItem('user', JSON.stringify(korisnik)); //make to string, to store in localStorage

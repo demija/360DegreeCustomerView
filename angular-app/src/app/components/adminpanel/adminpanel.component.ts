@@ -35,11 +35,7 @@ export class AdminpanelComponent implements OnInit {
     constructor(private navhomeService: NavhomeService, private authService: AuthService, private ponudeService: PonudeService) { }
 
     ngOnInit() {
-        this.authService.getProfile().subscribe(profile => {
-            this.prijavljeni_korisnik = profile.user;
-        }, err => {
-            return false;
-        });
+        this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
 
         this.navhomeService.getKorisnici().subscribe(korisnici => {
             this.korisnici = korisnici.data;

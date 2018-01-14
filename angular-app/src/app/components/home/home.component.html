@@ -148,261 +148,42 @@
                                 <p class="text-primary">{{ klijent.primanja_zadnji_mjesec }}</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <a href="#" class="card-link" data-toggle="modal" data-target="#noviKlijent">Novi kontakt</a>
-                                <a href="#" class="card-link" data-toggle="modal" data-target="#izmjenaPodatakaKlijenta" *ngIf="klijent._id">Uredi</a>
-                            </div>
-                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
-
-            <!-- Korisnik Add Modal -->
-            <div class="modal fade bd-example-modal-lg" id="noviKlijent" tabindex="-1" role="dialog" aria-labelledby="noviKlijentLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <form (submit)="onAddSubmit()">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="noviKlijentLabel">Novi kontakt</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Ime</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="imeNew" name="imeNew" id="imeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prezime</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="prezimeNew" name="prezimeNew" id="prezimeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Matični broj</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="jmbgNew" name="jmbgNew" id="jmbgNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Broj lične karte</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="broj_lkNew" name="broj_lkNew" id="broj_lkNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum izdavanja</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="datum_izdavanja_lkNew" name="datum_izdavanja_lkNew" id="datum_izdavanja_lkNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum važenja</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="datum_vazenja_lkNew" name="datum_vazenja_lkNew" id="datum_vazenja_lkNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bračno stanje</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="bracno_stanjeNew" name="bracno_stanjeNew" id="bracno_stanjeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Segment</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="segment_klijentaNew" name="segment_klijentaNew" id="segment_klijentaNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Klasifikacija</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="cb_klasifikacijaNew" name="cb_klasifikacijaNew" id="cb_klasifikacijaNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Adresa</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="ulica_i_brojNew" name="ulica_i_brojNew" id="ulica_i_brojNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Poštanski broj</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="postanski_brojNew" name="postanski_brojNew" id="postanski_brojNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grad</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="gradNew" name="gradNew" id="gradNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kanton</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="kantonNew" name="kantonNew" id="kantonNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>E-mail</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="emailNew" name="emailNew" id="emailNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Fiksni telefon</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="kucni_telNew" name="kucni_telNew" id="kucni_telNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mobilni telefon</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="mobilni_telNew" name="mobilni_telNew" id="mobilni_telNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Radni status</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="radni_statusNew" name="radni_statusNew" id="radni_statusNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Šifra firme zaposlenja</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="sifra_firmeNew" name="sifra_firmeNew" id="sifra_firmeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Firma zaposlenja</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="naziv_firmeNew" name="naziv_firmeNew" id="naziv_firmeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Odjel</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="odjel_firmeNew" name="odjel_firmeNew" id="odjel_firmeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kontakt telefon (posao)</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="tel_firmeNew" name="tel_firmeNew" id="tel_firmeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>CRK saglasnost</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="saglasnost_za_crkNew" name="saglasnost_za_crkNew" id="saglasnost_za_crkNewTextbox"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
-                                <button type="submit" class="btn btn-outline-success">Dodaj</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Kraj korisnik Modal -->
-    
-            <!-- Korisnik Edit Modal -->
-            <div class="modal fade bd-example-modal-lg" id="izmjenaPodatakaKlijenta" tabindex="-1" role="dialog" aria-labelledby="izmjenaPodatakaKlijentaLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <form (submit)="onEditSubmit()">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="izmjenaPodatakaKlijentaLabel">Izmjena podataka</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Ime</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.ime" name="imeEdit" id="imeEdit" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Prezime</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.prezime" name="prezime_klijenta" id="prezimeKlijentaTextbox" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Broj lične karte</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.broj_lk" name="br_lk_klijenta" id="brLkKlijentaTextbox" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum izdavanja</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.datum_izdavanja_lk" name="datum_izdavanja_lk_klijenta" id="datumIzdavanjaLkKlijentaTextbox" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum važenja</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.datum_vazenja_lk" name="datum_vazenja_lk_klijenta" id="datumVazenjaLkKlijentaTextbox" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bračno stanje</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.bracno_stanje" name="bracno_stanje_klijenta" id="brasnoStanjeKlijentaTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Segment</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.segment_klijenta" name="segment_klijenta" id="segmentKlijentaTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Klasifikacija</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.cb_klasifikacija" name="klasifikacija_klijenta" id="klasifikacijaKlijentaTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Adresa</td>
-                                            <td><input type="text" class="form-control" [ngModel]="klijent.adresa?.ulica_i_broj" name="adresa_klijenta" id="adresaKlijentaTextbox" (ngModelChange)="klijent.adresa.ulica_i_broj = $event" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Poštanski broj</td>
-                                            <td><input type="text" class="form-control" [ngModel]="klijent.adresa?.postanski_broj" name="post_br_klijenta" id="postBrKlijentaTextbox" (ngModelChange)="klijent.adresa.postanski_broj = $event" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grad</td>
-                                            <td><input type="text" class="form-control" [ngModel]="klijent.adresa?.grad" name="grad_klijenta" id="gradKlijentaTextbox" (ngModelChange)="klijent.adresa.grad = $event" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kanton</td>
-                                            <td><input type="text" class="form-control" [ngModel]="klijent.adresa?.kanton" name="kanton_klijenta" id="kantonKlijentaTextbox" (ngModelChange)="klijent.adresa.kanton = $event" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>E-mail</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.mail_adresa" name="email_klijenta" id="emailKlijentaTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Fiksni telefon</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.kucni_telefon" name="fiksniTel_klijenta" id="fiksniTelKlijentaTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mobilni telefon</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.mobilni_telefon" name="mobilniTel_klijenta" id="mobilniTelKlijentaTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Radni status</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.radni_status" name="radni_status_klijenta" id="radniStatusKlijentaTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Firma zaposlenja</td>
-                                            <td><input type="text" class="form-control" [ngModel]="klijent.firma_zaposlenja?.naziv" name="firma_zaposlenja_klijenta" id="firmaZaposlenjaKlijentaTextbox" (ngModelChange)="klijent.firma_zaposlenja.naziv = $event"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Odjel</td>
-                                            <td><input type="text" class="form-control" [ngModel]="klijent.firma_zaposlenja?.odjel" name="odjel_zaposlenja_klijenta" id="odjelZaposlenjaKlijentaTextbox" (ngModelChange)="klijent.firma_zaposlenja.odjel = $event"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kontakt telefon (posao)</td>
-                                            <td><input type="text" class="form-control" [ngModel]="klijent.firma_zaposlenja?.telefon" name="tel_zaposlenja_klijenta" id="telZaposlenjaKlijentaTextbox" (ngModelChange)="klijent.firma_zaposlenja.telefon = $event"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>CRK saglasnost</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klijent.saglasnost_za_crk" name="crk_saglasnost_klijenta" id="crlSaglasnostKlijentaTextbox" required></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
-                                <button type="submit" class="btn btn-outline-success">Sačuvaj izmjene</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Kraj korisnik Modal -->
-
             <br>
             <div id="transakcijsko_poslovanje">
                 <div class="card">
                     <h3 class="card-header">Transakcijsko poslovanje</h3>
                     <div class="card-body">
-                        <div *ngFor="let rcn of racuni.data">
+                        <div *ngFor="let rcn of racuni.data; let idx = index">
                             <div class="row" >
-                                <div class="col-3">
+                                <div class="col-4">
                                     <p class="card-subtitle mb-2 text-muted">Račun</p>
                                     <p class="text-primary">{{ rcn.ugovor.opis_tipa_ugovora }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ rcn.ugovor.partija }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
                                     <p class="text-primary">{{ rcn.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="text-primary">{{ rcn.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Stanje na računu</p>
                                     <p class="text-primary">{{ rcn.stanje_racuna | number:'.2' }} BAM</p>
+                                </div>
+                                <div col="col-2">
+                                    <p class="card-subtitle mb-2 text-muted">Status računa</p>
+                                    <div *ngIf="!rcn.aktivan_racun">
+                                        <p class="text-danger">Neaktivan račun</p>
+                                    </div>
+                                    <div *ngIf="rcn.aktivan_racun">
+                                        <p class="text-success">Aktivan račun</p>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -415,8 +196,8 @@
                 <div class="card">
                     <h3 class="card-header">Kartično poslovanje</h3>
                     <div class="card-body">
-                        <div *ngFor="let kart of kartice">
-                            <div class="row" >
+                        <div *ngFor="let kart of kartice; let idx = index">
+                            <div class="row">
                                 <div class="col">
                                     <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora</p>
                                     <p class="text-primary">{{ kart.ugovor.opis_tipa_ugovora }}</p>
@@ -447,7 +228,6 @@
                                     <div *ngIf="kart.aktivna_kartica">
                                         <p class="text-success">Aktivna kartica</p>
                                     </div>
-
                                 </div>
                             </div>
                             <hr>
@@ -460,21 +240,21 @@
                 <div class="card">
                     <h3 class="card-header">Krediti</h3>
                     <div class="card-body">
-                        <div *ngFor="let kredit of krediti.data">
+                        <div *ngFor="let kredit of krediti.data; let idx = index">
                             <div class="row" >
                                 <div class="col-4">
                                     <p class="card-subtitle mb-2 text-muted">Opis</p>
                                     <p class="text-primary">{{ kredit.ugovor.opis_tipa_ugovora }}</p>
-                                    <p class="text-primary">{{ kredit.ugovor.tip_ugovora }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ kredit.ugovor.partija }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
                                     <p class="text-primary">{{ kredit.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
                                     <p class="text-primary">{{ kredit.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Odobreni iznos</p>
                                     <p class="text-primary">{{ kredit.odobreni_iznos | number:'.2' }} BAM</p>
                                     <p class="card-subtitle mb-2 text-muted">Kamatna stopa</p>
@@ -483,10 +263,14 @@
                                 <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Ostatak duga</p>
                                     <p class="text-primary">{{ kredit.nedospjela_glavnica | number:'.2' }} BAM</p>
+                                    <p class="card-subtitle mb-2 text-muted">Glavnica ostatak</p>
+                                    <p class="text-primary">{{ kredit.glavnica_ostatak | number:'.2' }} BAM</p>
+                                </div>
+                                <div class="col-2">
                                     <p class="card-subtitle mb-2 text-muted">Anuitet</p>
                                     <p class="text-primary">{{ kredit.iznos_anuitet | number:'.2' }} BAM</p>
-                                    <p class="text-primary">{{ kredit.gospjela_glavnica | number:'.2' }} BAM</p>
-                                    <p class="text-primary">{{ kredit.glavnica_ostatak | number:'.2' }} BAM</p>
+                                    <p class="card-subtitle mb-2 text-muted">Dospjela glavnica</p>
+                                    <p class="text-primary">{{ kredit.dospjela_glavnica | number:'.2' }} BAM</p>
                                 </div>
                             </div>
                             <hr>
@@ -499,12 +283,12 @@
                 <div class="card">
                     <h3 class="card-header">Depoziti</h3>
                     <div class="card-body">
-                        <div *ngFor="let dpz of depoziti.data">
+                        <div *ngFor="let dpz of depoziti.data; let idx = index">
                             <div class="row" >
                                 <div class="col-6">
                                     <p class="card-subtitle mb-2 text-muted">Opis</p>
                                     <p class="text-primary">{{ dpz.ugovor.opis_tipa_ugovora }}</p>
-                                    <p class="text-primary">{{ dpz.ugovor.tip_ugovora }}</p>
+                                    <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ dpz.ugovor.partija }}</p>
                                 </div>
                                 <div class="col-3">
@@ -541,15 +325,16 @@
                     <h3 class="card-header">Bilješke</h3>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm">
-                                <ul *ngFor="let biljeska of biljeske.data">
+                            <div class="col-sm" *ngIf="biljeske.data">
+                                <ul *ngFor="let biljeska of biljeske.data | paginate: { itemsPerPage: 3, currentPage: biljeskePage, id: 'biljeske_pagination' }">
                                     <li>
                                         <button type="button" class="btn btn-link" (click)="showBiljeska(biljeska)">{{ biljeska.kreirao.korisnicko_ime }}_{{ biljeska.datum_kreiranja }}</button>
                                     </li>
                                 </ul>
+                                <pagination-controls class="text-left" (pageChange)="biljeskePage = $event" id="biljeske_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
                             </div>
                             <div class="col-sm">
-                                <p class="text-muted">{{ biljeskaNaslov }}</p>
+                                <p class="text-muted"><em>{{ biljeskaNaslov }}</em></p>
                                 <p>{{ biljeskaPrikaz }}</p>
                             </div>
                         </div>
@@ -559,7 +344,7 @@
             <br>
             <div id="vremenska_linija">
                 <div class="card">
-                    <h3 class="card-header">Vremenska linija korisnika</h3>
+                    <h3 class="card-header">Vremenska linija</h3>
                     <div class="card-body">
                         <ul class="timeline" *ngFor="let timel of time_line; let even = even; let odd = odd">
                             <li [ngClass]="{true: 'timeline-inverted', false: ''}[even]">

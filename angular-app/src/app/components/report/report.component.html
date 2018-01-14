@@ -23,15 +23,15 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora od:</label>
+                                <label for="datum_od_racuni" class="text-muted">Datum ugovora od:</label>
                                 <input type="date" class="form-control" [(ngModel)]="datumOdRacun" name="datum_od_racuni" id="datum_od_racuni">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoRacun" name="datum_od_racuni" id="datum_od_racuni">
+                                <label for="datum_do_racuni" class="text-muted">Datum ugovora do:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumDoRacun" name="datum_do_racuni" id="datum_do_racuni">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Tip ugovora:</label>
+                                <label for="tipRacunaCheck" class="text-muted">Tip ugovora:</label>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" id="tipRacunaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraRacuna()" [(ngModel)]="selectedSviUgovoriRacuna" >
                                     <label class="custom-control-label" for="tipRacunaCheck">Svi tipovi</label>
@@ -51,19 +51,17 @@
                                 <table class="table table-hover table-sm">
                                     <thead>
                                         <tr>
-                                            <th></th>
                                             <th class="card-subtitle mb-2 text-muted">Klijent</th>
                                             <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
                                             <th class="card-subtitle mb-2 text-muted">Datum ugovora</th>
                                             <th class="card-subtitle mb-2 text-muted">Stanje</th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngFor="let r of racuniResult; let myIndex = index">
+                                    <tbody *ngFor="let r of racuniResult | paginate: { itemsPerPage: 10, currentPage: racuniPage, id:'racuni_pagination' }">
                                         <tr>
-                                            <th>{{ myIndex + 1 }}</th>
                                             <td>
                                                 <p class="text-primary">{{ r.klijent.ime }} {{ r.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">{{ r.klijent.maticni_broj }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Jmbg:  {{ r.klijent.maticni_broj }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-primary">{{ r.ugovor.opis_tipa_ugovora }}</p>
@@ -84,6 +82,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls class="text-center" (pageChange)="racuniPage = $event" id="racuni_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
                                 <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
                             </div>
                         </div>
@@ -134,15 +133,15 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora od:</label>
+                                <label for="datum_od_kartice" class="text-muted">Datum ugovora od:</label>
                                 <input type="date" class="form-control" [(ngModel)]="datumOdKartica" name="datum_od_kartice" id="datum_od_kartice">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoKartica" name="datum_od_kartice" id="datum_od_kartice">
+                                <label for="datum_do_kartice" class="text-muted">Datum ugovora do:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumDoKartica" name="datum_do_kartice" id="datum_do_kartice">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Tip ugovora:</label>
+                                <label for="tipUgovoraCheck" class="text-muted">Tip ugovora:</label>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" id="tipUgovoraCheck" type="checkbox" (change)="selektujSveTipoveUgovoraKartica()" [(ngModel)]="selectedSviUgovoriKartica" >
                                     <label class="custom-control-label" for="tipUgovoraCheck">Svi tipovi</label>
@@ -153,7 +152,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Tip kartice:</label>
+                                <label for="tip_kartice_svi" class="text-muted">Tip kartice:</label>
                                 <div class="custom-control custom-radio">
                                     <input id="tip_kartice_svi" name="tipKarticeRdb" [value]='sviTipovi' [(ngModel)]="tipKarticeRadio" class="custom-control-input" type="radio">
                                     <label class="custom-control-label" for="tip_kartice_svi">Svi tipovi</label>
@@ -164,7 +163,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Vrsta kartice:</label>
+                                <label for="vrsta_kartice_sve" class="text-muted">Vrsta kartice:</label>
                                 <div class="custom-control custom-radio">
                                     <input id="vrsta_kartice_sve" name="vrstaKarticeRdb" [value]='sveVrste' [(ngModel)]="vrstaKarticeRadio" class="custom-control-input" type="radio">
                                     <label class="custom-control-label" for="vrsta_kartice_sve">Sve vrste</label>
@@ -184,7 +183,6 @@
                                 <table class="table table-hover table-sm">
                                     <thead>
                                         <tr>
-                                            <th></th>
                                             <th class="card-subtitle mb-2 text-muted">Klijent</th>
                                             <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
                                             <th class="card-subtitle mb-2 text-muted">Vrsta/tip kartice</th>
@@ -192,12 +190,11 @@
                                             <th class="card-subtitle mb-2 text-muted">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngFor="let k of karticeResult; let myIndex = index">
+                                    <tbody *ngFor="let k of karticeResult | paginate: { itemsPerPage: 10, currentPage: karticePage, id: 'kartice_pagination' }">
                                         <tr>
-                                            <th>{{ myIndex + 1 }}</th>
                                             <td>
                                                 <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">{{ k.klijent.maticni_broj }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-primary">{{ k.kartica.ugovor.opis_tipa_ugovora }}</p>
@@ -223,6 +220,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls class="text-center" (pageChange)="karticePage = $event" id="kartice_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
                                 <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
                             </div>
                         </div>
@@ -250,15 +248,15 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora od:</label>
+                                <label for="datum_od_kredita" class="text-muted">Datum ugovora od:</label>
                                 <input type="date" class="form-control" [(ngModel)]="datumOdKredit" name="datum_od_kredita" id="datum_od_kredita">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoKredit" name="datum_od_kredita" id="datum_od_kredita">
+                                <label for="datum_do_kredita" class="text-muted">Datum ugovora do:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumDoKredit" name="datum_do_kredita" id="datum_do_kredita">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Tip ugovora:</label>
+                                <label for="tipKreditaCheck" class="text-muted">Tip ugovora:</label>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" id="tipKreditaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraKredita()" [(ngModel)]="selectedSviUgovoriKredita" >
                                     <label class="custom-control-label" for="tipKreditaCheck">Svi tipovi</label>
@@ -278,7 +276,6 @@
                                 <table class="table table-hover table-sm">
                                     <thead>
                                         <tr>
-                                            <th></th>
                                             <th class="card-subtitle mb-2 text-muted">Klijent</th>
                                             <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
                                             <th class="card-subtitle mb-2 text-muted">Odobreni iznos</th>
@@ -286,12 +283,11 @@
                                             <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngFor="let k of kreditiResult; let myIndex = index">
+                                    <tbody *ngFor="let k of kreditiResult | paginate: { itemsPerPage: 10, currentPage: kreditiPage, id: 'krediti_pagination' }">
                                         <tr>
-                                            <th>{{ myIndex + 1 }}</th>
                                             <td>
                                                 <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">{{ k.klijent.maticni_broj }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-primary">{{ k.ugovor.opis_tipa_ugovora }}</p>
@@ -314,6 +310,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls class="text-center" (pageChange)="kreditiPage = $event" id="krediti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
                                 <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
                             </div>
                         </div>
@@ -363,15 +360,15 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora od:</label>
+                                <label for="datum_od_depoziti" class="text-muted">Datum ugovora od:</label>
                                 <input type="date" class="form-control" [(ngModel)]="datumOdDepozit" name="datum_od_depoziti" id="datum_od_depoziti">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoDepozit" name="datum_od_depoziti" id="datum_od_depoziti">
+                                <label for="datum_do_depoziti" class="text-muted">Datum ugovora do:</label>
+                                <input type="date" class="form-control" [(ngModel)]="datumDoDepozit" name="datum_do_depoziti" id="datum_do_depoziti">
                             </div>
                             <div class="form-group">
-                                <label for="code" class="text-muted">Vrsta depozita:</label>
+                                <label for="vrstaDepozitaCheck" class="text-muted">Vrsta depozita:</label>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" id="vrstaDepozitaCheck" type="checkbox" (change)="selektujSveTipoveDepozita()" [(ngModel)]="selectedAllDepozit">
                                     <label class="custom-control-label" for="vrstaDepozitaCheck">Sve vrste</label>
@@ -391,19 +388,17 @@
                                 <table class="table table-hover table-sm">
                                     <thead>
                                         <tr>
-                                            <th></th>
                                             <th class="card-subtitle mb-2 text-muted">Klijent</th>
                                             <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
                                             <th class="card-subtitle mb-2 text-muted">Ugovoreni iznos</th>
                                             <th class="card-subtitle mb-2 text-muted">Period ugovora</th>
                                         </tr>
                                     </thead>
-                                    <tbody *ngFor="let d of depozitiResult; let myIndex = index">
+                                    <tbody *ngFor="let d of depozitiResult | paginate: { itemsPerPage: 10, currentPage: depozitiPage, id: 'depoziti_pagination' }">
                                         <tr>
-                                            <th>{{ myIndex + 1 }}</th>
                                             <td>
                                                 <p class="text-primary">{{ d.klijent.ime }} {{ d.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">{{ d.klijent.maticni_broj }}</p>
+                                                <p class="card-subtitle mb-2 text-muted">Jmbg: {{ d.klijent.maticni_broj }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-primary">{{ d.ugovor.opis_tipa_ugovora }}</p>
@@ -411,7 +406,7 @@
                                             </td>
                                             <td>
                                                 <p class="text-primary">{{ d.stanje_racuna | number:'.2' }} BAM</p>
-                                                <p class="card-subtitle mb-2 text-muted">Stopa: {{ d.stopa }} %</p>
+                                                <p class="card-subtitle mb-2 text-muted">Kamatna stopa: {{ d.stopa }} %</p>
                                             </td>
                                             <td>
                                                 <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
@@ -420,6 +415,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls class="text-center" (pageChange)="depozitiPage = $event" id="depoziti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
                                 <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
                             </div>
                         </div>      

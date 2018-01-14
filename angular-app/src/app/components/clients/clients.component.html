@@ -1,0 +1,440 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <div class="row">
+        <div class="sideBr">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="container">
+            <div *ngIf="appView == 'allClients'">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">Klijenti</li>
+                </ol>
+                <div class="card">
+                    <h3 class="card-header">Klijenti</h3>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-link" (click)="noviKlijent()">Dodaj klijenta</button>
+                        <br>
+                        <br>
+                        <table class="table table-hover table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ime i prezime</th>
+                                    <th scope="col">Matični broj</th>
+                                    <th scope="col">Broj lične karte</th>
+                                    <th scope="col">Kontakt telefon</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Kompanija</th>
+                                    <th scope="col">Datum evidentiranja</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let klijent of klijenti | paginate: { itemsPerPage: 20, currentPage: klijentiPage, id: 'klijenti_pagination' }">
+                                    <td>
+                                        <button type="button" class="btn btn-link disabled" data-toggle="tooltip" data-placement="top" title="Izmjena" (click)="editKlijenta(klijent)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+                                        {{ klijent.ime }} {{ klijent.prezime }}
+                                    </td>
+                                    <td>{{ klijent.maticni_broj }}</td>
+                                    <td>{{ klijent.broj_lk }}</td>
+                                    <td>{{ klijent.mobilni_telefon }}</td>
+                                    <td>{{ klijent.mail_adresa }}</td>
+                                    <td>{{ klijent.firma_zaposlenja.naziv }}</td>
+                                    <td>{{ klijent.datum_evidentiranja | date:'dd/MM/yyyy' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls class="text-center" (pageChange)="klijentiPage = $event" id="klijenti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="appView == 'newClient'">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" (click)="sviKlijenti()"><a href="javascript:void(0);">Klijenti</a></li>
+                    <li class="breadcrumb-item active">Novi</li>
+                </ol>
+                <div class="card">
+                    <h3 class="card-header">Novi klijent</h3>
+                    <div class="card-body">
+                        <form (submit)="onAddSubmit()">
+                            <p class="card-subtitle mb-2 text-muted">Opšti podaci</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="imeNewTextbox" class="col-sm-4 col-form-label">Ime</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="imeNew" name="imeNew" id="imeNewTextbox" placeholder="Ime">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="prezimeNewTextbox" class="col-sm-4 col-form-label">Prezime</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="prezimeNew" name="prezimeNew" id="prezimeNewTextbox" placeholder="Prezime">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="jmbgNewTextbox" class="col-sm-4 col-form-label">Matični broj</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="jmbgNew" name="jmbgNew" id="jmbgNewTextbox" placeholder="JMBG">
+                                            <div class="invalid-feedback">Greška, pogrešan format!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="broj_lkNewTextbox" class="col-sm-4 col-form-label">Broj lične karte</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="broj_lkNew" name="broj_lkNew" id="broj_lkNewTextbox" placeholder="Broj lične karte">
+                                            <div class="invalid-feedback">Greška, pogrešan format!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="datum_izdavanja_lkNewTextbox" class="col-sm-4 col-form-label">Datum izdavanja lk</label>
+                                        <div class="col-8">
+                                            <my-date-picker name="datum_izdavanja_lkNew" [options]="myDatePickerOptions" [(ngModel)]="datum_izdavanja_lkNew" id="datum_izdavanja_lkNewTextbox"></my-date-picker>
+                                            <p id="datum_izdavanja_lkNewError" class="text-danger d-none"><small>Obavezan unos!</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="datum_vazenja_lkNewTextbox" class="col-sm-4 col-form-label">Datum važenja lk</label>
+                                        <div class="col-8">
+                                            <my-date-picker name="datum_vazenja_lkNew" [options]="myDatePickerOptions" [(ngModel)]="datum_vazenja_lkNew" id="datum_vazenja_lkNewTextbox"></my-date-picker>
+                                            <p id="datum_vazenja_lkNewError" class="text-danger d-none"><small>Obavezan unos!</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <p class="card-subtitle mb-2 text-muted">Adresa i kontakt podaci</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="ulica_i_brojNewTextbox" class="col-sm-4 col-form-label">Adresa</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="ulica_i_brojNew" name="ulica_i_brojNew" id="ulica_i_brojNewTextbox" placeholder="Ulica i broj">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="kucni_telNewTextbox" class="col-sm-4 col-form-label">Fiksni telefon</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="kucni_telNew" name="kucni_telNew" id="kucni_telNewTextbox" placeholder="xxx/xxx-xxx">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="gradNewTextbox" class="col-sm-4 col-form-label">Grad</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="gradNew" name="gradNew" id="gradNewTextbox" placeholder="Grad">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="mobilni_telNewTextbox" class="col-sm-4 col-form-label">Mobilni telefon</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="mobilni_telNew" name="mobilni_telNew" id="mobilni_telNewTextbox" placeholder="xxx/xxx-xxx">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="kantonNewTextbox" class="col-sm-4 col-form-label">Kanton</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="kantonNew" name="kantonNew" id="kantonNewTextbox" placeholder="Kanton">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="emailNewTextbox" class="col-sm-4 col-form-label">E-mail</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="emailNew" name="emailNew" id="emailNewTextbox" placeholder="email@adresa.ba">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="postanski_brojNewTextbox" class="col-sm-4 col-form-label">Poštanski broj</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="postanski_brojNew" name="postanski_brojNew" id="postanski_brojNewTextbox" placeholder="Poštanski broj">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                            <br>
+                            <p class="card-subtitle mb-2 text-muted">Podaci o zaposlenju</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="naziv_firmeNewTextbox" class="col-sm-4 col-form-label">Firma zaposlenja</label>
+                                        <div class="col-8">
+                                            <select class="custom-select" [(ngModel)]="id_firmeNew" name="id_firmeNew">
+                                                <option [value]="0" selected=""></option>
+                                                <option *ngFor="let kompanija of kompanije" [value]="kompanija._id">{{ kompanija.naziv }}</option>
+                                            </select>
+                                            <a href="#" class="card-link float-right" data-toggle="modal" data-target="#novaKompanija">Nova kompanija</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="odjel_firmeNewTextbox" class="col-sm-4 col-form-label">Odjel</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="odjel_firmeNew" name="odjel_firmeNew" id="odjel_firmeNewTextbox" placeholder="Odjel">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-outline-success float-right" (click)="dodajKlijenta()">Sačuvaj</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="appView == 'editClient'">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" (click)="sviKlijenti()"><a href="javascript:void(0);">Klijenti</a></li>
+                    <li class="breadcrumb-item active">Izmjena</li>
+                </ol>
+                <div class="card">
+                    <h3 class="card-header">Izmjena podataka klijenta</h3>
+                    <div class="card-body">
+                        <form (submit)="onAddSubmit()">
+                            <p class="card-subtitle mb-2 text-muted">Opšti podaci</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="imeEditTextbox" class="col-sm-4 col-form-label">Ime</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.ime" name="imeEdit" id="imeEditTextbox" placeholder="Ime">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="prezimeEditTextbox" class="col-sm-4 col-form-label">Prezime</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.prezime" name="prezimeEdit" id="prezimeEditTextbox" placeholder="Prezime">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="jmbgEditTextbox" class="col-sm-4 col-form-label">Matični broj</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.maticni_broj" name="jmbgEdit" id="jmbgEditTextbox" placeholder="JMBG">
+                                            <div class="invalid-feedback">Greška, pogrešan format!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="broj_lkEditTextbox" class="col-sm-4 col-form-label">Broj lične karte</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.broj_lk" name="broj_lkEdit" id="broj_lkEditTextbox" placeholder="Broj lične karte">
+                                            <div class="invalid-feedback">Greška, pogrešan format!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="datum_izdavanja_lkEditTextbox" class="col-sm-4 col-form-label">Datum izdavanja lk</label>
+                                        <div class="col-8">
+                                            <my-date-picker name="datum_izdavanja_lkEdit" [options]="myDatePickerOptions" [(ngModel)]="datum_izdavanja_lkEdit" id="datum_izdavanja_lkEditTextbox"></my-date-picker>
+                                            <p id="datum_izdavanja_lkEditError" class="text-danger d-none"><small>Obavezan unos!</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="datum_vazenja_lkEditTextbox" class="col-sm-4 col-form-label">Datum važenja lk</label>
+                                        <div class="col-8">
+                                            <my-date-picker name="datum_vazenja_lkEdit" [options]="myDatePickerOptions" [(ngModel)]="datum_vazenja_lkEdit" id="datum_vazenja_lkEditTextbox"></my-date-picker>
+                                            <p id="datum_vazenja_lkEditError" class="text-danger d-none"><small>Obavezan unos!</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <p class="card-subtitle mb-2 text-muted">Adresa i kontakt podaci</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="ulica_i_brojEditTextbox" class="col-sm-4 col-form-label">Adresa</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.adresa.ulica_i_broj" name="ulica_i_brojEdit" id="ulica_i_brojEditTextbox" placeholder="Ulica i broj">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="kucni_telEditTextbox" class="col-sm-4 col-form-label">Fiksni telefon</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.kucni_telefon" name="kucni_telEdit" id="kucni_telEditTextbox" placeholder="xxx/xxx-xxx">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="gradEditTextbox" class="col-sm-4 col-form-label">Grad</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.adresa.grad" name="gradEdit" id="gradEditTextbox" placeholder="Grad">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="mobilni_telEditTextbox" class="col-sm-4 col-form-label">Mobilni telefon</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.mobilni_telefon" name="mobilni_telEdit" id="mobilni_telEditTextbox" placeholder="xxx/xxx-xxx">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="kantonEditTextbox" class="col-sm-4 col-form-label">Kanton</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.adresa.kanton" name="kantonEdit" id="kantonEditTextbox" placeholder="Kanton">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="emailEditTextbox" class="col-sm-4 col-form-label">E-mail</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.mail_adresa" name="emailEdit" id="emailEditTextbox" placeholder="email@adresa.ba">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="postanski_brojEditTextbox" class="col-sm-4 col-form-label">Poštanski broj</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.adresa.postanski_broj" name="postanski_brojEdit" id="postanski_brojEditTextbox" placeholder="Poštanski broj">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                            <br>
+                            <p class="card-subtitle mb-2 text-muted">Podaci o zaposlenju</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="naziv_firmeEditTextbox" class="col-sm-4 col-form-label">Firma zaposlenja</label>
+                                        <div class="col-8">
+                                            <select class="custom-select" [(ngModel)]="id_firmeEdit" name="id_firmeEdit">
+                                                <option [value]="0" selected=""></option>
+                                                <option *ngFor="let kompanija of kompanije" [value]="kompanija._id">{{ kompanija.naziv }}</option>
+                                            </select>
+                                            <a href="#" class="card-link float-right" data-toggle="modal" data-target="#novaKompanija">Nova kompanija</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group row">
+                                        <label for="odjel_firmeEditTextbox" class="col-sm-4 col-form-label">Odjel</label>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control" [(ngModel)]="editKlijent.firma_zaposlenja.odjel" name="odjel_firmeEdit" id="odjel_firmeEditTextbox" placeholder="Odjel">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-outline-success float-right" (click)="sacuvajIzmjeneKlijenta(editKlijent)">Sačuvaj</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="novaKompanija">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form (submit)="novaKompanija()">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Nova kompanija</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="kompanijaNazivNewTextbox" class="form-label">Naziv</label>
+                                            <input type="text" class="form-control" [(ngModel)]="kompanijaNazivNew" name="kompanijaNazivNew" id="kompanijaNazivNewTextbox">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="kompanijaSifraNewTextbox" class="form-label">Šifra</label>
+                                            <input type="text" class="form-control" [(ngModel)]="kompanijaSifraNew" name="kompanijaSifraNew" id="kompanijaSifraNewTextbox">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="kompanijaTelNewTextbox" class="form-label">Kontakt telefon</label>
+                                            <input type="text" class="form-control" [(ngModel)]="kompanijaTelNew" name="kompanijaTelNew" id="kompanijaTelNewTextbox">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
+                                <button type="submit" class="btn btn-outline-success">Dodaj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

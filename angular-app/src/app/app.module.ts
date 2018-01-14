@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
@@ -17,13 +18,20 @@ import { DepozitService } from './services/depozit.service';
 import { KreditService } from './services/kredit.service';
 import { RacunService } from './services/racun.service';
 import { BiljeskaService } from './services/biljeska.service';
+import { KlijentService } from './services/klijent.service';
+import { KompanijaService } from './services/kompanija.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 import { ReportComponent } from './components/report/report.component';
+import { ClientsComponent } from './components/clients/clients.component';
 import { ChartsModule } from 'ng2-charts';
+
+//
+import { MyDatePickerModule } from 'mydatepicker';
+//
 
 const appRoutes: Routes = [
     {
@@ -51,6 +59,10 @@ const appRoutes: Routes = [
     {
         path: 'report',
         component: ReportComponent
+    },
+    {
+        path: 'clients',
+        component: ClientsComponent
     }
 ]
 
@@ -64,7 +76,8 @@ const appRoutes: Routes = [
         ProfileComponent,
         SidebarComponent,
         AdminpanelComponent,
-        ReportComponent
+        ReportComponent,
+        ClientsComponent
     ],
     imports: [
         BrowserModule,
@@ -72,7 +85,9 @@ const appRoutes: Routes = [
         HttpModule,
         RouterModule.forRoot(appRoutes),
         Angular2FontawesomeModule,
-        ChartsModule
+        ChartsModule,
+        NgxPaginationModule,
+        MyDatePickerModule
     ],
     providers: [
         ValidateService,
@@ -83,6 +98,8 @@ const appRoutes: Routes = [
         KreditService,
         RacunService,
         BiljeskaService,
+        KlijentService,
+        KompanijaService,
         AuthGuard
     ],
     bootstrap: [AppComponent]

@@ -22,11 +22,7 @@ export class NavbarComponent implements OnInit {
     constructor(private authService: AuthService, private navhomeService: NavhomeService, private validateService: ValidateService, private router: Router) { }
 
     ngOnInit() {
-        this.authService.getProfile().subscribe(profile => {
-            this.prijavljeni_korisnik = profile.user;
-        }, err => {
-            return false;
-        });
+        this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
     }
 
     onLogoutClick() {

@@ -10,10 +10,16 @@ import swal from 'sweetalert2';
     styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
+    // paging
+    racuniPage: number = 1;
+    karticePage: number = 1;
+    kreditiPage: number = 1;
+    depozitiPage: number = 1;
+
     // računi
     tipoviUgovoraRacuna: any;
     selectedSviUgovoriRacuna: any;
-    racuniResult: any;
+    racuniResult: any[];
     selektovaniTipoviUgovoraRacuna: Array<Object> = [];
     datumOdRacun: Date;
     datumDoRacun: Date;

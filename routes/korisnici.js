@@ -103,14 +103,7 @@ router.post('/autentifikacija', (req, res, next) => {
                         res.json({
                             success: true,
                             token: 'JWT ' + token,
-                            user: {
-                                id: user._id,
-                                korisnicko_ime: user.korisnicko_ime,
-                                ime: user.ime,
-                                prezime: user.prezime,
-                                email: user.email,
-                                odjel: user.odjel
-                            }
+                            user: user
                         })
                     } else {
                         return res.json({
