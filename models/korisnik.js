@@ -88,12 +88,31 @@ module.exports.dodaj = function(noviKorisnik, callback) {
 }
 
 module.exports.izmjena = function(korisnik, callback) {
+    korisnik.odjel._id = mongoose.Types.ObjectId(korisnik.odjel._id);
     const ObjectId = require('mongoose').Types.ObjectId;
     const query = {
         _id: new ObjectId(korisnik._id)
     };
 
     Korisnik.updateOne(query, korisnik, callback);
+}
+
+module.exports.izmjenaLozinke = function(korisnik, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId;
+    const query = {
+        _id: new ObjectId(korisnik._id)
+    };
+
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(korisnik.lozinka, salt, (err, hash) => {
+            if(err) {
+                throw err;
+            } else {
+                korisnik.lozinka = hash;
+                Korisnik.updateOne(query, korisnik, callback);
+            }
+        });
+    });
 }
 
 module.exports.uporediLozinke = function(candidatePassword, hash, callback) {

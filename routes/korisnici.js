@@ -55,7 +55,6 @@ router.post('/izmjena', (req, res, next) => {
         ime: req.body.ime,
         prezime: req.body.prezime,
         email: req.body.email,
-        //lozinka: req.body.lozinka,
         odjel: req.body.odjel,
         datum_zadnje_izmjene: Date.now()
     });
@@ -70,6 +69,29 @@ router.post('/izmjena', (req, res, next) => {
             res.json({
                 success: true,
                 msg: 'Izmjene sačuvane!'
+            });
+        }
+    });
+});
+
+// Update lozinke korisnika
+router.post('/izmjenalozinke', (req, res, next) => {
+    let korisnik = new Korisnik({
+        _id: req.body._id,
+        lozinka: req.body.novaLozinka,
+        datum_zadnje_izmjene: Date.now()
+    });
+
+    Korisnik.izmjenaLozinke(korisnik, (err, user) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška, izmjene nisu sačuvane!'
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'Nova lozinka sačuvana!'
             });
         }
     });

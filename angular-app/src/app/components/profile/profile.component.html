@@ -44,7 +44,7 @@
                                         <span *ngIf="user.aktivan" class="badge badge-success">Aktivan korisnik</span>
                                     </div>
                                     <div class="col">
-                                        <button type="button" class="btn btn-link disabled float-right" data-toggle="tooltip" data-placement="top" title="Izmjena" data-toggle="modal" data-target="#editKorisnika"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-link disabled float-right" data-toggle="tooltip" data-placement="top" title="Izmjena" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="editProfila(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -60,22 +60,110 @@
     </div>
 </div>
 
-<div class="modal fade" id="editKorisnika">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-lg" id="editKorisnika">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Izmjena podataka</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <nav class="nav nav-tabs" id="myTab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-podaci-tab" data-toggle="tab" href="#nav-podaci" role="tab" aria-controls="nav-podaci" aria-selected="false">
+                        Lični podaci
+                    </a>
+                    <a class="nav-item nav-link" id="nav-lozinka-tab" data-toggle="tab" href="#nav-lozinka" role="tab" aria-controls="nav-lozinka" aria-selected="true">
+                        Lozinka
+                    </a>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-podaci" role="tabpanel" aria-labelledby="nav-podaci-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="imeEditTextbox">Ime</label>
+                                            <input type="text" class="form-control" [(ngModel)]="imeEdit" name="imeEdit" id="imeProfilEditTextbox" placeholder="Ime">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="prezimeEditTextbox">Prezime</label>
+                                            <input type="text" class="form-control" [(ngModel)]="prezimeEdit" name="prezimeEdit" id="prezimeProfilEditTextbox" placeholder="Prezime">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="emailEditTextbox">E-mail</label>
+                                            <input type="emal" class="form-control" [(ngModel)]="emailEdit" name="emailEdit" id="emailProfilEditTextbox" placeholder="email@adresa.ba">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="odjelEditTextbox">Odjel</label>
+                                            <select class="custom-select" [(ngModel)]="id_odjelaEdit" name="odjelEdit" id="odjelProfilEdit">
+                                                <option [value]="0" selected=""></option>
+                                                <option *ngFor="let odjel of odjeliLista" [value]="odjel._id">{{ odjel.organizaciona_jedinica }}</option>
+                                            </select>
+                                            <div class="invalid-feedback">Obavezan odabir!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <a href="#" class="card-link text-danger" data-dismiss="modal">Zatvori</a>
+                                <a href="#" class="card-link" (click)="sacuvajIzmjene()">Sačuvaj</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-lozinka" role="tabpanel" aria-labelledby="nav-lozinka-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <!--<div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="trenutnaLozinkaEditTextbox">Trenutna lozinka</label>
+                                            <input type="password" class="form-control" [(ngModel)]="trenutnaLozinkaEdit" name="trenutnaLozinkaEdit" id="trenutnaLozinkaEditTextbox">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="novaLozinkaEditTextbox">Nova lozinka</label>
+                                            <input type="password" class="form-control" [(ngModel)]="novaLozinkaEdit" name="novaLozinkaEdit" id="novaLozinkaEditTextbox">
+                                            <div class="invalid-feedback">Obavezan unos!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="potvrdaNoveLozinkeEditTextbox">Potvrda nove lozinke</label>
+                                            <input type="password" class="form-control" [(ngModel)]="potvrdaNoveLozinkeEdit" name="potvrdaNoveLozinkeEdit" id="potvrdaNoveLozinkeEditTextbox">
+                                            <div class="invalid-feedback">Lozinke nisu iste!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#" class="card-link text-danger" data-dismiss="modal">Zatvori</a>
+                                <a href="#" class="card-link" (click)="izmjeniLozinku()">Sačuvaj</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
+                <button type="submit" class="btn btn-outline-success" (click)="sacuvajIzmjene()">Sačuvaj</button>
+            </div>-->
         </div>
     </div>
 </div>

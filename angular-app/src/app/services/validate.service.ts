@@ -44,7 +44,6 @@ export class ValidateService {
         } else {
             document.getElementById('idUposlenikaTextbox').classList.remove('is-invalid');
             document.getElementById('idUposlenikaError').classList.add('d-none');
-            //valid = true;
         }
 
         if(korisnik.ime == undefined || korisnik.ime == '') {
@@ -54,7 +53,6 @@ export class ValidateService {
         } else {
             document.getElementById('imeTextbox').classList.remove('is-invalid');
             document.getElementById('imeError').classList.add('d-none');
-            //valid = true;
         }
 
         if(korisnik.prezime == undefined || korisnik.prezime == '') {
@@ -64,7 +62,6 @@ export class ValidateService {
         } else {
             document.getElementById('prezimeTextbox').classList.remove('is-invalid');
             document.getElementById('prezimeError').classList.add('d-none');
-            //valid = true;
         }
 
         if(korisnik.email == undefined || korisnik.email == '' || !this.validacijaEmaila(korisnik.email)) {
@@ -74,7 +71,6 @@ export class ValidateService {
         } else {
             document.getElementById('emailTextbox').classList.remove('is-invalid');
             document.getElementById('emailError').classList.add('d-none');
-            //valid = true;
         }
 
         if(korisnik.korisnicko_ime == undefined || korisnik.korisnicko_ime == '' || korisnik.korisnicko_ime.length < 5) {
@@ -84,7 +80,6 @@ export class ValidateService {
         } else {
             document.getElementById('korisnickoimeTextbox').classList.remove('is-invalid');
             document.getElementById('korisnickoimeError').classList.add('d-none');
-            //valid = true;
         }
 
         if(korisnik.lozinka == undefined || korisnik.lozinka == '') {
@@ -94,7 +89,6 @@ export class ValidateService {
         } else {
             document.getElementById('lozinkaTextbox').classList.remove('is-invalid');
             document.getElementById('lozinkaError').classList.add('d-none');
-            //valid = true;
         }
 
         if(korisnik.potvrdaLozinke == undefined || korisnik.potvrdaLozinke == '' || korisnik.potvrdaLozinke != korisnik.lozinka) {
@@ -104,7 +98,6 @@ export class ValidateService {
         } else {
             document.getElementById('potvrdaLozinkeTextbox').classList.remove('is-invalid');
             document.getElementById('potvrdaLozinkeError').classList.add('d-none');
-            //valid = true;
         }
 
         if(korisnik.odjel == undefined) {
@@ -114,7 +107,6 @@ export class ValidateService {
         } else {
             document.getElementById('odjelDropbox').classList.remove('is-invalid');
             document.getElementById('odjelError').classList.add('d-none');
-            //valid = true;
         }
 
         return valid;
@@ -216,43 +208,62 @@ export class ValidateService {
         return valid;
     }
 
-    validateUpdate(korisnik) {
+    validacijaIzmjeneProfila(korisnik) {
         let valid = true;
 
         if(korisnik.ime == undefined || korisnik.ime == '') {
-            document.getElementById('imeTextbox').classList.add('is-invalid');
-            document.getElementById('imeError').classList.remove('d-none');
+            document.getElementById('imeProfilEditTextbox').classList.add('is-invalid');
             valid = false;
         } else {
-            document.getElementById('imeTextbox').classList.remove('is-invalid');
-            document.getElementById('imeError').classList.add('d-none');
+            document.getElementById('imeProfilEditTextbox').classList.remove('is-invalid');
         }
 
         if(korisnik.prezime == undefined || korisnik.prezime == '') {
-            document.getElementById('prezimeTextbox').classList.add('is-invalid');
-            document.getElementById('prezimeError').classList.remove('d-none');
+            document.getElementById('prezimeProfilEditTextbox').classList.add('is-invalid');
             valid = false;
         } else {
-            document.getElementById('prezimeTextbox').classList.remove('is-invalid');
-            document.getElementById('prezimeError').classList.add('d-none');
+            document.getElementById('prezimeProfilEditTextbox').classList.remove('is-invalid');
         }
 
         if(korisnik.email == undefined || korisnik.email == '' || !this.validacijaEmaila(korisnik.email)) {
-            document.getElementById('emailTextbox').classList.add('is-invalid');
-            document.getElementById('emailError').classList.remove('d-none');
+            document.getElementById('emailProfilEditTextbox').classList.add('is-invalid');
             valid = false;
         } else {
-            document.getElementById('emailTextbox').classList.remove('is-invalid');
-            document.getElementById('emailError').classList.add('d-none');
+            document.getElementById('emailProfilEditTextbox').classList.remove('is-invalid');
         }
 
         if(korisnik.odjel == undefined) {
-            document.getElementById('odjelDropbox').classList.add('is-invalid');
-            document.getElementById('odjelError').classList.remove('d-none');
+            document.getElementById('odjelProfilEdit').classList.add('is-invalid');
             valid = false;
         } else {
-            document.getElementById('odjelDropbox').classList.remove('is-invalid');
-            document.getElementById('odjelError').classList.add('d-none');
+            document.getElementById('odjelProfilEdit').classList.remove('is-invalid');
+        }
+
+        return valid;
+    }
+
+    validacijaIzmjeneLozinke(lozinke) {
+        let valid = true;
+
+        /*if(lozinke.trenutnaLozinka == undefined || lozinke.trenutnaLozinka == '') {
+            document.getElementById('trenutnaLozinkaEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('trenutnaLozinkaEditTextbox').classList.remove('is-invalid');
+        }*/
+
+        if(lozinke.novaLozinka == undefined || lozinke.novaLozinka == '') {
+            document.getElementById('novaLozinkaEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('novaLozinkaEditTextbox').classList.remove('is-invalid');
+        }
+
+        if(lozinke.potvrdaNoveLozinke == undefined || lozinke.potvrdaNoveLozinke == '' || lozinke.potvrdaNoveLozinke != lozinke.novaLozinka) {
+            document.getElementById('potvrdaNoveLozinkeEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('potvrdaNoveLozinkeEditTextbox').classList.remove('is-invalid');
         }
 
         return valid;

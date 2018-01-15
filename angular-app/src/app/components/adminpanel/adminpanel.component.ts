@@ -30,7 +30,9 @@ export class AdminpanelComponent implements OnInit {
     datum_doEdit: Date;
     datum_izmjeneEdit: Date;
     izmjenioEdit: Object;
-    //
+    
+    // paging
+    ponudePage: number = 1;
 
     constructor(private navhomeService: NavhomeService, private authService: AuthService, private ponudeService: PonudeService) { }
 

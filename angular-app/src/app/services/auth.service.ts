@@ -17,11 +17,18 @@ export class AuthService {
         return this.http.post('http://localhost:3000/korisnici/registracija', korisnik, {headers: headers}).map(res => res.json());
     }
 
-    updateUser(korisnik) {
+    izmjenaKorisnika(korisnik) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
         return this.http.post('http://localhost:3000/korisnici/izmjena', korisnik, {headers: headers}).map(res => res.json());
+    }
+
+    izmjenaLozinkeKorisnika(korisnik) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/korisnici/izmjenalozinke', korisnik, {headers: headers}).map(res => res.json());
     }
 
     autentifikacijaKorisnika(korisnik) {
