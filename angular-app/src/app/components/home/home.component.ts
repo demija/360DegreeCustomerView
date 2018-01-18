@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { ValidateService } from '../../services/validate.service';
 import { PonudeService } from '../../services/ponude.service';
 import { BiljeskaService } from '../../services/biljeska.service';
+import { KlijentPonudeService } from '../../services/klijent-ponude.service';
 
 @Component({
     selector: 'app-home',
@@ -15,6 +16,8 @@ export class HomeComponent implements OnInit {
     biljeskePage: number = 1;
 
     prijavljeni_korisnik: Object;
+    ponudjeneUsluge: Array<any> = [];
+    ugovoreneUsluge: Array<any> = [];
 
     klijent: Object;
     racuni: Object;
@@ -25,14 +28,12 @@ export class HomeComponent implements OnInit {
     ponude: any;
     time_line: Object;
 
+    // biljeske
     biljeskaTxt: String = "";
     biljeskaNaslov: String = "";
-    biljeskaPrikaz: String = "";
+    biljeskaPrikaz: String = "";   
 
-    ponudjeneUsluge: Array<any> = [];
-    ugovoreneUsluge: Array<any> = [];
-
-    constructor(private authService: AuthService, private valdateService: ValidateService, private navhomeService: NavhomeService, private ponudeService: PonudeService, private biljeskaService: BiljeskaService) { }
+    constructor(private authService: AuthService, private valdateService: ValidateService, private navhomeService: NavhomeService, private ponudeService: PonudeService, private biljeskaService: BiljeskaService, private klijentPonudeService: KlijentPonudeService) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
@@ -110,7 +111,14 @@ export class HomeComponent implements OnInit {
                 });
 
                 if(!contains) {
-                    this.ponudjeneUsluge.push(ponuda);
+                    let tempPonuda = {
+                        _id: ponuda._id,
+                        naziv_ponude: ponuda.naziv_ponude,
+                        sifra_ponude: ponuda.sifra_ponude,
+                        klasa_ponude: ponuda.klasa_ponude
+                    }
+
+                    this.ponudjeneUsluge.push(tempPonuda);
                 }
 
                 this.ugovoreneUsluge.forEach(element => {
@@ -128,7 +136,14 @@ export class HomeComponent implements OnInit {
                 });
 
                 if(!contains) {
-                    this.ugovoreneUsluge.push(ponuda);
+                    let tempPonuda = {
+                        _id: ponuda._id,
+                        naziv_ponude: ponuda.naziv_ponude,
+                        sifra_ponude: ponuda.sifra_ponude,
+                        klasa_ponude: ponuda.klasa_ponude
+                    }
+                    
+                    this.ugovoreneUsluge.push(tempPonuda);
                 }
 
                 this.ponudjeneUsluge.forEach(element => {
@@ -142,25 +157,41 @@ export class HomeComponent implements OnInit {
 
     //TODO
     onCardClick() {        
-        console.log('ponudjeno');
-        this.ponudjeneUsluge.forEach(elementPonuda => {
-            console.log(elementPonuda);
-        });
-
-        console.log('ugovoreno');
-        this.ugovoreneUsluge.forEach(elementUgovor => {
-            console.log(elementUgovor);
-        });
-
         if(!this.klijent['_id']) {
             this.valdateService.pokreniSwal('Greška!', 'Odaberi klijenta', 'warning', 'Uredu');
-        } else {
-            if(this.ponudjeneUsluge.length == 0 && this.ugovoreneUsluge.length == 0) {
-                this.valdateService.pokreniSwal('Greška!', 'Odaberi uslugu', 'warning', 'Uredu');
-            } else {
-                console.log('sve ok, spašavam usluge');
+            return false;
+        }
+
+        if(this.ponudjeneUsluge.length == 0 && this.ugovoreneUsluge.length == 0) {
+            this.valdateService.pokreniSwal('Greška!', 'Odaberi uslugu', 'warning', 'Uredu');
+            return false;
+        }
+
+        const ponuda = {
+            klijent: {
+                _id: this.klijent['_id'],
+                maticni_broj: this.klijent['maticni_broj'],
+                ime: this.klijent['ime'],
+                prezime: this.klijent['prezime']
+            },
+            ponudjene_usluge: this.ponudjeneUsluge,
+            ugovorene_usluge: this.ugovoreneUsluge,
+            evidentirao: {
+                _id: this.prijavljeni_korisnik['_id'],
+                id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
+                ime: this.prijavljeni_korisnik['ime'],
+                prezime: this.prijavljeni_korisnik['prezime'],
+                korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
             }
         }
+
+        this.klijentPonudeService.novaKlijentPonuda(ponuda).subscribe(data => {
+            if(data.success) {
+                this.valdateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
+            } else {
+                this.valdateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
+            }
+        });
     }
 
     onBiljeskeSacuvajClick() {
@@ -173,7 +204,7 @@ export class HomeComponent implements OnInit {
                 id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
                 ime: this.prijavljeni_korisnik['ime'],
                 prezime: this.prijavljeni_korisnik['prezime'],
-                korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime'],
+                korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
             },
             poruka: this.biljeskaTxt.trim()
         }

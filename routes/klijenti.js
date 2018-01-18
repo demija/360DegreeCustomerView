@@ -75,8 +75,6 @@ router.post('/izmjena', (req, res, next) => {
 router.post('/dodaj', (req, res, next) => {
     let noviKlijent = new Klijent(req.body);
     noviKlijent.datum_evidentiranja = Date.now();
-
-    console.log(noviKlijent);
     
     Klijent.dodaj(noviKlijent, (err, user) => {
         if(err) {

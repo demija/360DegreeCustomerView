@@ -20,18 +20,16 @@ import { RacunService } from './services/racun.service';
 import { BiljeskaService } from './services/biljeska.service';
 import { KlijentService } from './services/klijent.service';
 import { KompanijaService } from './services/kompanija.service';
+import { KlijentPonudeService } from './services/klijent-ponude.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
+import { MyDatePickerModule } from 'mydatepicker';
 import { AdminpanelComponent } from './components/adminpanel/adminpanel.component';
 import { ReportComponent } from './components/report/report.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { ChartsModule } from 'ng2-charts';
-
-//
-import { MyDatePickerModule } from 'mydatepicker';
-//
 
 const appRoutes: Routes = [
     {
@@ -100,6 +98,7 @@ const appRoutes: Routes = [
         BiljeskaService,
         KlijentService,
         KompanijaService,
+        KlijentPonudeService,
         AuthGuard
     ],
     bootstrap: [AppComponent]

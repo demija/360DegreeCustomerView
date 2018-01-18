@@ -28,6 +28,7 @@ const pretrage = require('./routes/pretrage');
 const ponude = require('./routes/ponude');
 const biljeske = require('./routes/biljeske');
 const kompanije = require('./routes/kompanije');
+const klijentiponude = require('./routes/klijentiponude');
 
 // port
 const port = 3000;
@@ -59,6 +60,7 @@ app.use('/pretrage', pretrage);
 app.use('/ponude', ponude);
 app.use('/biljeske', biljeske);
 app.use('/kompanije', kompanije);
+app.use('/klijentiponude', klijentiponude);
 
 // Index ruta
 app.get('/', (req, res) => {
