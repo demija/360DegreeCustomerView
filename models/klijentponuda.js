@@ -37,6 +37,15 @@ module.exports.getDataById = function(id, callback) {
     KlijentPonuda.find(query, callback).sort('-datum_evidentiranja');
 }
 
+module.exports.getDataForKorisnik = function(id, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        'evidentirao._id': new ObjectId(id)
+    };
+    
+    KlijentPonuda.find(query, callback);
+}
+
 module.exports.dodaj = function(novaKlijentPonuda, callback) {
     novaKlijentPonuda.klijent._id = mongoose.Types.ObjectId(novaKlijentPonuda.klijent._id);
     novaKlijentPonuda.evidentirao._id = mongoose.Types.ObjectId(novaKlijentPonuda.evidentirao._id);

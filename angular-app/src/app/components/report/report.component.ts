@@ -85,7 +85,8 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'left'
+            position: 'bottom',
+            fullWidth: true
         }
     };
 
@@ -132,7 +133,8 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'left'
+            position: 'bottom',
+            fullWidth: true
         }
     };
 
@@ -169,7 +171,8 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'left'
+            position: 'bottom',
+            fullWidth: true
         }
     }
 
@@ -210,12 +213,18 @@ export class ReportComponent implements OnInit {
                         stepSize: 5
                     }
                 }]
+        },
+        legend: {
+            display: true,
+            position: 'bottom',
+            fullWidth: true
         }
     };
 
     public lineKolicinaChartOptions:any = {
         scaleShowVerticalLines: false,
         responsive: true,
+        //maintainAspectRatio: true,
         title: {
             display: true,
             text: 'Iznos'
@@ -246,6 +255,11 @@ export class ReportComponent implements OnInit {
                         beginAtZero: true,
                     }
                 }]
+        },
+        legend: {
+            display: true,
+            position: 'bottom',
+            fullWidth: true
         }
     };
 

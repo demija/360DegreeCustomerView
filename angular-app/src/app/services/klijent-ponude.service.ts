@@ -12,4 +12,11 @@ export class KlijentPonudeService {
         
         return this.http.post('http://localhost:3000/klijentiponude/dodaj', ponuda, {headers: headers}).map(res => res.json());
     }
+
+    ponudeKorisnika(korisnik) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/klijentiponude/ponudekorisnika', korisnik, {headers: headers}).map(res => res.json());
+    }
 }

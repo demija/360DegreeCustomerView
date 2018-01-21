@@ -40,7 +40,32 @@ router.post('/vratipodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoji depozit',
+                    msg: 'Greška!',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
+// Vraćanje ponuda korisnika
+router.post('/ponudekorisnika', (req, res, next) => {
+    const id = req.body._id;
+
+    KlijentPonuda.getDataForKorisnik(id, (err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Greška!',
                     data: null
                 });
             }

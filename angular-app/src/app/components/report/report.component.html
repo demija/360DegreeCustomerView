@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="card">
+<div class="card card-1">
     <h3 class="card-header">Pregled poslovanja</h3>
     <div class="card-body">
         <nav class="nav nav-pills" id="myTab" role="tablist">
@@ -45,7 +45,7 @@
                                 <button type="submit" class="btn btn-outline-primary float-right" (click)="traziRacune()">Traži</button>
                             </div>
                         </div>
-                        <div class="col-10">
+                        <div class="col-10" *ngIf="racuniResult">
                             <h4 class="card-title">Računi</h4>
                             <div class="table-responsive">
                                 <table class="table table-hover table-sm">
@@ -87,40 +87,46 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div style="display: block">
-                                <canvas baseChart id="brojRacunaGraph"
-                                    [datasets]="racunBrojChartData"
-                                    [labels]="racunBrojChartLabels"
-                                    [options]="lineBrojChartOptions"
-                                    [legend]="racunBrojChartLegend"
-                                    [chartType]="racunBrojChartType">
-                                </canvas>
+                    <div *ngIf="racuniResult">
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="brojRacunaGraph" height="100"
+                                        [datasets]="racunBrojChartData"
+                                        [labels]="racunBrojChartLabels"
+                                        [options]="lineBrojChartOptions"
+                                        [legend]="racunBrojChartLegend"
+                                        [chartType]="racunBrojChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div style="display: block">
-                                <canvas baseChart id="kolicinaRacunaGraph"
-                                    [datasets]="racunKolicinaChartData"
-                                    [labels]="racunKolicinaChartLabels"
-                                    [options]="lineKolicinaChartOptions"
-                                    [legend]="racunKolicinaChartLegend"
-                                    [chartType]="racunKolicinaChartType">
-                                </canvas>
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="kolicinaRacunaGraph" height="100"
+                                        [datasets]="racunKolicinaChartData"
+                                        [labels]="racunKolicinaChartLabels"
+                                        [options]="lineKolicinaChartOptions"
+                                        [legend]="racunKolicinaChartLegend"
+                                        [chartType]="racunKolicinaChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row justify-content-md-center">
-                        <div class="col-md-8">
-                            <div style="display: block">
-                                <canvas baseChart id="racuniGraph"
-                                    [data]="racunDoughnutChartData"
-                                    [labels]="racunDoughnutChartLabels"
-                                    [options]="racunDoughnutChartOptions"
-                                    [chartType]="racunDoughnutChartType">
-                                </canvas>
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="racuniGraph" height="100"
+                                        [data]="racunDoughnutChartData"
+                                        [labels]="racunDoughnutChartLabels"
+                                        [options]="racunDoughnutChartOptions"
+                                        [chartType]="racunDoughnutChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -177,7 +183,7 @@
                                 <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKartice()">Traži</button>
                             </div>
                         </div>
-                        <div class="col-10">
+                        <div class="col-10" *ngIf="karticeResult">
                             <h4 class="card-title">Kartice</h4>
                             <div class="table-responsive">
                                 <table class="table table-hover table-sm">
@@ -225,17 +231,19 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row justify-content-md-center">
-                        <div class="col-md-8">
-                            <div style="display: block">
-                                <canvas baseChart id="brojKarticaGraph"
-                                    [datasets]="karticaBrojChartData"
-                                    [labels]="karticaBrojChartLabels"
-                                    [options]="lineBrojChartOptions"
-                                    [legend]="karticaBrojChartLegend"
-                                    [chartType]="karticaBrojChartType">
-                                </canvas>
+                    <div *ngIf="karticeResult">
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="brojKarticaGraph" height="100"
+                                        [datasets]="karticaBrojChartData"
+                                        [labels]="karticaBrojChartLabels"
+                                        [options]="lineBrojChartOptions"
+                                        [legend]="karticaBrojChartLegend"
+                                        [chartType]="karticaBrojChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -270,7 +278,7 @@
                                 <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKredite()">Traži</button>
                             </div>
                         </div>
-                        <div class="col-10">
+                        <div class="col-10" *ngIf="kreditiResult">
                             <h4 class="card-title">Krediti</h4>
                             <div class="table-responsive">
                                 <table class="table table-hover table-sm">
@@ -315,39 +323,46 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div style="display: block">
-                                <canvas baseChart id="brojKreditaGraph"
-                                    [datasets]="kreditBrojChartData"
-                                    [labels]="kreditBrojChartLabels"
-                                    [options]="lineBrojChartOptions"
-                                    [legend]="kreditBrojChartLegend"
-                                    [chartType]="kreditBrojChartType">
-                                </canvas>
+                    <div *ngIf="kreditiResult">
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="brojKreditaGraph" height="120"
+                                        [datasets]="kreditBrojChartData"
+                                        [labels]="kreditBrojChartLabels"
+                                        [options]="lineBrojChartOptions"
+                                        [legend]="kreditBrojChartLegend"
+                                        [chartType]="kreditBrojChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div style="display: block">
-                                <canvas baseChart id="kolicinaKreditaGraph"
-                                    [datasets]="kreditKolicinaChartData"
-                                    [labels]="kreditKolicinaChartLabels"
-                                    [options]="lineKolicinaChartOptions"
-                                    [legend]="kreditKolicinaChartLegend"
-                                    [chartType]="kreditKolicinaChartType">
-                                </canvas>
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="kolicinaKreditaGraph" height="120"
+                                        [datasets]="kreditKolicinaChartData"
+                                        [labels]="kreditKolicinaChartLabels"
+                                        [options]="lineKolicinaChartOptions"
+                                        [legend]="kreditKolicinaChartLegend"
+                                        [chartType]="kreditKolicinaChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row justify-content-md-center">
-                        <div class="col-md-8">
-                            <div style="display: block">
-                                <canvas baseChart id="kreditiGraph"
-                                    [data]="kreditDoughnutChartData"
-                                    [labels]="kreditDoughnutChartLabels"
-                                    [options]="kreditDoughnutChartOptions"
-                                    [chartType]="kreditDoughnutChartType"></canvas>
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="kreditiGraph" height="100"
+                                        [data]="kreditDoughnutChartData"
+                                        [labels]="kreditDoughnutChartLabels"
+                                        [options]="kreditDoughnutChartOptions"
+                                        [chartType]="kreditDoughnutChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -382,7 +397,7 @@
                                 <button type="submit" class="btn btn-outline-primary float-right" (click)="traziDepozite()">Traži</button>
                             </div>
                         </div>
-                        <div class="col-10">
+                        <div class="col-10" *ngIf="depozitiResult">
                             <h4 class="card-title">Depoziti</h4>
                             <div class="table-responsive">
                                 <table class="table table-hover table-sm">
@@ -420,40 +435,46 @@
                             </div>
                         </div>      
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div style="display: block">
-                                <canvas baseChart id="brojDepozitaGraph"
-                                    [datasets]="depozitBrojChartData"
-                                    [labels]="depozitBrojChartLabels"
-                                    [options]="lineBrojChartOptions"
-                                    [legend]="depozitBrojChartLegend"
-                                    [chartType]="depozitBrojChartType">
-                                </canvas>
+                    <div *ngIf="depozitiResult">
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="brojDepozitaGraph" height="100"
+                                        [datasets]="depozitBrojChartData"
+                                        [labels]="depozitBrojChartLabels"
+                                        [options]="lineBrojChartOptions"
+                                        [legend]="depozitBrojChartLegend"
+                                        [chartType]="depozitBrojChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div style="display: block">
-                                <canvas baseChart id="kolicinaDepozitaGraph"
-                                    [datasets]="depozitKolicinaChartData"
-                                    [labels]="depozitKolicinaChartLabels"
-                                    [options]="lineKolicinaChartOptions"
-                                    [legend]="depozitKolicinaChartLegend"
-                                    [chartType]="depozitKolicinaChartType">
-                                </canvas>
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="kolicinaDepozitaGraph" height="100"
+                                        [datasets]="depozitKolicinaChartData"
+                                        [labels]="depozitKolicinaChartLabels"
+                                        [options]="lineKolicinaChartOptions"
+                                        [legend]="depozitKolicinaChartLegend"
+                                        [chartType]="depozitKolicinaChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row justify-content-md-center">
-                        <div class="col-md-8">
-                            <div style="display: block">
-                                <canvas baseChart id="depozitiGraph"
-                                    [data]="doughnutChartData"
-                                    [labels]="doughnutChartLabels"
-                                    [options]="doughnutChartOptions"
-                                    [chartType]="doughnutChartType">
-                                </canvas>
+                        <hr>
+                        <div class="row justify-content-md-center">
+                            <div class="col-md-12">
+                                <div style="display: block">
+                                    <canvas baseChart id="depozitiGraph" height="100"
+                                        [data]="doughnutChartData"
+                                        [labels]="doughnutChartLabels"
+                                        [options]="doughnutChartOptions"
+                                        [chartType]="doughnutChartType">
+                                    </canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
