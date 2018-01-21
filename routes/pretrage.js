@@ -3,12 +3,12 @@ const router = express.Router();
 const config = require('../config/database');
 const Pretraga = require('../models/pretraga');
 
-// Registracija korisnik
+// Unos loga pretrage
 router.post('/unosPretrage', (req, res, next) => {
     let log = new Pretraga({
         trazeni_maticni_broj: req.body.maticni_broj,
         korisnik: {
-            id_korisnika: req.body.id_prijavljenog_korisnika,
+            _id: req.body.id_prijavljenog_korisnika,
             id_uposlenika: req.body.id_uposlenika,
             ime: req.body.ime,
             prezime: req.body.prezime,
@@ -26,7 +26,28 @@ router.post('/unosPretrage', (req, res, next) => {
         } else {
             res.json({
                 success: true,
-                msg: 'Log unešen!'
+                msg: 'Log spašen!'
+            });
+        }
+    });
+});
+
+// Broj pretraga korisnika
+router.post('/brojpretraga', (req, res, next) => {
+    let korisnik_id = req.body._id;
+
+    Pretraga.brojPretraga(korisnik_id, (err, data) => {
+        if(err) {
+            res.json({
+                success: false,
+                msg: 'Greška!',
+                data: null
+            });
+        } else {
+            res.json({
+                success: true,
+                msg: 'ok!',
+                data: data
             });
         }
     });

@@ -21,6 +21,7 @@ import { BiljeskaService } from './services/biljeska.service';
 import { KlijentService } from './services/klijent.service';
 import { KompanijaService } from './services/kompanija.service';
 import { KlijentPonudeService } from './services/klijent-ponude.service';
+import { ProfilService } from './services/profil.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -99,6 +100,7 @@ const appRoutes: Routes = [
         KlijentService,
         KompanijaService,
         KlijentPonudeService,
+        ProfilService,
         AuthGuard
     ],
     bootstrap: [AppComponent]

@@ -8,7 +8,7 @@
         <div class="container" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
             <br>
             <div id="svakodnevno_bankarstvo">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Svakodnevno bankarstvo</h3>
                     <div class="card-body">
                         <div class="row">
@@ -153,7 +153,7 @@
             </div>
             <br>
             <div id="transakcijsko_poslovanje">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Transakcijsko poslovanje</h3>
                     <div class="card-body">
                         <div *ngFor="let rcn of racuni.data; let idx = index">
@@ -192,7 +192,7 @@
             </div>
             <br>
             <div id="karticno_poslovanje">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Kartično poslovanje</h3>
                     <div class="card-body">
                         <div *ngFor="let kart of kartice; let idx = index">
@@ -236,7 +236,7 @@
             </div>
             <br>
             <div id="krediti">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Krediti</h3>
                     <div class="card-body">
                         <div *ngFor="let kredit of krediti.data; let idx = index">
@@ -279,7 +279,7 @@
             </div>
             <br>
             <div id="depoziti">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Depoziti</h3>
                     <div class="card-body">
                         <div *ngFor="let dpz of depoziti.data; let idx = index">
@@ -310,7 +310,7 @@
             </div>
             <br>
             <div id="ostale_usluge">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Dodatne usluge</h3>
                     <div class="card-body">
                         <h5><span *ngFor="let usluga of dodatne_usluge">
@@ -321,7 +321,7 @@
             </div>
             <br>
             <div id="biljeske">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Bilješke</h3>
                     <div class="card-body">
                         <div class="row">
@@ -343,7 +343,7 @@
             </div>
             <br>
             <div id="arhiva_interakcija">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Arhiva interakcija</h3>
                     <div class="card-body">
                         <div class="row">
@@ -366,7 +366,7 @@
             </div>
             <br>
             <div id="vremenska_linija">
-                <div class="card">
+                <div class="card card-1">
                     <h3 class="card-header">Vremenska linija</h3>
                     <div class="card-body">
                         <ul class="timeline" *ngFor="let timel of time_line; let even = even; let odd = odd">
@@ -408,7 +408,7 @@
         </div>
 
         <div class="rightPanel">
-            <div class="card border-success" style="height: 50%;">
+            <div class="card border-success card-1" style="height: 50%;">
                 <div class="card-header">Preporučene usluge</div>
                 <div class="card-body" style="overflow-y: auto">
                     <p><span class="text-muted">Ponuđeno</span><span class="text-muted float-right">Ugovoreno</span></p>
@@ -433,17 +433,17 @@
                     </table>
                 </div>
                 <div style="padding:10px;">
-                    <a href="#" class="card-link" (click)="onCardClick()">Sačuvaj</a>
+                    <button type="button" class="btn btn-link" (click)="onCardClick()">Sačuvaj</button>
                 </div>
             </div>
 
-            <div class="card border-warning mb-3" style="height:30%; margin-top:15px;">
+            <div class="card border-warning card-1" style="height:30%; margin-top:15px;">
                 <div class="card-header">Bilješke</div>
                 <div class="card-body" style="overflow-y: auto">
                     <textarea class="form-control" id="biljeskaTextarea" [(ngModel)]="biljeskaTxt" rows="6" style="border: none; box-shadow: none; resize:none;"></textarea>
                 </div>
                 <div style="padding:10px;">
-                    <a href="#" class="card-link" (click)="onBiljeskeSacuvajClick()">Sačuvaj</a>
+                    <button type="button" class="btn btn-link" (click)="onBiljeskeSacuvajClick()">Sačuvaj</button>
                 </div>
             </div>
         </div>

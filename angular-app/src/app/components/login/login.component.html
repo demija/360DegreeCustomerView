@@ -1,23 +1,35 @@
 <div class="loginBlock card-2">
     <img src="../../assets/app.png" alt="app" style="display: block; margin-left: auto; margin-right: auto;">
-    <form (submit)="onLoginSubmit()">
-        <div class="form-group">
-            <label for="korisnickoimeTextbox">Korisničko ime</label>
-            <label id="korisnickoimeError" class="float-right text-danger d-none">Obavezan unos!</label>
-            <input type="text" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" class="form-control" id="korisnickoimeTextbox" placeholder="Unesi korisničko ime">
+    <div class="row">
+        <div class="col form-group">
+            <label class="form-control-label" for="korisnickoimeTextbox">Korisničko ime</label>
+            <input class="form-control" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" id="korisnickoimeTextbox" type="text" placeholder="Unesi korisničko ime">
+            <div class="invalid-feedback">Obavezan unos!</div>
         </div>
-
-        <div class="form-group">
-            <label for="lozinkaTextbox">Lozinka</label>
-            <label id="lozinkaError" class="float-right text-danger d-none">Obavezan unos!</label>
-            <input type="password" [(ngModel)]="lozinka" name="lozinka" class="form-control" id="lozinkaTextbox" placeholder="Unesi lozinku">
-        </div>
-        <button type="submit" class="btn btn-outline-success w-100">Prijava</button>
-        <br>
-        <br>
-        <p class="text-center"><a href="#" class="card-link" [routerLink]="['/register']">Novi korisnik? Registruj se ovdje</a></p>
-    </form>
-    <div class="text-center invisible" id="loginSpinner">
-        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
     </div>
+    <div class="row">
+        <div class="col form-group">
+            <label class="form-control-label" for="lozinkaTextbox">Lozinka</label>
+            <input class="form-control" [(ngModel)]="lozinka" name="lozinka" id="lozinkaTextbox" type="password" placeholder="Unesi lozinku">
+            <div class="invalid-feedback">Obavezan unos!</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-outline-success w-100" (click)="onLoginSubmit()">Prijava</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <p class="text-center"><a href="#" class="card-link" [routerLink]="['/register']">Novi korisnik? Registruj se ovdje</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center invisible" id="loginSpinner">
+                <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+            </div>
+        </div>
+    </div>    
 </div>

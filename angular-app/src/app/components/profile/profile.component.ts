@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ValidateService } from '../../services/validate.service';
 import { NavhomeService } from '../../services/navhome.service';
 import { AuthService } from '../../services/auth.service';
+import { ProfilService } from '../../services/profil.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
@@ -13,6 +14,7 @@ import swal from 'sweetalert2';
 export class ProfileComponent implements OnInit {
     user: Object;
     odjeliLista: any;
+    brojPretraga: String;
     
     // izmjena podataka
     imeEdit: String;
@@ -22,17 +24,20 @@ export class ProfileComponent implements OnInit {
     odjelEdit: Object;
 
     // izmjena lozinke
-    //trenutnaLozinkaEdit: String;
     novaLozinkaEdit: String = '';
     potvrdaNoveLozinkeEdit: String = '';
     
-    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService) { }
+    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService, private profilService: ProfilService) { }
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user'));
 
         this.navhomeService.getOdjeli().subscribe(odjeli => {
             this.odjeliLista = odjeli.data;
+        });
+
+        this.profilService.brojPretraga(this.user).subscribe(broj_pretraga => {
+            this.brojPretraga = broj_pretraga.data;
         });
     }
 
@@ -91,7 +96,6 @@ export class ProfileComponent implements OnInit {
     izmjeniLozinku() {
         const korisnik = {
             _id: this.user['_id'],
-            //trenutnaLozinka: this.trenutnaLozinkaEdit,
             novaLozinka: this.novaLozinkaEdit,
             potvrdaNoveLozinke: this.potvrdaNoveLozinkeEdit
         }

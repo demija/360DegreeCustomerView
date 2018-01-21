@@ -21,5 +21,15 @@ pretragaSchema.set('collection', 'pretrage_korisnika');
 const Pretraga = module.exports = mongoose.model('Pretraga', pretragaSchema);
 
 module.exports.dodajLog = function(log, callback) {
+    log.korisnik._id = mongoose.Types.ObjectId(log.korisnik._id);
     log.save(callback);
+}
+
+module.exports.brojPretraga = function(korisnik_id, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        'korisnik._id': new ObjectId(korisnik_id)
+    };
+    
+    Pretraga.count(query, callback);
 }

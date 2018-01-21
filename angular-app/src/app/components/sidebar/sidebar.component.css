@@ -3,7 +3,7 @@
     top: 80px;
     left: 0;
     height:100vh;
-    width: 15% !important;
+    width: 15.5% !important;
     background-color: #2C3E50;
 }
 
@@ -18,5 +18,4 @@
 
 .nav-link:hover {
     color: #18BC9C;
-    /*background-color: #0a2239;*/
 }
