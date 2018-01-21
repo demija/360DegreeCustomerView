@@ -30,7 +30,7 @@ module.exports.vratiBiljeske = function(klijent_id, callback) {
         'klijent._id': new ObjectId(klijent_id)
     };
     
-    Biljeska.find(query, callback).sort('-datum_kreiranja');;
+    Biljeska.find(query, callback).sort('-datum_kreiranja');
 }
 
 module.exports.dodaj = function(novaBiljeska, callback) {

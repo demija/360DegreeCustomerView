@@ -28,6 +28,15 @@ klijentPonudaSchema.set('collection', 'klijenti_ponude');
 
 const KlijentPonuda = module.exports = mongoose.model('KlijentPonuda', klijentPonudaSchema);
 
+module.exports.getDataById = function(id, callback) {
+    const ObjectId = require('mongoose').Types.ObjectId; 
+    const query = {
+        'klijent._id': new ObjectId(id)
+    };
+    
+    KlijentPonuda.find(query, callback).sort('-datum_evidentiranja');
+}
+
 module.exports.dodaj = function(novaKlijentPonuda, callback) {
     novaKlijentPonuda.klijent._id = mongoose.Types.ObjectId(novaKlijentPonuda.klijent._id);
     novaKlijentPonuda.evidentirao._id = mongoose.Types.ObjectId(novaKlijentPonuda.evidentirao._id);

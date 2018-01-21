@@ -25,10 +25,17 @@ export class NavhomeService {
     private biljeskaSource = new BehaviorSubject<Object>({});
     currentBiljeska = this.biljeskaSource.asObservable();
 
+    private dodatnaUslugaSource = new BehaviorSubject<Object>({});
+    currentDodatnaUsluga = this.dodatnaUslugaSource.asObservable();
+
+    private arhivaPonudaSource = new BehaviorSubject<Object>({});
+    currentArhivaPonuda = this.arhivaPonudaSource.asObservable();
+
+    private preporucenaPonudaSource = new BehaviorSubject<Object>({});
+    currentPreporucenaPonuda = this.preporucenaPonudaSource.asObservable();
+
     private timelineSource = new BehaviorSubject<Object>({});
     currentTimeline = this.timelineSource.asObservable();
-
-    private client: any;
 
     constructor(private http: Http) { }
 
@@ -58,6 +65,9 @@ export class NavhomeService {
                     this.http.post('http://localhost:3000/racuni/vratikartice', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/krediti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/biljeske/vratibiljeske', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/klijentidodatneusluge/vratiusluge', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/klijentiponude/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.get('http://localhost:3000/ponude/vratiaktivneponude').map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/pretrage/unosPretrage', pretraga, {headers: headers}).map((res: any) => res.json())
                 )
                 .map((data: any[]) => {
@@ -67,12 +77,18 @@ export class NavhomeService {
                     let kartice = data[3];
                     let krediti = data[4];
                     let biljeske = data[5];
+                    let dodatneUsluge = data[6];
+                    let arhivaponuda = data[7];
+                    let preporuceneponude = data[8];
 
                     klijent_rezultat.racuni = racuni;
                     klijent_rezultat.depoziti = depoziti;
                     klijent_rezultat.kartice = kartice;
                     klijent_rezultat.krediti = krediti;
                     klijent_rezultat.biljeske = biljeske;
+                    klijent_rezultat.dodatneUsluge = dodatneUsluge;
+                    klijent_rezultat.arhivaponuda = arhivaponuda;
+                    klijent_rezultat.preporuceneponude = preporuceneponude;
 
                     return klijent_rezultat;
                 });
@@ -80,12 +96,12 @@ export class NavhomeService {
         });
     }
 
-    changeRacun(racuni) {
-        this.racunSource.next(racuni);
-    }
-
     changeClient(klijent) {
         this.klijentSource.next(klijent);
+    }
+
+    changeRacun(racuni) {
+        this.racunSource.next(racuni);
     }
 
     changeDeposit(depozit) {
@@ -104,33 +120,47 @@ export class NavhomeService {
         this.biljeskaSource.next(biljeska);
     }
 
+    changeDodatneUsluge(dodatnaUsluga) {
+        this.dodatnaUslugaSource.next(dodatnaUsluga);
+    }
+
+    changeArhivaPonuda(arhivaPonude) {
+        this.arhivaPonudaSource.next(arhivaPonude);
+    }
+
+    changePreporucenePonude(preporucenaPonuda) {
+        this.preporucenaPonudaSource.next(preporucenaPonuda);
+    }
+
     changeTimeline(klijent) {
         var time_line = [];
 
-        for(let racuni of klijent.racuni.data) {
-            racuni.type = 'racun';
-            time_line.push(racuni);
-        }
-
-        for(let depoziti of klijent.depoziti.data) {
-            depoziti.type = 'depozit';
-            time_line.push(depoziti);
-        }
-
-        for(let element of klijent.kartice.data) {
-            for(let kartica of element.kartica) {
-                kartica.type = 'kartica';
-                kartica.racunUgovor = element.ugovor;
-                time_line.push(kartica);
+        if(klijent) {
+            for(let racuni of klijent.racuni.data) {
+                racuni.type = 'racun';
+                time_line.push(racuni);
             }
+    
+            for(let depoziti of klijent.depoziti.data) {
+                depoziti.type = 'depozit';
+                time_line.push(depoziti);
+            }
+    
+            for(let element of klijent.kartice.data) {
+                for(let kartica of element.kartica) {
+                    kartica.type = 'kartica';
+                    kartica.racunUgovor = element.ugovor;
+                    time_line.push(kartica);
+                }
+            }
+    
+            for(let krediti of klijent.krediti.data) {
+                krediti.type = 'kredit';
+                time_line.push(krediti);
+            }
+    
+            time_line.sort((a, b) => new Date(b.datum_ugovora).getTime() - new Date(a.datum_ugovora).getTime());
         }
-
-        for(let krediti of klijent.krediti.data) {
-            krediti.type = 'kredit';
-            time_line.push(krediti);
-        }
-
-        time_line.sort((a, b) => new Date(b.datum_ugovora).getTime() - new Date(a.datum_ugovora).getTime());
 
         this.timelineSource.next(time_line);
     }

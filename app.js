@@ -29,6 +29,7 @@ const ponude = require('./routes/ponude');
 const biljeske = require('./routes/biljeske');
 const kompanije = require('./routes/kompanije');
 const klijentiponude = require('./routes/klijentiponude');
+const klijentidodatneusluge = require('./routes/klijentidodatneusluge');
 
 // port
 const port = 3000;
@@ -61,6 +62,7 @@ app.use('/ponude', ponude);
 app.use('/biljeske', biljeske);
 app.use('/kompanije', kompanije);
 app.use('/klijentiponude', klijentiponude);
+app.use('/klijentidodatneusluge', klijentidodatneusluge);
 
 // Index ruta
 app.get('/', (req, res) => {

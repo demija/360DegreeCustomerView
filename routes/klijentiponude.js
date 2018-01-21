@@ -23,4 +23,29 @@ router.post('/dodaj', (req, res, next) => {
     });
 });
 
+// Vraćanje ponuda klijenta
+router.post('/vratipodatke', (req, res, next) => {
+    const id = req.body.klijent_id;
+
+    KlijentPonuda.getDataById(id, (err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Ne postoji depozit',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
 module.exports = router;

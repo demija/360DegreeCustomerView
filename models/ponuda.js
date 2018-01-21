@@ -15,14 +15,6 @@ const ponudaSchema = mongoose.Schema({
         type: String
     },
 
-    datum_od: {
-        type: Date
-    },
-
-    datum_do: {
-        type: Date
-    },
-
     aktivna: {
         type: Boolean
     },
@@ -54,6 +46,7 @@ const Ponuda = module.exports = mongoose.model('Ponuda', ponudaSchema);
 
 //Dodavanje nove ponude
 module.exports.dodaj = function(novaPonuda, callback) {
+    novaPonuda.kreirao._id = mongoose.Types.ObjectId(novaPonuda.kreirao._id);
     novaPonuda.save(callback);
 }
 
@@ -63,7 +56,7 @@ module.exports.vratiSveZapise = function(callback) {
         obrisana: false
     };
 
-    Ponuda.find(query, callback);
+    Ponuda.find(query, callback).sort('klasa_ponude');
 }
 
 //Vrati aktivne ponude
@@ -73,7 +66,7 @@ module.exports.vratiAktivnePonude = function(callback) {
         aktivna: true
     };
 
-    Ponuda.find(query, callback);
+    Ponuda.find(query, callback).sort('klasa_ponude');
 }
 
 //Obriši ponudu
@@ -94,7 +87,7 @@ module.exports.izmjeni = function(ponuda, callback) {
     };
 
     Ponuda.updateOne(query, {$set: { naziv_ponude: ponuda.naziv_ponude, sifra_ponude: ponuda.sifra_ponude, klasa_ponude: ponuda.klasa_ponude,
-        datum_od: ponuda.datum_od, datum_do: ponuda.datum_do, izmjenio: ponuda.izmjenio, datum_izmjene: ponuda.datum_izmjene }}, callback);
+        izmjenio: ponuda.izmjenio, datum_izmjene: ponuda.datum_izmjene }}, callback);
 }
 
 //Aktivna ponuda

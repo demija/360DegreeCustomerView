@@ -73,8 +73,6 @@
                             <th scope="col">Naziv ponude</th>
                             <th scope="col">Šfra</th>
                             <th scope="col">Klasa</th>
-                            <th scope="col">Datum od</th>
-                            <th scope="col">Datum do</th>
                             <th acope="col">Aktivna</th>
                             <th scope="col">Kreirao</th>
                             <th scope="col">Datum kreiranja</th>
@@ -86,8 +84,6 @@
                             <td>{{ponuda.naziv_ponude}}</td>
                             <td>{{ponuda.sifra_ponude}}</td>
                             <td>{{ponuda.klasa_ponude}}</td>
-                            <td>{{ponuda.datum_od | date:'dd/MM/yyyy'}}</td>
-                            <td>{{ponuda.datum_do | date:'dd/MM/yyyy'}}</td>
                             <td>
                                 <label class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" [(ngModel)]="ponuda.aktivna" id="ponuda_{{ponuda._id}}" (ngModelChange)="toggleAktivnaPonuda($event, ponuda._id)">
@@ -105,107 +101,143 @@
                 </table>
                 <pagination-controls class="text-center" (pageChange)="ponudePage = $event" id="ponude_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
             </div>
-            <!-- Ponuda modal -->
-            <div class="modal fade bd-example-modal-lg" id="novaPonuda" tabindex="-1" role="dialog" aria-labelledby="novaPonudaLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <form (submit)="onAddSubmit()">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="novaPonudaLabel">Nova ponuda</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Naziv ponude</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="naziv_ponudeNew" name="naziv_ponudeNew" id="naziv_ponudeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Šifra</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="sifra_ponudeNew" name="sifra_ponudeNew" id="sifra_ponudeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Klasa</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klasa_ponudeNew" name="klasa_ponudeNew" id="klasa_ponudeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum od</td>
-                                            <td><input type="date" class="form-control" [(ngModel)]="datum_od_ponudeNew" name="datum_od_ponudeNew" id="datum_od_ponudeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum do</td>
-                                            <td><input type="date" class="form-control" [(ngModel)]="datum_do_ponudeNew" name="datum_do_ponudeNew" id="datum_do_ponudeNewTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Aktivna</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="aktivna_ponudaNew" name="aktivna_ponudaNew" id="aktivna_ponudaNewTextbox"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
-                                <button type="submit" class="btn btn-outline-success">Dodaj</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Kraj ponuda Modal -->
             
-            <!-- Ponuda uređivanje modal -->
-            <div class="modal fade bd-example-modal-lg" id="editPonude" tabindex="-1" role="dialog" aria-labelledby="editPonudeLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <form (submit)="onEditSubmit()">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editPonudeLabel">Uredi ponudu</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Naziv ponude</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="naziv_ponudeEdit" name="naziv_ponudeEdit" id="naziv_ponudeEditTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Šifra</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="sifra_ponudeEdit" name="sifra_ponudeEdit" id="sifra_ponudeEditTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Klasa</td>
-                                            <td><input type="text" class="form-control" [(ngModel)]="klasa_ponudeEdit" name="klasa_ponudeEdit" id="klasa_ponudeEditTextbox"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum od</td>
-                                            <td><input type="date" class="form-control" [ngModel]="datum_odEdit | date:'yyyy-MM-dd'" name="datum_odEdit" id="datum_odEditTextbox" (ngModelChange)="datum_odEdit = $event"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Datum do</td>
-                                            <td><input type="date" class="form-control" [ngModel]="datum_doEdit | date:'yyyy-MM-dd'" name="datum_doEdit" id="datum_doEditTextbox" (ngModelChange)="datum_doEdit = $event"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
-                                <button type="submit" class="btn btn-outline-success">Sačuvaj</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Kraj ponuda uređivanje Modal -->
-        
             <div class="tab-pane fade" id="nav-akcija" role="tabpanel" aria-labelledby="nav-akcija-tab">
                 Pregled akcija
             </div>
         </div>
     </div>
 </div>
+
+<!-- Ponuda modal -->
+<div class="modal fade bd-example-modal-lg" id="novaPonuda" tabindex="-1" role="dialog" aria-labelledby="novaPonudaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form (submit)="onAddSubmit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="novaPonudaLabel">Nova ponuda</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">Naziv ponude</div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <input type="text" class="form-control" [(ngModel)]="naziv_ponudeNew" name="naziv_ponudeNew" id="naziv_ponudeNewTextbox">
+                                    <div class="invalid-feedback">Obavezan unos!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Šifra</div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <input type="text" class="form-control" [(ngModel)]="sifra_ponudeNew" name="sifra_ponudeNew" id="sifra_ponudeNewTextbox">
+                                    <div class="invalid-feedback">Obavezan unos!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Klasa</div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <input type="text" class="form-control" [(ngModel)]="klasa_ponudeNew" name="klasa_ponudeNew" id="klasa_ponudeNewTextbox">
+                                    <div class="invalid-feedback">Obavezan unos!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="row">
+                        <div class="col"> Datum od</div>
+                        <div class="col-8">
+                            <my-date-picker name="datum_od_ponudeNew" [options]="myDatePickerOptions" [(ngModel)]="datum_od_ponudeNew" id="datum_od_ponudeNewTextbox"></my-date-picker>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"> Datum do</div>
+                        <div class="col-8">
+                            <my-date-picker name="datum_do_ponudeNew" [options]="myDatePickerOptions" [(ngModel)]="datum_do_ponudeNew" id="datum_do_ponudeNewTextbox"></my-date-picker>
+                        </div>
+                    </div>-->
+                    <div class="row">
+                        <div class="col">Aktivna ponuda</div>
+                        <div class="col-8">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="aktivna_ponudaNewTextbox" [(ngModel)]="aktivna_ponudaNew" name="aktivna_ponudaNew" checked="" type="checkbox">
+                                <label class="custom-control-label" for="aktivna_ponudaNewTextbox"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
+                    <button type="submit" class="btn btn-outline-success">Dodaj</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Kraj ponuda Modal -->
+
+<!-- Ponuda uređivanje modal -->
+<div class="modal fade bd-example-modal-lg" id="editPonude" tabindex="-1" role="dialog" aria-labelledby="editPonudeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form (submit)="onEditSubmit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPonudeLabel">Uredi ponudu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">Naziv ponude</div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <input type="text" class="form-control" [(ngModel)]="naziv_ponudeEdit" name="naziv_ponudeEdit" id="naziv_ponudeEditTextbox">
+                                    <div class="invalid-feedback">Obavezan unos!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Šifra</div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <input type="text" class="form-control" [(ngModel)]="sifra_ponudeEdit" name="sifra_ponudeEdit" id="sifra_ponudeEditTextbox">
+                                    <div class="invalid-feedback">Obavezan unos!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Klasa</div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <input type="text" class="form-control" [(ngModel)]="klasa_ponudeEdit" name="klasa_ponudeEdit" id="klasa_ponudeEditTextbox">
+                                    <div class="invalid-feedback">Obavezan unos!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
+                    <button type="submit" class="btn btn-outline-success">Sačuvaj</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Kraj ponuda uređivanje Modal -->

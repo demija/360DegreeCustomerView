@@ -282,6 +282,60 @@ export class ValidateService {
         return valid;
     }
 
+    validacijaNovePonude(ponuda) {
+        let valid = true;
+
+        if(ponuda.naziv_ponude == undefined || ponuda.naziv_ponude == '') {
+            document.getElementById('naziv_ponudeNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('naziv_ponudeNewTextbox').classList.remove('is-invalid');
+        }
+
+        if(ponuda.sifra_ponude == undefined || ponuda.sifra_ponude == '') {
+            document.getElementById('sifra_ponudeNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('sifra_ponudeNewTextbox').classList.remove('is-invalid');
+        }
+
+        if(ponuda.klasa_ponude == undefined || ponuda.klasa_ponude == '') {
+            document.getElementById('klasa_ponudeNewTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('klasa_ponudeNewTextbox').classList.remove('is-invalid');
+        }
+
+        return valid;
+    }
+
+    validacijaIzmjenePonude(ponuda) {
+        let valid = true;
+
+        if(ponuda.naziv_ponude == undefined || ponuda.naziv_ponude == '') {
+            document.getElementById('naziv_ponudeEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('naziv_ponudeEditTextbox').classList.remove('is-invalid');
+        }
+
+        if(ponuda.sifra_ponude == undefined || ponuda.sifra_ponude == '') {
+            document.getElementById('sifra_ponudeEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('sifra_ponudeEditTextbox').classList.remove('is-invalid');
+        }
+
+        if(ponuda.klasa_ponude == undefined || ponuda.klasa_ponude == '') {
+            document.getElementById('klasa_ponudeEditTextbox').classList.add('is-invalid');
+            valid = false;
+        } else {
+            document.getElementById('klasa_ponudeEditTextbox').classList.remove('is-invalid');
+        }
+
+        return valid;
+    }
+
     validateSearch() {
         let valid = true;
         let searchMaricniBroj = (<HTMLInputElement>document.getElementById('jmbgSearch')).value;

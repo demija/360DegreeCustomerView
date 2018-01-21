@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavhomeService } from '../../services/navhome.service';
 import { AuthService } from '../../services/auth.service';
 import { PonudeService } from '../../services/ponude.service';
+import { ValidateService } from '../../services/validate.service';
 import { DatePipe } from '@angular/common';
 import swal from 'sweetalert2';
 
@@ -16,9 +17,7 @@ export class AdminpanelComponent implements OnInit {
     naziv_ponudeNew: String;
     sifra_ponudeNew: String;
     klasa_ponudeNew: String;
-    datum_od_ponudeNew: String;
-    datum_do_ponudeNew: String;
-    aktivna_ponudaNew: String;
+    aktivna_ponudaNew: Boolean = true;
     prijavljeni_korisnik: Object;
 
     //
@@ -26,15 +25,13 @@ export class AdminpanelComponent implements OnInit {
     naziv_ponudeEdit: String;
     sifra_ponudeEdit: String;
     klasa_ponudeEdit: String;
-    datum_odEdit: Date;
-    datum_doEdit: Date;
     datum_izmjeneEdit: Date;
     izmjenioEdit: Object;
     
     // paging
     ponudePage: number = 1;
 
-    constructor(private navhomeService: NavhomeService, private authService: AuthService, private ponudeService: PonudeService) { }
+    constructor(private navhomeService: NavhomeService, private authService: AuthService, private ponudeService: PonudeService, private valdateService: ValidateService) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
@@ -53,13 +50,24 @@ export class AdminpanelComponent implements OnInit {
         }
 
         this.authService.changeAdminRolle(korisnik).subscribe(data => {
-            //TODO
-            //notification
-
             if(data.success) {
-                console.log('OK');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'success',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             } else {
-                console.log('Error');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             }
         });
     }
@@ -71,13 +79,24 @@ export class AdminpanelComponent implements OnInit {
         }
 
         this.authService.changeActivity(korisnik).subscribe(data => {
-            //TODO
-            //notification
-
             if(data.success) {
-                console.log('OK');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'success',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             } else {
-                console.log('Error');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             }
         });
     }
@@ -87,8 +106,6 @@ export class AdminpanelComponent implements OnInit {
             naziv_ponude: this.naziv_ponudeNew,
             sifra_ponude: this.sifra_ponudeNew,
             klasa_ponude: this.klasa_ponudeNew,
-            datum_od: this.datum_od_ponudeNew,
-            datum_do: this.datum_do_ponudeNew,
             aktivna: this.aktivna_ponudaNew,
             kreirao: {
                 _id: this.prijavljeni_korisnik['_id'],
@@ -96,18 +113,31 @@ export class AdminpanelComponent implements OnInit {
             }
         }
 
-        //TODO
-        // Validacija unesenih vrijednosti
+        // Validacija podataka nova ponude
+        if(!this.valdateService.validacijaNovePonude(novaPonuda)) {
+            return false;
+        }
 
         //Unos nove usluge
         this.ponudeService.dodajPonudu(novaPonuda).subscribe(data => {
-            //TODO
-            //notification
-
             if(data.success) {
-                console.log('OK');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'success',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             } else {
-                console.log('Error');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             }
         });
 
@@ -117,7 +147,6 @@ export class AdminpanelComponent implements OnInit {
     onDeleteClick(id) {
         swal({
             title: 'Jeste li sigurni?',
-            //text: "You won't be able to revert this!",
             type: 'question',
             showCancelButton: true,
             confirmButtonColor: '#149A80',
@@ -164,8 +193,6 @@ export class AdminpanelComponent implements OnInit {
                 this.naziv_ponudeEdit = p.naziv_ponude;
                 this.sifra_ponudeEdit = p.sifra_ponude;
                 this.klasa_ponudeEdit = p.klasa_ponude;
-                this.datum_odEdit = p.datum_od;
-                this.datum_doEdit = p.datum_do;
             }
         }
     }
@@ -176,22 +203,36 @@ export class AdminpanelComponent implements OnInit {
             naziv_ponude: this.naziv_ponudeEdit,
             sifra_ponude: this.sifra_ponudeEdit,
             klasa_ponude: this.klasa_ponudeEdit,
-            datum_od: this.datum_odEdit,
-            datum_do: this.datum_doEdit,
             izmjenio: {
                 _id: this.prijavljeni_korisnik['_id'],
                 korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
             }
         }
 
-        this.ponudeService.editPonudu(ponudaEdit).subscribe(data => {
-            //TODO
-            //notification
+        // Validacija podataka nova ponude
+        if(!this.valdateService.validacijaIzmjenePonude(ponudaEdit)) {
+            return false;
+        }
 
+        this.ponudeService.editPonudu(ponudaEdit).subscribe(data => {
             if(data.success) {
-                console.log('OK');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'success',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             } else {
-                console.log('Error');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             }
         });
 
@@ -209,13 +250,24 @@ export class AdminpanelComponent implements OnInit {
         }
 
         this.ponudeService.changeActivity(ponuda).subscribe(data => {
-            //TODO
-            //notification
-
             if(data.success) {
-                console.log('OK');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'success',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             } else {
-                console.log('Error');
+                swal({
+                    position: 'top-right',
+                    //title: 'Greška!',
+                    text: data.msg,
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
             }
         });
 

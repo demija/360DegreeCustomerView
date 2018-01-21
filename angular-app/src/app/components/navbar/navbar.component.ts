@@ -27,20 +27,12 @@ export class NavbarComponent implements OnInit {
 
     onLogoutClick() {
         this.authService.logout();
+        this.clearSearch();
         this.router.navigate(['/login']);
         return false;
     }
 
     onSearchClick() {
-        const pretraga = {
-            maticni_broj: this.maticni_broj_search,
-            id_prijavljenog_korisnika: this.prijavljeni_korisnik['_id'],
-            id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
-            ime: this.prijavljeni_korisnik['ime'],
-            prezime: this.prijavljeni_korisnik['prezime'],
-            korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
-        }
-
         if(!this.validateService.validateSearch()) {
             swal({
                 //position: 'top-right',
@@ -50,25 +42,52 @@ export class NavbarComponent implements OnInit {
                 showConfirmButton: false,
                 timer: 2000
             });
-        } else {
-            this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {
-                if(klijent.success) {
-                    this.navhomeService.changeClient(klijent.client);
-                    this.navhomeService.changeRacun(klijent.racuni);
-                    this.navhomeService.changeDeposit(klijent.depoziti);
-                    this.navhomeService.changeKartice(klijent.kartice);
-                    this.navhomeService.changeKredite(klijent.krediti);
-                    this.navhomeService.changeBiljeske(klijent.biljeske);
-                    this.navhomeService.changeTimeline(klijent);
-                } else {
-                    swal({
-                        title: 'Greška!',
-                        text: klijent.msg,
-                        type: 'error',
-                        confirmButtonText: 'Uredu'
-                    });
-                }
-            });
+
+            return false;
         }
+
+        const pretraga = {
+            maticni_broj: this.maticni_broj_search,
+            id_prijavljenog_korisnika: this.prijavljeni_korisnik['_id'],
+            id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
+            ime: this.prijavljeni_korisnik['ime'],
+            prezime: this.prijavljeni_korisnik['prezime'],
+            korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
+        }
+
+        this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {
+            if(klijent.success) {
+                this.navhomeService.changeClient(klijent.client);
+                this.navhomeService.changeRacun(klijent.racuni);
+                this.navhomeService.changeDeposit(klijent.depoziti);
+                this.navhomeService.changeKartice(klijent.kartice);
+                this.navhomeService.changeKredite(klijent.krediti);
+                this.navhomeService.changeBiljeske(klijent.biljeske);
+                this.navhomeService.changeDodatneUsluge(klijent.dodatneUsluge);
+                this.navhomeService.changeArhivaPonuda(klijent.arhivaponuda);
+                this.navhomeService.changePreporucenePonude(klijent.preporuceneponude);
+                this.navhomeService.changeTimeline(klijent);
+            } else {
+                swal({
+                    title: 'Greška!',
+                    text: klijent.msg,
+                    type: 'error',
+                    confirmButtonText: 'Uredu'
+                });
+            }
+        });
+    }
+
+    clearSearch() {
+        this.navhomeService.changeClient([]);
+        this.navhomeService.changeRacun([]);
+        this.navhomeService.changeDeposit([]);
+        this.navhomeService.changeKartice([]);
+        this.navhomeService.changeKredite([]);
+        this.navhomeService.changeBiljeske([]);
+        this.navhomeService.changeDodatneUsluge([]);
+        this.navhomeService.changeArhivaPonuda([]);
+        this.navhomeService.changePreporucenePonude([]);
+        this.navhomeService.changeTimeline(null);
     }
 }

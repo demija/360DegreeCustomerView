@@ -2,6 +2,7 @@ import { Component, OnInit, transition } from '@angular/core';
 import { DepozitService } from '../../services/depozit.service';
 import { KreditService } from '../../services/kredit.service';
 import { RacunService } from '../../services/racun.service';
+import { IMyDpOptions } from 'mydatepicker';
 import swal from 'sweetalert2';
 
 @Component({
@@ -246,6 +247,10 @@ export class ReportComponent implements OnInit {
                     }
                 }]
         }
+    };
+
+    public myDatePickerOptions: IMyDpOptions = {
+        dateFormat: 'dd.mm.yyyy',
     };
 
     constructor(private depozitService: DepozitService, private kreditService: KreditService, private racunService: RacunService) { }

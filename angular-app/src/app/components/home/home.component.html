@@ -313,8 +313,9 @@
                 <div class="card">
                     <h3 class="card-header">Dodatne usluge</h3>
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h5><span *ngFor="let usluga of dodatne_usluge">
+                            <span class="badge badge-info floating-box">{{ usluga.naziv_ponude }}</span>
+                        </span></h5>
                     </div>
                 </div>
             </div>
@@ -327,7 +328,7 @@
                             <div class="col-sm" *ngIf="biljeske.data">
                                 <ul *ngFor="let biljeska of biljeske.data | paginate: { itemsPerPage: 3, currentPage: biljeskePage, id: 'biljeske_pagination' }">
                                     <li>
-                                        <button type="button" class="btn btn-link" (click)="showBiljeska(biljeska)">{{ biljeska.kreirao.korisnicko_ime }}_{{ biljeska.datum_kreiranja }}</button>
+                                        <button type="button" class="btn btn-link" (click)="showBiljeska(biljeska)">{{ biljeska.kreirao.korisnicko_ime }}_{{ biljeska.datum_kreiranja | date:'dd/MM/yyyy' }}</button>
                                     </li>
                                 </ul>
                                 <pagination-controls class="text-left" (pageChange)="biljeskePage = $event" id="biljeske_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
@@ -335,6 +336,29 @@
                             <div class="col-sm">
                                 <p class="text-muted"><em>{{ biljeskaNaslov }}</em></p>
                                 <p>{{ biljeskaPrikaz }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div id="arhiva_interakcija">
+                <div class="card">
+                    <h3 class="card-header">Arhiva interakcija</h3>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm" *ngIf="arhivaPonuda.data">
+                                <ul *ngFor="let arhiva of arhivaPonuda.data | paginate: { itemsPerPage: 3, currentPage: arhivaPonudaPage, id: 'arhivaPonuda_pagination' }">
+                                    <li>
+                                        <button type="button" class="btn btn-link" (click)="showArhiva(arhiva)">{{ arhiva.evidentirao.korisnicko_ime }}_{{ arhiva.datum_evidentiranja | date:'dd/MM/yyyy' }}</button>
+                                    </li>
+                                </ul>
+                                <pagination-controls class="text-left" (pageChange)="arhivaPonudaPage = $event" id="arhivaPonuda_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                            </div>
+                            <div class="col-sm">
+                                <p class="text-muted"><em>{{ arivaPonudaNaslov }}</em></p>
+                                <p>{{ arhivaPonudaPonudjeneUsluge }}</p>
+                                <p>{{ arhivaPonudaUgovoreneUsluge }}</p>
                             </div>
                         </div>
                     </div>
@@ -389,7 +413,7 @@
                 <div class="card-body" style="overflow-y: auto">
                     <p><span class="text-muted">Ponuđeno</span><span class="text-muted float-right">Ugovoreno</span></p>
                     <table class="table table-hover table-sm">
-                        <tbody *ngFor="let ponuda of ponude" class="scrollable" style="overflow-y:scroll;">
+                        <tbody *ngFor="let ponuda of preporucene_ponude" class="scrollable" style="overflow-y:scroll;">
                             <tr>
                                 <td class="col-1">
                                     <div class="custom-control custom-radio">

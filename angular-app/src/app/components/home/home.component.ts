@@ -14,6 +14,7 @@ import { KlijentPonudeService } from '../../services/klijent-ponude.service';
 export class HomeComponent implements OnInit {
     // paging
     biljeskePage: number = 1;
+    arhivaPonudaPage: number = 1;
 
     prijavljeni_korisnik: Object;
     ponudjeneUsluge: Array<any> = [];
@@ -25,13 +26,21 @@ export class HomeComponent implements OnInit {
     kartice: Array<Object> = [];
     krediti: Object;
     biljeske: Object;
-    ponude: any;
+    dodatne_usluge: Array<Object> = [];
+    arhivaPonuda: any;
+    preporucene_ponude: any;
     time_line: Object;
 
     // biljeske
     biljeskaTxt: String = "";
     biljeskaNaslov: String = "";
-    biljeskaPrikaz: String = "";   
+    biljeskaPrikaz: String = "";
+
+    // arhiva ponuda
+    arhivaPonudaTxt: String = "";
+    arivaPonudaNaslov: String = "";
+    arhivaPonudaPonudjeneUsluge: String = "";
+    arhivaPonudaUgovoreneUsluge: String = "";
 
     constructor(private authService: AuthService, private valdateService: ValidateService, private navhomeService: NavhomeService, private ponudeService: PonudeService, private biljeskaService: BiljeskaService, private klijentPonudeService: KlijentPonudeService) { }
 
@@ -72,14 +81,46 @@ export class HomeComponent implements OnInit {
             this.biljeske = bilj;
         });
 
+        this.navhomeService.currentDodatnaUsluga.subscribe(dodatne_usluge => {
+            this.dodatne_usluge = [];
+            let tempDodatneUsluge = dodatne_usluge['data'];
+
+            if(tempDodatneUsluge && tempDodatneUsluge.length > 0) {
+                tempDodatneUsluge[0]['dodatne_usluge'].forEach(element => {
+                    this.dodatne_usluge.push(element);
+                });
+            } else {
+                this.dodatne_usluge = [];
+            }
+        });
+
+        this.navhomeService.currentArhivaPonuda.subscribe(arhiva_ponuda => {
+            this.arhivaPonuda = arhiva_ponuda;
+        });
+
+        this.navhomeService.currentPreporucenaPonuda.subscribe(preporucene_ponude => {
+            this.preporucene_ponude = [];
+            let tempPreporucenePonude = preporucene_ponude['data'];
+
+            if(this.dodatne_usluge.length > 0) {
+                tempPreporucenePonude.forEach(tempPreporucenePonudeElement => {
+                    this.dodatne_usluge.forEach(dodatneUslugeElement => {
+                        if(tempPreporucenePonudeElement['_id'] == dodatneUslugeElement['_id']) {
+                            tempPreporucenePonude.splice(tempPreporucenePonude.indexOf(tempPreporucenePonudeElement), 1);
+                        }
+                    });
+                });
+
+                this.preporucene_ponude = tempPreporucenePonude;
+            } else {
+                this.preporucene_ponude = tempPreporucenePonude;
+            }
+        });
+
         this.navhomeService.currentTimeline.subscribe(timeline => {
             if(Object.keys(timeline).length > 0) {
                 this.time_line = timeline;
             }
-        });
-
-        this.ponudeService.getAktivnePonude().subscribe(ponude => {
-            this.ponude = ponude.data;
         });
     }
 
@@ -155,7 +196,6 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    //TODO
     onCardClick() {        
         if(!this.klijent['_id']) {
             this.valdateService.pokreniSwal('Greška!', 'Odaberi klijenta', 'warning', 'Uredu');
@@ -232,5 +272,22 @@ export class HomeComponent implements OnInit {
 
         this.biljeskaNaslov = biljeska.kreirao.ime + " " + biljeska.kreirao.prezime + " - " + datumBiljeske;
         this.biljeskaPrikaz = biljeska.poruka;
+    }
+
+    showArhiva(arhiva) {
+        let datumArhive = new Date(arhiva.datum_evidentiranja).getUTCDate() + "/" + new Date(arhiva.datum_evidentiranja).getUTCMonth() + 1 + "/" + new Date(arhiva.datum_evidentiranja).getUTCFullYear();
+
+        this.arivaPonudaNaslov = arhiva.evidentirao.ime + " " + arhiva.evidentirao.prezime + " - " + datumArhive;
+        this.arhivaPonudaPonudjeneUsluge = "Ponuđene usluge: ";
+
+        arhiva.ponudjene_usluge.forEach(element => {
+            this.arhivaPonudaPonudjeneUsluge = this.arhivaPonudaPonudjeneUsluge + " " + element.naziv_ponude + ", "
+        });
+
+        this.arhivaPonudaUgovoreneUsluge =  "Ugovorene usluge: ";
+
+        arhiva.ugovorene_usluge.forEach(element => {
+            this.arhivaPonudaUgovoreneUsluge = this.arhivaPonudaUgovoreneUsluge + " " + element.naziv_ponude + ", "
+        });
     }
 }

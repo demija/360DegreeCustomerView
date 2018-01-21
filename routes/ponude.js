@@ -9,8 +9,6 @@ router.post('/dodaj', (req, res, next) => {
         naziv_ponude: req.body.naziv_ponude,
         sifra_ponude: req.body.sifra_ponude,
         klasa_ponude: req.body.klasa_ponude,
-        datum_od: req.body.datum_od,
-        datum_do: req.body.datum_do,
         aktivna: req.body.aktivna,
         kreirao: {
             _id: req.body.kreirao._id,
@@ -109,8 +107,6 @@ router.post('/izmjeniponudu', (req, res, next) => {
         naziv_ponude: req.body.naziv_ponude,
         sifra_ponude: req.body.sifra_ponude,
         klasa_ponude: req.body.klasa_ponude,
-        datum_od: req.body.datum_od,
-        datum_do: req.body.datum_do,
         izmjenio: req.body.izmjenio,
         datum_izmjene: Date.now()
     });
@@ -119,12 +115,12 @@ router.post('/izmjeniponudu', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška prilikom registracije!'
+                msg: 'Greška prilikom izmjene!'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Ponuda uspješno obrisana!'
+                msg: 'Izmjene sačuvane!'
             });
         }
     });
