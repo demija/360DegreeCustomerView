@@ -24,11 +24,11 @@
                         <div class="col-2">
                             <div class="form-group">
                                 <label for="datum_od_racuni" class="text-muted">Datum ugovora od:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumOdRacun" name="datum_od_racuni" id="datum_od_racuni">
+                                <my-date-picker name="datum_od_racuni" [options]="myDatePickerOptions" [(ngModel)]="datumOdRacun" id="datum_od_racuni"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="datum_do_racuni" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoRacun" name="datum_do_racuni" id="datum_do_racuni">
+                                <my-date-picker name="datum_do_racuni" [options]="myDatePickerOptions" [(ngModel)]="datumDoRacun" id="datum_do_racuni"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="tipRacunaCheck" class="text-muted">Tip ugovora:</label>
@@ -257,11 +257,11 @@
                         <div class="col-2">
                             <div class="form-group">
                                 <label for="datum_od_kredita" class="text-muted">Datum ugovora od:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumOdKredit" name="datum_od_kredita" id="datum_od_kredita">
+                                <my-date-picker name="datum_od_kredita" [options]="myDatePickerOptions" [(ngModel)]="datumOdKredit" id="datum_od_kredita"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="datum_do_kredita" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoKredit" name="datum_do_kredita" id="datum_do_kredita">
+                                <my-date-picker name="datum_do_kredita" [options]="myDatePickerOptions" [(ngModel)]="datumDoKredit" id="datum_do_kredita"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="tipKreditaCheck" class="text-muted">Tip ugovora:</label>
@@ -376,11 +376,11 @@
                         <div class="col-2">
                             <div class="form-group">
                                 <label for="datum_od_depoziti" class="text-muted">Datum ugovora od:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumOdDepozit" name="datum_od_depoziti" id="datum_od_depoziti">
+                                <my-date-picker name="datum_od_depoziti" [options]="myDatePickerOptions" [(ngModel)]="datumOdDepozit" id="datum_od_depoziti"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="datum_do_depoziti" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoDepozit" name="datum_do_depoziti" id="datum_do_depoziti">
+                                <my-date-picker name="datum_do_depoziti" [options]="myDatePickerOptions" [(ngModel)]="datumDoDepozit" id="datum_do_depoziti"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="vrstaDepozitaCheck" class="text-muted">Vrsta depozita:</label>

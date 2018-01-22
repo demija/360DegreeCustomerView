@@ -381,8 +381,16 @@ export class ReportComponent implements OnInit {
             
             let search = {
                 tip_ugovora: this.selektovaniTipoviUgovoraRacuna,
-                datum_od: this.datumOdRacun,
-                datum_do: this.datumDoRacun
+                datum_od: null,
+                datum_do: null
+            }
+
+            if(this.datumOdRacun) {
+                search.datum_od = this.datumOdRacun['jsdate'];
+            }
+
+            if(this.datumDoRacun) {
+                search.datum_do = this.datumDoRacun['jsdate'];
             }
 
             this.racunService.pretraga(search).subscribe(racuni => {
@@ -765,8 +773,16 @@ export class ReportComponent implements OnInit {
             
             let search = {
                 tip_ugovora: this.selektovaniTipoviUgovoraKredita,
-                datum_od: this.datumOdKredit,
-                datum_do: this.datumDoKredit
+                datum_od: null,
+                datum_do: null
+            }
+
+            if(this.datumOdKredit) {
+                search.datum_od = this.datumOdKredit['jsdate'];
+            }
+
+            if(this.datumDoKredit) {
+                search.datum_do = this.datumDoKredit['jsdate'];
             }
 
             this.kreditService.pretraga(search).subscribe(krediti => {
@@ -981,8 +997,16 @@ export class ReportComponent implements OnInit {
             
             let search = {
                 tip_depozita: this.selektovaniTipoviDepozita,
-                datum_od: this.datumOdDepozit,
-                datum_do: this.datumDoDepozit
+                datum_od: null,
+                datum_do: null
+            }
+
+            if(this.datumOdDepozit) {
+                search.datum_od = this.datumOdDepozit['jsdate'];
+            }
+
+            if(this.datumDoDepozit) {
+                search.datum_do = this.datumDoDepozit['jsdate'];
             }
     
             this.depozitService.pretraga(search).subscribe(depoziti => {
