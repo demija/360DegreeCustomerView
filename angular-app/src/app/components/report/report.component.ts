@@ -5,6 +5,8 @@ import { RacunService } from '../../services/racun.service';
 import { IMyDpOptions } from 'mydatepicker';
 import swal from 'sweetalert2';
 
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
+
 @Component({
     selector: 'app-report',
     templateUrl: './report.component.html',
@@ -574,6 +576,30 @@ export class ReportComponent implements OnInit {
         this.racunDoughnutChartData = doughnutVrijednosti;
     }
 
+    racuniCsv() {
+        let data = [];
+        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
+                        'Partija', 'Konto', 'Datum ugovora'];
+
+        this.racuniResult.forEach(element => {
+            let obj = {
+                ime_klijenta: element.klijent.ime,
+                prezime_klijenta: element.klijent.prezime,
+                lk_klijenta: element.klijent.broj_lk,
+                jmbg_klijenta: element.klijent.maticni_broj,
+                tip_ugovora: element.ugovor.tip_ugovora,
+                opis_tipa_ugovora: element.ugovor.opis_tipa_ugovora,
+                partija: element.ugovor.partija,
+                konto: element.konto,
+                datum_ugovora: element.datum_ugovora
+            }
+
+            data.push(obj);
+        });
+        
+        new Angular2Csv(data, 'recuniReport', {headers: (head)});        
+    }
+
     /*
     *   KARTICE - metode
     */
@@ -612,6 +638,7 @@ export class ReportComponent implements OnInit {
             this.racunService.pretragaKartica(search).subscribe(kartice => {
                 if(kartice.success) {
                     let tempKarticeResult = [];
+                    let datum;
 
                     kartice.data.forEach(elementData => {
                         elementData.kartica.forEach(element => {
@@ -621,21 +648,23 @@ export class ReportComponent implements OnInit {
                                 kartica: element
                             }
 
+                            datum = new Date(objekat.kartica.datum_ugovora);
+
                             if(this.datumOdKartica && this.datumDoKartica) {
-                                if(objekat.kartica.datum_ugovora >= this.datumOdKartica && objekat.kartica.datum_ugovora <= this.datumDoKartica) {
+                                if(datum >= this.datumOdKartica['jsdate'] && datum <= this.datumDoKartica['jsdate']) {
                                     tempKarticeResult.push(objekat);
                                 }
                             } else if(!this.datumOdKartica && !this.datumDoKartica) {
                                 tempKarticeResult.push(objekat);
                             } else {
                                 if(this.datumOdKartica) {
-                                    if(objekat.kartica.datum_ugovora >= this.datumOdKartica) {
+                                    if(datum >= this.datumOdKartica['jsdate']) {
                                         tempKarticeResult.push(objekat);
                                     }
                                 }
 
                                 if(this.datumDoKartica) {
-                                    if(objekat.kartica.datum_ugovora <= this.datumDoKartica) {
+                                    if(datum <= this.datumDoKartica['jsdate']) {
                                         tempKarticeResult.push(objekat);
                                     }
                                 }
@@ -740,6 +769,32 @@ export class ReportComponent implements OnInit {
         };
 
         this.karticaBrojChartData = clone;
+    }
+
+    karticeCsv() {
+        let data = [];
+        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
+                        'Partija', 'Tip kartice', 'Vrsta kartice', 'Datum ugovora', 'Datum vazenja'];
+
+        this.karticeResult.forEach(element => {
+            let obj = {
+                ime_klijenta: element.klijent.ime,
+                prezime_klijenta: element.klijent.prezime,
+                lk_klijenta: element.klijent.broj_lk,
+                jmbg_klijenta: element.klijent.maticni_broj,
+                tip_ugovora: element.kartica.ugovor.tip_ugovora,
+                opis_tipa_ugovora: element.kartica.ugovor.opis_tipa_ugovora,
+                partija: element.ugovor.partija,
+                tip_kartice: element.kartica.tip_kartice,
+                vrsta_kartice: element.kartica.vrsta_kartice,
+                datum_ugovora: element.kartica.datum_ugovora,
+                datum_vazenja: element.kartica.datum_vazenja
+            }
+
+            data.push(obj);
+        });
+        
+        new Angular2Csv(data, 'karticeReport', {headers: (head)});
     }
 
     /*
@@ -966,6 +1021,35 @@ export class ReportComponent implements OnInit {
         this.kreditDoughnutChartData = doughnutVrijednosti;
     }
 
+    kreditiCsv() {
+        let data = [];
+        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
+                        'Partija', 'Stopa', 'Odobreni iznos', 'Dospjela glavnica', 'Glavnica ostatak', 'Anuitet', 'Datum ugovora', 'Datum vazenja'];
+
+        this.kreditiResult.forEach(element => {
+            let obj = {
+                ime_klijenta: element.klijent.ime,
+                prezime_klijenta: element.klijent.prezime,
+                lk_klijenta: element.klijent.broj_lk,
+                jmbg_klijenta: element.klijent.maticni_broj,
+                tip_ugovora: element.ugovor.tip_ugovora,
+                opis_tipa_ugovora: element.ugovor.opis_tipa_ugovora,
+                partija: element.ugovor.partija,
+                stopa: element.stopa,
+                odobreni_iznos: element.odobreni_iznos,
+                dospjela_glavnica: element.dospjela_glavnica,
+                glavnica_ostatak: element.glavnica_ostatak,
+                anuitet: element.iznos_anuitet,
+                datum_ugovora: element.datum_ugovora,
+                datum_vazenja: element.datum_vazenja
+            }
+
+            data.push(obj);
+        });
+        
+        new Angular2Csv(data, 'kreditiReport', {headers: (head)});
+    }
+
     /*
     *   DEPOZITI - metode
     */
@@ -1012,6 +1096,10 @@ export class ReportComponent implements OnInit {
             this.depozitService.pretraga(search).subscribe(depoziti => {
                 if(depoziti.success) {
                     this.depozitiResult = depoziti.data;
+
+                    //
+                    //new Angular2Csv(this.depozitiResult, 'My Report');
+                    //
     
                     this.generisanjePeriodaDepozitGrafa();
                     this.generisanjeBrojDepozitaGrafa();
@@ -1189,7 +1277,33 @@ export class ReportComponent implements OnInit {
 
         this.doughnutChartData = doughnutVrijednosti;
     }
+
+    depozitiCsv() {
+        let data = [];
+        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
+                        'Partija', 'Stanje racuna', 'Datum ugovora', 'Datum vazenja'];
+
+        this.depozitiResult.forEach(element => {
+            let obj = {
+                ime_klijenta: element.klijent.ime,
+                prezime_klijenta: element.klijent.prezime,
+                lk_klijenta: element.klijent.broj_lk,
+                jmbg_klijenta: element.klijent.maticni_broj,
+                tip_ugovora: element.ugovor.tip_ugovora,
+                opis_tipa_ugovora: element.ugovor.opis_tipa_ugovora,
+                partija: element.ugovor.partija,
+                stanje_racuna: element.stanje_racuna,
+                datum_ugovora: element.datum_ugovora,
+                datum_vazenja: element.datum_vazenja
+            }
+
+            data.push(obj);
+        });
+        
+        new Angular2Csv(data, 'depozitiReport', {headers: (head)});
+    }
     
+    // prebaciti u navbar service
     pokreniSwal(title, text, type, confirmButtonText) {
         swal({
             title: title,

@@ -83,7 +83,7 @@
                                     </tbody>
                                 </table>
                                 <pagination-controls class="text-center" (pageChange)="racuniPage = $event" id="racuni_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
+                                <button type="submit" class="btn btn-outline-primary float-right" (click)="racuniCsv()">Spasi CSV</button>
                             </div>
                         </div>
                     </div>
@@ -140,11 +140,11 @@
                         <div class="col-2">
                             <div class="form-group">
                                 <label for="datum_od_kartice" class="text-muted">Datum ugovora od:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumOdKartica" name="datum_od_kartice" id="datum_od_kartice">
+                                <my-date-picker name="datum_od_kartice" [options]="myDatePickerOptions" [(ngModel)]="datumOdKartica" id="datum_od_kartice"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="datum_do_kartice" class="text-muted">Datum ugovora do:</label>
-                                <input type="date" class="form-control" [(ngModel)]="datumDoKartica" name="datum_do_kartice" id="datum_do_kartice">
+                                <my-date-picker name="datum_do_kartice" [options]="myDatePickerOptions" [(ngModel)]="datumDoKartica" id="datum_do_kartice"></my-date-picker>
                             </div>
                             <div class="form-group">
                                 <label for="tipUgovoraCheck" class="text-muted">Tip ugovora:</label>
@@ -227,7 +227,7 @@
                                     </tbody>
                                 </table>
                                 <pagination-controls class="text-center" (pageChange)="karticePage = $event" id="kartice_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
+                                <button type="submit" class="btn btn-outline-primary float-right" (click)="karticeCsv()">Spasi CSV</button>
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
                                     </tbody>
                                 </table>
                                 <pagination-controls class="text-center" (pageChange)="kreditiPage = $event" id="krediti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
+                                <button type="submit" class="btn btn-outline-primary float-right" (click)="kreditiCsv()">Spasi CSV</button>
                             </div>
                         </div>
                     </div>
@@ -431,7 +431,7 @@
                                     </tbody>
                                 </table>
                                 <pagination-controls class="text-center" (pageChange)="depozitiPage = $event" id="depoziti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right">Spasi CSV</button>
+                                <button type="submit" class="btn btn-outline-primary float-right" (click)="depozitiCsv()">Spasi CSV</button>
                             </div>
                         </div>      
                     </div>
