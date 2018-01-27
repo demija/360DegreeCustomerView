@@ -6,50 +6,49 @@
         </div>
         <div class="container">
             <div class="card card-1">
+                <div class="card-header">Administracija {{ labela }}</div>
                 <div class="card-body">
-                    <h4 class="card-title">Administracija</h4>
-                    <hr>
                     <nav class="nav nav-tabs" id="myTab" role="tablist">
-                        <a class="nav-item nav-link" id="nav-izvjestaj-tab" data-toggle="tab" href="#nav-izvjestaj" role="tab" aria-controls="nav-izvjestaj" aria-selected="false">
+                        <a class="nav-item nav-link active" id="nav-izvjestaj-tab" data-toggle="tab" href="#nav-izvjestaj" role="tab" aria-controls="nav-izvjestaj" aria-selected="false" (click)="promjeniLabelu('izvještaja');">
                             Izvještaji
                         </a>
-                        <a class="nav-item nav-link" id="nav-korisnici-tab" data-toggle="tab" href="#nav-korisnici" role="tab" aria-controls="nav-korisnici" aria-selected="true">
+                        <a class="nav-item nav-link" id="nav-korisnici-tab" data-toggle="tab" href="#nav-korisnici" role="tab" aria-controls="nav-korisnici" aria-selected="true" (click)="promjeniLabelu('korisnika');">
                             Korisnici
                         </a>
-                        <a class="nav-item nav-link" id="nav-ponude-tab" data-toggle="tab" href="#nav-ponude" role="tab" aria-controls="nav-ponude" aria-selected="false">
+                        <a class="nav-item nav-link" id="nav-ponude-tab" data-toggle="tab" href="#nav-ponude" role="tab" aria-controls="nav-ponude" aria-selected="false" (click)="promjeniLabelu('ponuda');">
                             Ponude
                         </a>
-                        <a class="nav-item nav-link" id="nav-akcija-tab" data-toggle="tab" href="#nav-akcija" role="tab" aria-controls="nav-akcija" aria-selected="false">
+                        <!--<a class="nav-item nav-link" id="nav-akcija-tab" data-toggle="tab" href="#nav-akcija" role="tab" aria-controls="nav-akcija" aria-selected="false" (click)="promjeniLabelu('akcija');">
                             Akcije
-                        </a>
+                        </a>-->
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade" id="nav-izvjestaj" role="tabpanel" aria-labelledby="nav-izvjestaj-tab">
+                        <div class="tab-pane fade show active" id="nav-izvjestaj" role="tabpanel" aria-labelledby="nav-izvjestaj-tab">
                             Izvještaji
                         </div>
                         <div class="tab-pane fade" id="nav-korisnici" role="tabpanel" aria-labelledby="nav-korisnici-tab">
                             <table class="table table-hover table-sm">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">ID uposlenika</th>
+                                        <th scope="col">ID</th>
                                         <th scope="col">Ime i prezime</th>
                                         <th scope="col">Korisničko ime</th>
                                         <th scope="col">E-mail</th>
                                         <th scope="col">Odjel</th>
+                                        <th scope="col">Poslovnica</th>
                                         <th acope="col">Administrator</th>
                                         <th scope="col">Datum registracije</th>
                                         <th scope="col">Aktivan korisnik</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let korisnik of korisnici; let myIndex = index">
-                                        <th scope="row">{{myIndex + 1}}</th>
+                                    <tr *ngFor="let korisnik of korisnici | paginate: { itemsPerPage: 15, currentPage: korisniciPage, id: 'korisnici_pagination' }">
                                         <td>{{korisnik.id_uposlenika}}</td>
                                         <td>{{korisnik.ime}} {{korisnik.prezime}}</td>
                                         <td>{{korisnik.korisnicko_ime}}</td>
                                         <td>{{korisnik.email}}</td>
                                         <td>{{korisnik.odjel.organizaciona_jedinica}}</td>
+                                        <td>{{korisnik.poslovnica?.naziv}}</td>
                                         <td>
                                             <label class="custom-control custom-checkbox">
                                                 <input class="custom-control-input" type="checkbox" [(ngModel)]="korisnik.administrator" id="admin_{{korisnik._id}}" (ngModelChange)="toggleAdministrator($event, korisnik._id)">
@@ -66,13 +65,9 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <pagination-controls class="text-center" (pageChange)="korisniciPage = $event" id="korisnici_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
                         </div>
                         <div class="tab-pane fade" id="nav-ponude" role="tabpanel" aria-labelledby="nav-ponude-tab">
-                            <h3 class="card-header">Pregled ponuda</h3>
-                            <br>
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#novaPonuda">Nova ponuda</button>
-                            <br>
-                            <br>
                             <table class="table table-hover table-sm">
                                 <thead>
                                     <tr>
@@ -99,18 +94,19 @@
                                         <td>{{ponuda.kreirao.korisnicko_ime}}</td>
                                         <td>{{ponuda.datum_kreiranja | date:'dd/MM/yyyy'}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Obriši ponudu" (click)="onDeleteClick(ponuda._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                            <button type="button" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Izmjeni ponudu" (click)="onEditClick(ponuda._id)" data-toggle="modal" data-target="#editPonude"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-link disabled" data-toggle="tooltip" data-placement="top" title="Obriši ponudu" (click)="onDeleteClick(ponuda._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-link disabled" data-toggle="tooltip" data-placement="top" title="Izmjeni ponudu" (click)="onEditClick(ponuda._id)" data-toggle="modal" data-target="#editPonude"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <pagination-controls class="text-center" (pageChange)="ponudePage = $event" id="ponude_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#novaPonuda">Nova ponuda</button>
                         </div>
                         
-                        <div class="tab-pane fade" id="nav-akcija" role="tabpanel" aria-labelledby="nav-akcija-tab">
+                        <!--<div class="tab-pane fade" id="nav-akcija" role="tabpanel" aria-labelledby="nav-akcija-tab">
                             Pregled akcija
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

@@ -2,8 +2,8 @@
 
 body {
     height: 100%;
-    background-color: /*#F8F9FB;*/ #eef4f9;
-    color: #374664;
+    background-color: #ecf2f6;
+    color: #6F7D95;
     background-image: url('/assets/gray-wallpaperT.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -11,19 +11,17 @@ body {
 
 .card {
     border: none;
-    border-radius: 0%;
 }
 
 .card-header {
-    background-color: white !important;
+    background-color: #6f7d95 !important;
+    color: #ffffff;
 }
 
-[type="text"], [type="password"], [type="button"], [type="submit"] {
-    border-radius: 0%;
-}
-
-.custom-select {
-    border-radius: 0%;
+.badge {
+    padding: 10px !important;
+    border-radius: 15px !important;
+    border: 2px solid #d2dae2;
 }
 
 /*.btn-outline-primary {

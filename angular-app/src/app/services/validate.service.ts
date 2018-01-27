@@ -353,7 +353,8 @@ export class ValidateService {
             title: title,
             text: text,
             type: type,
-            confirmButtonText: confirmButtonText
+            confirmButtonText: confirmButtonText,
+            confirmButtonColor: '#149A80'
         });
     }
 

@@ -29,6 +29,8 @@ export class AdminpanelComponent implements OnInit {
     
     // paging
     ponudePage: number = 1;
+    korisniciPage: number = 1;
+    labela: String = 'izvještaja';
 
     constructor(private navhomeService: NavhomeService, private authService: AuthService, private ponudeService: PonudeService, private valdateService: ValidateService) { }
 
@@ -185,5 +187,9 @@ export class AdminpanelComponent implements OnInit {
         this.ponudeService.getPonude().subscribe(ponude => {
             this.ponude = ponude.data;
         });
+    }
+
+    promjeniLabelu(lbl) {
+        this.labela = lbl;
     }
 }

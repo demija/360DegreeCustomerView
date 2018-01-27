@@ -6,25 +6,25 @@
         </div>
         <div class="container">
             <div class="card card-1">
+                <div class="card-header">Izvještaj {{ labela }}</div>
                 <div class="card-body">
-                    <h4 class="card-title">Pregled poslovanja</h4>
-                    <hr>
                     <nav class="nav nav-tabs" id="myTab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-racuni-tab" data-toggle="tab" href="#nav-racuni" role="tab" aria-controls="nav-racuni" aria-selected="false">
+                        <a class="nav-item nav-link active" id="nav-racuni-tab" data-toggle="tab" href="#nav-racuni" role="tab" aria-controls="nav-racuni" aria-selected="false" (click)="promjenaLabele('računa')">
                             Računi
                         </a>
-                        <a class="nav-item nav-link" id="nav-kartice-tab" data-toggle="tab" href="#nav-kartice" role="tab" aria-controls="nav-kartice" aria-selected="false">
+                        <a class="nav-item nav-link" id="nav-kartice-tab" data-toggle="tab" href="#nav-kartice" role="tab" aria-controls="nav-kartice" aria-selected="false" (click)="promjenaLabele('kartica')">
                             Kartice
                         </a>
-                        <a class="nav-item nav-link" id="nav-krediti-tab" data-toggle="tab" href="#nav-krediti" role="tab" aria-controls="nav-krediti" aria-selected="false">
+                        <a class="nav-item nav-link" id="nav-krediti-tab" data-toggle="tab" href="#nav-krediti" role="tab" aria-controls="nav-krediti" aria-selected="false" (click)="promjenaLabele('kredita')">
                             Krediti
                         </a>
-                        <a class="nav-item nav-link" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true">
+                        <a class="nav-item nav-link" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true" (click)="promjenaLabele('depozita')">
                             Depoziti
                         </a>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">
+                            <br>
                             <div class="row">
                                 <div class="col-2">
                                     <div class="form-group">
@@ -50,6 +50,7 @@
                                         <button type="submit" class="btn btn-outline-primary float-right" (click)="traziRacune()">Traži</button>
                                     </div>
                                 </div>
+
                                 <div class="col-10" *ngIf="racuniResult">
                                     <h4 class="card-title">Računi</h4>
                                     <div class="table-responsive">
@@ -95,9 +96,9 @@
                             <div *ngIf="racuniResult">
                                 <hr>
                                 <div class="row justify-content-md-center">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <div style="display: block">
-                                            <canvas baseChart id="brojRacunaGraph" height="100"
+                                            <canvas baseChart id="brojRacunaGraph"
                                                 [datasets]="racunBrojChartData"
                                                 [labels]="racunBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
@@ -109,9 +110,9 @@
                                 </div>
                                 <hr>
                                 <div class="row justify-content-md-center">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <div style="display: block">
-                                            <canvas baseChart id="kolicinaRacunaGraph" height="100"
+                                            <canvas baseChart id="kolicinaRacunaGraph"
                                                 [datasets]="racunKolicinaChartData"
                                                 [labels]="racunKolicinaChartLabels"
                                                 [options]="lineKolicinaChartOptions"
@@ -123,9 +124,9 @@
                                 </div>
                                 <hr>
                                 <div class="row justify-content-md-center">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <div style="display: block">
-                                            <canvas baseChart id="racuniGraph" height="100"
+                                            <canvas baseChart id="racuniGraph"
                                                 [data]="racunDoughnutChartData"
                                                 [labels]="racunDoughnutChartLabels"
                                                 [options]="racunDoughnutChartOptions"
@@ -138,6 +139,7 @@
                         </div>
             
                         <div class="tab-pane fade" id="nav-kartice" role="tabpanel" aria-labelledby="nav-kartice-tab">
+                            <br>
                             <div class="row">
                                 <div class="col-2">
                                     <div class="form-group">
@@ -236,9 +238,9 @@
                             <div *ngIf="karticeResult">
                                 <hr>
                                 <div class="row justify-content-md-center">
-                                    <div class="col-md-12">
+                                    <div class="col-md-8">
                                         <div style="display: block">
-                                            <canvas baseChart id="brojKarticaGraph" height="100"
+                                            <canvas baseChart id="brojKarticaGraph"
                                                 [datasets]="karticaBrojChartData"
                                                 [labels]="karticaBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
@@ -252,6 +254,7 @@
                         </div>
             
                         <div class="tab-pane fade" id="nav-krediti" role="tabpanel" aria-labelledby="nav-krediti-tab">
+                            <br>
                             <div class="row">
                                 <div class="col-2">
                                     <div class="form-group">
@@ -327,7 +330,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-12">
                                         <div style="display: block">
-                                            <canvas baseChart id="brojKreditaGraph" height="120"
+                                            <canvas baseChart id="brojKreditaGraph"
                                                 [datasets]="kreditBrojChartData"
                                                 [labels]="kreditBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
@@ -341,7 +344,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-12">
                                         <div style="display: block">
-                                            <canvas baseChart id="kolicinaKreditaGraph" height="120"
+                                            <canvas baseChart id="kolicinaKreditaGraph"
                                                 [datasets]="kreditKolicinaChartData"
                                                 [labels]="kreditKolicinaChartLabels"
                                                 [options]="lineKolicinaChartOptions"
@@ -355,7 +358,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-12">
                                         <div style="display: block">
-                                            <canvas baseChart id="kreditiGraph" height="100"
+                                            <canvas baseChart id="kreditiGraph"
                                                 [data]="kreditDoughnutChartData"
                                                 [labels]="kreditDoughnutChartLabels"
                                                 [options]="kreditDoughnutChartOptions"
@@ -368,6 +371,7 @@
                         </div>
             
                         <div class="tab-pane fade show" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
+                            <br>
                             <div class="row">
                                 <div class="col-2">
                                     <div class="form-group">
@@ -436,7 +440,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-12">
                                         <div style="display: block">
-                                            <canvas baseChart id="brojDepozitaGraph" height="100"
+                                            <canvas baseChart id="brojDepozitaGraph"
                                                 [datasets]="depozitBrojChartData"
                                                 [labels]="depozitBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
@@ -450,7 +454,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-12">
                                         <div style="display: block">
-                                            <canvas baseChart id="kolicinaDepozitaGraph" height="100"
+                                            <canvas baseChart id="kolicinaDepozitaGraph"
                                                 [datasets]="depozitKolicinaChartData"
                                                 [labels]="depozitKolicinaChartLabels"
                                                 [options]="lineKolicinaChartOptions"
@@ -464,7 +468,7 @@
                                 <div class="row justify-content-md-center">
                                     <div class="col-md-12">
                                         <div style="display: block">
-                                            <canvas baseChart id="depozitiGraph" height="100"
+                                            <canvas baseChart id="depozitiGraph"
                                                 [data]="doughnutChartData"
                                                 [labels]="doughnutChartLabels"
                                                 [options]="doughnutChartOptions"

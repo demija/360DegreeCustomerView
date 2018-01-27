@@ -4,7 +4,7 @@
     left: 0;
     height:100vh;
     width: 15.5% !important;
-    background-color: #4e546c; /*#2C3E50;*/
+    background-color: #354052; /*#2C3E50;*/
 }
 
 #navbar-example2::-webkit-scrollbar-track {
@@ -13,9 +13,10 @@
 }
 
 .nav-link {
-    color: #FFFFFF;
+    color: #a0abbf;
 }
 
 .nav-link:hover {
-    color: #18BC9C;
+    color: #ffffff;
+    background-color: #303949;
 }

@@ -9,144 +9,40 @@
             <br>
             <div id="svakodnevno_bankarstvo">
                 <div class="card card-1">
+                    <div class="card-header">Svakodnevno bankarstvo</div>
                     <div class="card-body">
-                        <h4 class="card-title">Svakodnevno bankarstvo</h4>
-                        <hr>
                         <div class="row">
                             <div class="col">
-                                <h6 class="card-subtitle mb-2 card-subtitle mb-2 text-muted">Ime i prezime</h6>
+                                <p class="text-muted">Ime i prezime</p>
+                                <p class="text-muted">JMBG</p>
+                                <p class="text-muted">Broj lične karte</p>
+                                <p class="text-muted">Datum izdavanja</p>
+                                <p class="text-muted">Datum važenja</p>
+                                <p class="text-muted">CRK saglasnost</p>
                             </div>
-                            <div class="col" >
-                                <h6 class="card-subtitle mb-2 text-muted">JMBG</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">CRK saglasnost</h6>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col">
                                 <p class="text-primary">{{ klijent.ime }} {{ klijent.prezime }}</p>
-                            </div>
-                            <div class="col">
                                 <p class="text-primary">{{ klijent.maticni_broj }}</p>
-                            </div>
-                            <div class="col">
+                                <p class="text-primary">{{ klijent.broj_lk }}</p>
+                                <p class="text-primary">{{ klijent.datum_izdavanja_lk | date:'dd/MM/yyyy' }}</p>
+                                <p class="text-primary">{{ klijent.datum_vazenja_lk | date:'dd/MM/yyyy' }}</p>
                                 <p [ngClass]="{Da:'text-success', Ne:'text-danger'}[klijent.saglasnost_za_crk]">{{ klijent.saglasnost_za_crk }}</p>
                             </div>
-                        </div>
-    
-                        <div class="row">
                             <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Broj lične karte</h6>
+                                <p class="text-muted">Adresa</p>
+                                <p class="text-muted">Grad</p>
+                                <p class="text-muted">Kanton</p>
+                                <p class="text-muted">E-mail</p>
+                                <p class="text-muted">Fiksni telefon</p>
+                                <p class="text-muted">Mobilni telefon</p>
                             </div>
-                            <div class="col" >
-                                <h6 class="card-subtitle mb-2 text-muted">Datum izdavanja</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Datum važenja</h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.broj_lk }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.datum_izdavanja_lk | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.datum_vazenja_lk | date:'dd/MM/yyyy' }}</p>
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Segment</h6>
-                            </div>
-                            <div class="col" >
-                                <h6 class="card-subtitle mb-2 text-muted">Rejting</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Klasifikacija</h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.segment_klijenta }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.rejting_klijenta }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.cb_klasifikacija }}</p>
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Adresa</h6>
-                            </div>
-                            <div class="col" >
-                                <h6 class="card-subtitle mb-2 text-muted">Grad</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Kanton</h6>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col">
                                 <p class="text-primary">{{ klijent.adresa?.ulica_i_broj }}</p>
-                            </div>
-                            <div class="col">
                                 <p class="text-primary">{{ klijent.adresa?.grad }}</p>
-                            </div>
-                            <div class="col">
                                 <p class="text-primary">{{ klijent.adresa?.kanton }}</p>
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">E-mail</h6>
-                            </div>
-                            <div class="col" >
-                                <h6 class="card-subtitle mb-2 text-muted">Fiksni telefon</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Mobilni telefon</h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
                                 <p class="text-primary">{{ klijent.mail_adresa }}</p>
-                            </div>
-                            <div class="col">
                                 <p class="text-primary">{{ klijent.kucni_telefon }}</p>
-                            </div>
-                            <div class="col">
                                 <p class="text-primary">{{ klijent.mobilni_telefon }}</p>
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Radni status</h6>
-                            </div>
-                            <div class="col" >
-                                <h6 class="card-subtitle mb-2 text-muted">Firma zaposlenja</h6>
-                            </div>
-                            <div class="col">
-                                <h6 class="card-subtitle mb-2 text-muted">Klijent prima platu</h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.radni_status }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.firma_zaposlenja?.naziv }} {{ klijent.firma_zaposlenja?.odjel }}</p>
-                            </div>
-                            <div class="col">
-                                <p class="text-primary">{{ klijent.primanja_zadnji_mjesec }}</p>
                             </div>
                         </div>
                     </div>
@@ -155,9 +51,8 @@
             <br>
             <div id="transakcijsko_poslovanje">
                 <div class="card card-1">
+                    <div class="card-header">Transakcijsko poslovanje</div>
                     <div class="card-body">
-                        <h4 class="card-title">Transakcijsko poslovanje</h4>
-                        <hr>
                         <div *ngFor="let rcn of racuni.data; let idx = index">
                             <div class="row" >
                                 <div class="col-4">
@@ -195,9 +90,8 @@
             <br>
             <div id="karticno_poslovanje">
                 <div class="card card-1">
+                    <div class="card-header">Kartično poslovanje</div>
                     <div class="card-body">
-                        <h4 class="card-title">Kartično poslovanje</h4>
-                        <hr>
                         <div *ngFor="let kart of kartice; let idx = index">
                             <div class="row">
                                 <div class="col">
@@ -240,9 +134,8 @@
             <br>
             <div id="krediti">
                 <div class="card card-1">
+                    <div class="card-header">Krediti</div>
                     <div class="card-body">
-                        <h4 class="card-title">Krediti</h4>
-                        <hr>
                         <div *ngFor="let kredit of krediti.data; let idx = index">
                             <div class="row" >
                                 <div class="col-4">
@@ -284,9 +177,8 @@
             <br>
             <div id="depoziti">
                 <div class="card card-1">
+                    <div class="card-header">Depoziti</div>
                     <div class="card-body">
-                        <h4 class="card-title">Depoziti</h4>
-                        <hr>
                         <div *ngFor="let dpz of depoziti.data; let idx = index">
                             <div class="row" >
                                 <div class="col-6">
@@ -316,11 +208,10 @@
             <br>
             <div id="ostale_usluge">
                 <div class="card card-1">
+                    <div class="card-header">Dodatne usluge</div>
                     <div class="card-body">
-                        <h4 class="card-title">Dodatne usluge</h4>
-                        <hr>
                         <h5><span *ngFor="let usluga of dodatne_usluge">
-                            <span class="badge badge-info floating-box">{{ usluga.naziv_ponude }}</span>
+                            <span class="badge floating-box">{{ usluga.naziv_ponude }}</span>
                         </span></h5>
                     </div>
                 </div>
@@ -328,14 +219,13 @@
             <br>
             <div id="biljeske">
                 <div class="card card-1">
+                    <div class="card-header">Bilješke</div>
                     <div class="card-body">
-                        <h4 class="card-title">Bilješke</h4>
-                        <hr>
                         <div class="row">
                             <div class="col-sm" *ngIf="biljeske.data">
                                 <ul *ngFor="let biljeska of biljeske.data | paginate: { itemsPerPage: 3, currentPage: biljeskePage, id: 'biljeske_pagination' }">
                                     <li>
-                                        <button type="button" class="btn btn-link" (click)="showBiljeska(biljeska)">{{ biljeska.kreirao.korisnicko_ime }}_{{ biljeska.datum_kreiranja | date:'dd/MM/yyyy' }}</button>
+                                        <button type="button" class="btn btn-link" (click)="showBiljeska(biljeska)" style="color: #6F7D95;">{{ biljeska.kreirao.korisnicko_ime }}_{{ biljeska.datum_kreiranja | date:'dd/MM/yyyy' }}</button>
                                     </li>
                                 </ul>
                                 <pagination-controls class="text-left" (pageChange)="biljeskePage = $event" id="biljeske_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
@@ -351,14 +241,13 @@
             <br>
             <div id="arhiva_interakcija">
                 <div class="card card-1">
+                    <div class="card-header">Arhiva interakcija</div>
                     <div class="card-body">
-                        <h4 class="card-title">Arhiva interakcija</h4>
-                        <hr>
                         <div class="row">
                             <div class="col-sm" *ngIf="arhivaPonuda.data">
                                 <ul *ngFor="let arhiva of arhivaPonuda.data | paginate: { itemsPerPage: 3, currentPage: arhivaPonudaPage, id: 'arhivaPonuda_pagination' }">
                                     <li>
-                                        <button type="button" class="btn btn-link" (click)="showArhiva(arhiva)">{{ arhiva.evidentirao.korisnicko_ime }}_{{ arhiva.datum_evidentiranja | date:'dd/MM/yyyy' }}</button>
+                                        <button type="button" class="btn btn-link" (click)="showArhiva(arhiva)" style="color: #6F7D95;">{{ arhiva.evidentirao.korisnicko_ime }}_{{ arhiva.datum_evidentiranja | date:'dd/MM/yyyy' }}</button>
                                     </li>
                                 </ul>
                                 <pagination-controls class="text-left" (pageChange)="arhivaPonudaPage = $event" id="arhivaPonuda_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
@@ -375,9 +264,8 @@
             <br>
             <div id="vremenska_linija">
                 <div class="card card-1">
+                    <div class="card-header">Vremenska linija korisnika</div>
                     <div class="card-body">
-                        <h4 class="card-title">Vremenska linija</h4>
-                        <hr>
                         <ul class="timeline" *ngFor="let timel of time_line; let even = even; let odd = odd">
                             <li [ngClass]="{true: 'timeline-inverted', false: ''}[even]">
                                 <div class="timeline-badge" [ngClass]="{kartica: 'info', depozit: 'warning', kredit: 'primary', racun: 'secondary'}[timel.type]"><i [ngClass]="{kartica: 'fa fa-credit-card', depozit: 'fa fa-line-chart', kredit: 'fa fa-file-text-o', racun: 'fa fa-handshake-o'}[timel.type]" aria-hidden="true"></i></div>

@@ -18,6 +18,7 @@ export class ReportComponent implements OnInit {
     karticePage: number = 1;
     kreditiPage: number = 1;
     depozitiPage: number = 1;
+    labela: String = "računa";
 
     // računi
     tipoviUgovoraRacuna: any;
@@ -1301,5 +1302,9 @@ export class ReportComponent implements OnInit {
         });
         
         new Angular2Csv(data, 'depozitiReport', {headers: (head)});
+    }
+
+    promjenaLabele(lbl) {
+        this.labela = lbl;
     }
 }

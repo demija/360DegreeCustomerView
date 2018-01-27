@@ -6,12 +6,11 @@
         </div>
         <div class="container">
             <div class="card card-1">
+                <div class="card-header">Moj profil</div>
                 <div class="card-body">
-                    <h4 class="card-title">Moj profil</h4>
-                    <hr>
                     <div *ngIf="user">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <p class="card-subtitle mb-2 text-muted">Lični podaci</p>
                                 <hr>
                                 <br>
@@ -22,35 +21,38 @@
                                 <div class="row">
                                     <div class="col">
                                         <p class="text-muted">ID poslenika</p>
-                                        <p class="text-primary">{{ user.id_uposlenika }}</p>
                                         <p class="text-muted">Ime</p>
-                                        <p class="text-primary">{{ user.ime }}</p>
                                         <p class="text-muted">E-mail</p>
-                                        <p class="text-primary">{{ user.email }}</p>
                                         <p class="text-muted">Datum registracije</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-primary">{{ user.id_uposlenika }}</p>
+                                        <p class="text-primary">{{ user.ime }}</p>
+                                        <p class="text-primary">{{ user.email }}</p>
                                         <p class="text-primary">{{ user.datum_registracije | date:'dd/MM/yyyy' }}</p>
                                     </div>
                                     <div class="col">
                                         <p class="text-muted">Korisničko ime</p>
-                                        <p class="text-primary">{{ user.korisnicko_ime }}</p>
                                         <p class="text-muted">Prezime</p>
+                                        <p class="text-muted" *ngIf="user.poslovnica">Poslovnica</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="text-primary">{{ user.korisnicko_ime }}</p>
                                         <p class="text-primary">{{ user.prezime }}</p>
-                                        <p class="text-muted">Odjel</p>
-                                        <p class="text-primary">{{ user.odjel.organizaciona_jedinica }}</p>
                                         <p class="text-primary" *ngIf="user.poslovnica">{{ user.poslovnica.naziv }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <h5><span *ngIf="user.administrator" class="badge badge-info">Administrator</span>
-                                        <span *ngIf="user.aktivan" class="badge badge-success">Aktivan korisnik</span></h5>
+                                        <h5><span *ngIf="user.administrator" class="badge">Administrator</span>
+                                        <span *ngIf="user.aktivan" class="badge">Aktivan korisnik</span></h5>
                                     </div>
                                     <div class="col">
                                         <button type="button" class="btn btn-link disabled float-right" data-toggle="tooltip" data-placement="top" title="Izmjena" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="editProfila(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-8">
+                            <div class="col-6">
                                 <p class="card-subtitle mb-2 text-muted">Statistika</p>
                                 <hr>
                                 <div class="row">
