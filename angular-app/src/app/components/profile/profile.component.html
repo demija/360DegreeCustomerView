@@ -6,8 +6,9 @@
         </div>
         <div class="container">
             <div class="card card-1">
-                <h3 class="card-header">Moj profil</h3>
                 <div class="card-body">
+                    <h4 class="card-title">Moj profil</h4>
+                    <hr>
                     <div *ngIf="user">
                         <div class="row">
                             <div class="col-4">
@@ -36,6 +37,7 @@
                                         <p class="text-primary">{{ user.prezime }}</p>
                                         <p class="text-muted">Odjel</p>
                                         <p class="text-primary">{{ user.odjel.organizaciona_jedinica }}</p>
+                                        <p class="text-primary" *ngIf="user.poslovnica">{{ user.poslovnica.naziv }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -127,17 +129,30 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="form-control-label" for="odjelEditTextbox">Odjel</label>
-                                            <select class="custom-select" [(ngModel)]="id_odjelaEdit" name="odjelEdit" id="odjelProfilEdit">
-                                                <option [value]="0" selected=""></option>
+                                            <select class="custom-select" [(ngModel)]="id_odjelaEdit" name="odjelEdit" id="odjelProfilEdit" (change)="onOdjelChange()">
+                                                
                                                 <option *ngFor="let odjel of odjeliLista" [value]="odjel._id">{{ odjel.organizaciona_jedinica }}</option>
                                             </select>
                                             <div class="invalid-feedback">Obavezan odabir!</div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row" *ngIf="prikaziPoslovnicu">
+                                    <div class="col"></div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="poslovnicaEditDropbox">Poslovnica</label>
+                                            <select [(ngModel)]="id_poslovniceEdit" class="w-100 custom-select" name="poslovnicaEdit" id="poslovnicaEditDropbox">
+                                                <option [value]="0" selected=""></option>
+                                                <option *ngFor="let o of poslovniceLista" [value]="o._id">{{ o.naziv }}</option>
+                                            </select>
+                                            <div class="invalid-feedback">Obavezan odabir!</div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <br>
-                                <a href="#" class="card-link text-danger" data-dismiss="modal">Zatvori</a>
-                                <a href="#" class="card-link" (click)="sacuvajIzmjene()">Sačuvaj</a>
+                                <button type="button" class="btn btn-link text-danger" data-dismiss="modal">Zatvori</button>
+                                <button type="button" class="btn btn-link" (click)="sacuvajIzmjene()">Sačuvaj</button>
                             </div>
                         </div>
                     </div>

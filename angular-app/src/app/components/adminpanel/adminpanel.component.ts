@@ -4,7 +4,6 @@ import { AuthService } from '../../services/auth.service';
 import { PonudeService } from '../../services/ponude.service';
 import { ValidateService } from '../../services/validate.service';
 import { DatePipe } from '@angular/common';
-import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-adminpanel',
@@ -51,23 +50,9 @@ export class AdminpanelComponent implements OnInit {
 
         this.authService.changeAdminRolle(korisnik).subscribe(data => {
             if(data.success) {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'success',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'success', 'Uredu');
             } else {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'error', 'Uredu');
             }
         });
     }
@@ -80,23 +65,9 @@ export class AdminpanelComponent implements OnInit {
 
         this.authService.changeActivity(korisnik).subscribe(data => {
             if(data.success) {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'success',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'success', 'Uredu');
             } else {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'error', 'Uredu');
             }
         });
     }
@@ -121,23 +92,9 @@ export class AdminpanelComponent implements OnInit {
         //Unos nove usluge
         this.ponudeService.dodajPonudu(novaPonuda).subscribe(data => {
             if(data.success) {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'success',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'success', 'Uredu');
             } else {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'error', 'Uredu');
             }
         });
 
@@ -145,15 +102,7 @@ export class AdminpanelComponent implements OnInit {
     }
 
     onDeleteClick(id) {
-        swal({
-            title: 'Jeste li sigurni?',
-            type: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#149A80',
-            cancelButtonColor: '#E12E1C',
-            confirmButtonText: 'Da',
-            cancelButtonText: 'Ne'
-        }).then((result) => {
+        this.valdateService.pokreniSwalUpit('Jeste li sigurni?', 'question').then((result) => {
             if (result.value) {
                 const ponuda = {
                     _id: id
@@ -161,23 +110,9 @@ export class AdminpanelComponent implements OnInit {
                 
                 this.ponudeService.obrisiPonudu(ponuda).subscribe(data => {
                     if(data.success) {
-                        swal({
-                            position: 'top-right',
-                            //title: 'Greška!',
-                            text: data.msg,
-                            type: 'success',
-                            showConfirmButton: false,
-                            timer: 2500
-                        });
+                        this.valdateService.pokreniSwal('', data.msg, 'success', 'Uredu');
                     } else {
-                        swal({
-                            position: 'top-right',
-                            //title: 'Greška!',
-                            text: data.msg,
-                            type: 'error',
-                            showConfirmButton: false,
-                            timer: 2500
-                        });
+                        this.valdateService.pokreniSwal('', data.msg, 'error', 'Uredu');
                     }
                 });
         
@@ -216,23 +151,9 @@ export class AdminpanelComponent implements OnInit {
 
         this.ponudeService.editPonudu(ponudaEdit).subscribe(data => {
             if(data.success) {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'success',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'success', 'Uredu');
             } else {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'error', 'Uredu');
             }
         });
 
@@ -251,23 +172,9 @@ export class AdminpanelComponent implements OnInit {
 
         this.ponudeService.changeActivity(ponuda).subscribe(data => {
             if(data.success) {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'success',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'success', 'Uredu');
             } else {
-                swal({
-                    position: 'top-right',
-                    //title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    showConfirmButton: false,
-                    timer: 2500
-                });
+                this.valdateService.pokreniSwal('', data.msg, 'error', 'Uredu');
             }
         });
 

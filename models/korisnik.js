@@ -39,6 +39,10 @@ const userSchema = mongoose.Schema({
         required: true
     },
 
+    poslovnica: {
+        type: Object
+    },
+
     datum_registracije: {
         type: Date
     },
@@ -89,6 +93,11 @@ module.exports.dodaj = function(noviKorisnik, callback) {
 
 module.exports.izmjena = function(korisnik, callback) {
     korisnik.odjel._id = mongoose.Types.ObjectId(korisnik.odjel._id);
+    
+    if(korisnik.poslovnica) {
+        korisnik.poslovnica._id = mongoose.Types.ObjectId(korisnik.poslovnica._id);
+    }
+    
     const ObjectId = require('mongoose').Types.ObjectId;
     const query = {
         _id: new ObjectId(korisnik._id)

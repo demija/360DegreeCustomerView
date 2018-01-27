@@ -87,6 +87,13 @@ export class ValidateService {
             valid = false;
         } else {
             document.getElementById('odjelDropbox').classList.remove('is-invalid');
+
+            if(korisnik.odjel.organizaciona_jedinica == 'Sektor poslova sa stanovništvom' && !korisnik.poslovnica) {
+                document.getElementById('poslovnicaDropbox').classList.add('is-invalid');
+                valid = false;
+            } else if(korisnik.odjel.organizaciona_jedinica == 'Sektor poslova sa stanovništvom' && korisnik.poslovnica) {
+                document.getElementById('poslovnicaDropbox').classList.remove('is-invalid');
+            }
         }
 
         return valid;
@@ -217,6 +224,13 @@ export class ValidateService {
             valid = false;
         } else {
             document.getElementById('odjelProfilEdit').classList.remove('is-invalid');
+
+            if(korisnik.odjel.organizaciona_jedinica == 'Sektor poslova sa stanovništvom' && !korisnik.poslovnica) {
+                document.getElementById('poslovnicaEditDropbox').classList.add('is-invalid');
+                valid = false;
+            } else if(korisnik.odjel.organizaciona_jedinica == 'Sektor poslova sa stanovništvom' && korisnik.poslovnica) {
+                document.getElementById('poslovnicaEditDropbox').classList.remove('is-invalid');
+            }
         }
 
         return valid;
@@ -335,10 +349,23 @@ export class ValidateService {
 
     pokreniSwal(title, text, type, confirmButtonText) {
         swal({
+            position: 'top-right',
             title: title,
             text: text,
             type: type,
             confirmButtonText: confirmButtonText
+        });
+    }
+
+    pokreniSwalUpit(title, type) {
+        return swal({
+            title: title,
+            type: type,
+            showCancelButton: true,
+            confirmButtonColor: '#149A80',
+            cancelButtonColor: '#E12E1C',
+            confirmButtonText: 'Da',
+            cancelButtonText: 'Ne'
         });
     }
 }

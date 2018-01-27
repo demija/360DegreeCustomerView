@@ -1,479 +1,477 @@
 <app-navbar></app-navbar>
-<div class="card card-1">
-    <h3 class="card-header">Pregled poslovanja</h3>
-    <div class="card-body">
-        <nav class="nav nav-pills" id="myTab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-racuni-tab" data-toggle="tab" href="#nav-racuni" role="tab" aria-controls="nav-racuni" aria-selected="false">
-                Računi
-            </a>
-            <a class="nav-item nav-link" id="nav-kartice-tab" data-toggle="tab" href="#nav-kartice" role="tab" aria-controls="nav-kartice" aria-selected="false">
-                Kartice
-            </a>
-            <a class="nav-item nav-link" id="nav-krediti-tab" data-toggle="tab" href="#nav-krediti" role="tab" aria-controls="nav-krediti" aria-selected="false">
-                Krediti
-            </a>
-            <a class="nav-item nav-link" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true">
-                Depoziti
-            </a>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">
-                <div class="container">
+<div class="container-fluid">
+    <div class="row">
+        <div class="sideBr">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="container">
+            <div class="card card-1">
+                <div class="card-body">
+                    <h4 class="card-title">Pregled poslovanja</h4>
                     <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <div class="form-group">
-                                <label for="datum_od_racuni" class="text-muted">Datum ugovora od:</label>
-                                <my-date-picker name="datum_od_racuni" [options]="myDatePickerOptions" [(ngModel)]="datumOdRacun" id="datum_od_racuni"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="datum_do_racuni" class="text-muted">Datum ugovora do:</label>
-                                <my-date-picker name="datum_do_racuni" [options]="myDatePickerOptions" [(ngModel)]="datumDoRacun" id="datum_do_racuni"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="tipRacunaCheck" class="text-muted">Tip ugovora:</label>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="tipRacunaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraRacuna()" [(ngModel)]="selectedSviUgovoriRacuna" >
-                                    <label class="custom-control-label" for="tipRacunaCheck">Svi tipovi</label>
+                    <nav class="nav nav-tabs" id="myTab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-racuni-tab" data-toggle="tab" href="#nav-racuni" role="tab" aria-controls="nav-racuni" aria-selected="false">
+                            Računi
+                        </a>
+                        <a class="nav-item nav-link" id="nav-kartice-tab" data-toggle="tab" href="#nav-kartice" role="tab" aria-controls="nav-kartice" aria-selected="false">
+                            Kartice
+                        </a>
+                        <a class="nav-item nav-link" id="nav-krediti-tab" data-toggle="tab" href="#nav-krediti" role="tab" aria-controls="nav-krediti" aria-selected="false">
+                            Krediti
+                        </a>
+                        <a class="nav-item nav-link" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true">
+                            Depoziti
+                        </a>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="datum_od_racuni" class="text-muted">Datum ugovora od:</label>
+                                        <my-date-picker name="datum_od_racuni" [options]="myDatePickerOptions" [(ngModel)]="datumOdRacun" id="datum_od_racuni"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datum_do_racuni" class="text-muted">Datum ugovora do:</label>
+                                        <my-date-picker name="datum_do_racuni" [options]="myDatePickerOptions" [(ngModel)]="datumDoRacun" id="datum_do_racuni"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipRacunaCheck" class="text-muted">Tip ugovora:</label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="tipRacunaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraRacuna()" [(ngModel)]="selectedSviUgovoriRacuna" >
+                                            <label class="custom-control-label" for="tipRacunaCheck">Svi tipovi</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraRacuna">
+                                            <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraRacuna()" type="checkbox">
+                                            <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziRacune()">Traži</button>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraRacuna">
-                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraRacuna()" type="checkbox">
-                                    <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziRacune()">Traži</button>
-                            </div>
-                        </div>
-                        <div class="col-10" *ngIf="racuniResult">
-                            <h4 class="card-title">Računi</h4>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                            <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                            <th class="card-subtitle mb-2 text-muted">Datum ugovora</th>
-                                            <th class="card-subtitle mb-2 text-muted">Stanje</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let r of racuniResult | paginate: { itemsPerPage: 10, currentPage: racuniPage, id:'racuni_pagination' }">
-                                        <tr>
-                                            <td>
-                                                <p class="text-primary">{{ r.klijent.ime }} {{ r.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Jmbg:  {{ r.klijent.maticni_broj }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ r.ugovor.opis_tipa_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ r.ugovor.partija }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ r.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                                <p class="text-primary">{{ r.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                                            </td>
-                                            <td>
-                                                <div *ngIf="r.stanje_racuna < 0">
-                                                    <p class="text-danger">{{ r.stanje_racuna | number:'.2' }} BAM</p>
-                                                </div>
-                                                <div *ngIf="r.stanje_racuna >= 0">
-                                                    <p class="text-success">{{ r.stanje_racuna | number:'.2' }} BAM</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <pagination-controls class="text-center" (pageChange)="racuniPage = $event" id="racuni_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="racuniCsv()">Spasi CSV</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div *ngIf="racuniResult">
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="brojRacunaGraph" height="100"
-                                        [datasets]="racunBrojChartData"
-                                        [labels]="racunBrojChartLabels"
-                                        [options]="lineBrojChartOptions"
-                                        [legend]="racunBrojChartLegend"
-                                        [chartType]="racunBrojChartType">
-                                    </canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="kolicinaRacunaGraph" height="100"
-                                        [datasets]="racunKolicinaChartData"
-                                        [labels]="racunKolicinaChartLabels"
-                                        [options]="lineKolicinaChartOptions"
-                                        [legend]="racunKolicinaChartLegend"
-                                        [chartType]="racunKolicinaChartType">
-                                    </canvas>
+                                <div class="col-10" *ngIf="racuniResult">
+                                    <h4 class="card-title">Računi</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Datum ugovora</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Stanje</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let r of racuniResult | paginate: { itemsPerPage: 10, currentPage: racuniPage, id:'racuni_pagination' }">
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-primary">{{ r.klijent.ime }} {{ r.klijent.prezime }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Jmbg:  {{ r.klijent.maticni_broj }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ r.ugovor.opis_tipa_ugovora }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Partija: {{ r.ugovor.partija }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ r.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                        <p class="text-primary">{{ r.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <div *ngIf="r.stanje_racuna < 0">
+                                                            <p class="text-danger">{{ r.stanje_racuna | number:'.2' }} BAM</p>
+                                                        </div>
+                                                        <div *ngIf="r.stanje_racuna >= 0">
+                                                            <p class="text-success">{{ r.stanje_racuna | number:'.2' }} BAM</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <pagination-controls class="text-center" (pageChange)="racuniPage = $event" id="racuni_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="racuniCsv()">Spasi izvještaj</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="racuniGraph" height="100"
-                                        [data]="racunDoughnutChartData"
-                                        [labels]="racunDoughnutChartLabels"
-                                        [options]="racunDoughnutChartOptions"
-                                        [chartType]="racunDoughnutChartType">
-                                    </canvas>
+                            <div *ngIf="racuniResult">
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="brojRacunaGraph" height="100"
+                                                [datasets]="racunBrojChartData"
+                                                [labels]="racunBrojChartLabels"
+                                                [options]="lineBrojChartOptions"
+                                                [legend]="racunBrojChartLegend"
+                                                [chartType]="racunBrojChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="nav-kartice" role="tabpanel" aria-labelledby="nav-kartice-tab">
-                <div class="container">
-                    <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <div class="form-group">
-                                <label for="datum_od_kartice" class="text-muted">Datum ugovora od:</label>
-                                <my-date-picker name="datum_od_kartice" [options]="myDatePickerOptions" [(ngModel)]="datumOdKartica" id="datum_od_kartice"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="datum_do_kartice" class="text-muted">Datum ugovora do:</label>
-                                <my-date-picker name="datum_do_kartice" [options]="myDatePickerOptions" [(ngModel)]="datumDoKartica" id="datum_do_kartice"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="tipUgovoraCheck" class="text-muted">Tip ugovora:</label>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="tipUgovoraCheck" type="checkbox" (change)="selektujSveTipoveUgovoraKartica()" [(ngModel)]="selectedSviUgovoriKartica" >
-                                    <label class="custom-control-label" for="tipUgovoraCheck">Svi tipovi</label>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="kolicinaRacunaGraph" height="100"
+                                                [datasets]="racunKolicinaChartData"
+                                                [labels]="racunKolicinaChartLabels"
+                                                [options]="lineKolicinaChartOptions"
+                                                [legend]="racunKolicinaChartLegend"
+                                                [chartType]="racunKolicinaChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraKartica">
-                                    <input class="custom-control-input" id="{{o.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraKartice()" type="checkbox">
-                                    <label class="custom-control-label" for="{{o.opis_tipa_ugovora}}">{{o.opis_tipa_ugovora}}</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="tip_kartice_svi" class="text-muted">Tip kartice:</label>
-                                <div class="custom-control custom-radio">
-                                    <input id="tip_kartice_svi" name="tipKarticeRdb" [value]='sviTipovi' [(ngModel)]="tipKarticeRadio" class="custom-control-input" type="radio">
-                                    <label class="custom-control-label" for="tip_kartice_svi">Svi tipovi</label>
-                                </div>
-                                <div class="custom-control custom-radio" *ngFor="let o of tipoviKartica">
-                                    <input id="tip_kartice_{{o}}" [value]='o' [(ngModel)]="tipKarticeRadio" name="tipKarticeRdb" class="custom-control-input" type="radio">
-                                    <label class="custom-control-label" for="tip_kartice_{{o}}">{{o}}</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="vrsta_kartice_sve" class="text-muted">Vrsta kartice:</label>
-                                <div class="custom-control custom-radio">
-                                    <input id="vrsta_kartice_sve" name="vrstaKarticeRdb" [value]='sveVrste' [(ngModel)]="vrstaKarticeRadio" class="custom-control-input" type="radio">
-                                    <label class="custom-control-label" for="vrsta_kartice_sve">Sve vrste</label>
-                                </div>
-                                <div class="custom-control custom-radio" *ngFor="let o of vrsteKartica">
-                                    <input id="vrsta_kartice_{{o}}" [value]='o' [(ngModel)]="vrstaKarticeRadio" name="vrstaKarticeRdb" class="custom-control-input" type="radio">
-                                    <label class="custom-control-label" for="vrsta_kartice_{{o}}">{{o}}</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKartice()">Traži</button>
-                            </div>
-                        </div>
-                        <div class="col-10" *ngIf="karticeResult">
-                            <h4 class="card-title">Kartice</h4>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                            <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                            <th class="card-subtitle mb-2 text-muted">Vrsta/tip kartice</th>
-                                            <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
-                                            <th class="card-subtitle mb-2 text-muted">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let k of karticeResult | paginate: { itemsPerPage: 10, currentPage: karticePage, id: 'kartice_pagination' }">
-                                        <tr>
-                                            <td>
-                                                <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ k.kartica.ugovor.opis_tipa_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">{{ k.ugovor.opis_tipa_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">{{ k.ugovor.partija }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ k.kartica.vrsta_kartice }}</p>
-                                                <p class="text-primary">{{ k.kartica.tip_kartice }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ k.kartica.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                                <p class="text-primary">{{ k.kartica.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                                            </td>
-                                            <td>
-                                                <div *ngIf="k.kartica.aktivna_kartica">
-                                                    <p class="text-success">Aktivna kartica</p>
-                                                </div>
-                                                <div *ngIf="!k.kartica.aktivna_kartica">
-                                                    <p class="text-danger">Neaktivna kartica</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <pagination-controls class="text-center" (pageChange)="karticePage = $event" id="kartice_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="karticeCsv()">Spasi CSV</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div *ngIf="karticeResult">
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="brojKarticaGraph" height="100"
-                                        [datasets]="karticaBrojChartData"
-                                        [labels]="karticaBrojChartLabels"
-                                        [options]="lineBrojChartOptions"
-                                        [legend]="karticaBrojChartLegend"
-                                        [chartType]="karticaBrojChartType">
-                                    </canvas>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="racuniGraph" height="100"
+                                                [data]="racunDoughnutChartData"
+                                                [labels]="racunDoughnutChartLabels"
+                                                [options]="racunDoughnutChartOptions"
+                                                [chartType]="racunDoughnutChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="nav-krediti" role="tabpanel" aria-labelledby="nav-krediti-tab">
-                <div class="container">
-                    <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <div class="form-group">
-                                <label for="datum_od_kredita" class="text-muted">Datum ugovora od:</label>
-                                <my-date-picker name="datum_od_kredita" [options]="myDatePickerOptions" [(ngModel)]="datumOdKredit" id="datum_od_kredita"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="datum_do_kredita" class="text-muted">Datum ugovora do:</label>
-                                <my-date-picker name="datum_do_kredita" [options]="myDatePickerOptions" [(ngModel)]="datumDoKredit" id="datum_do_kredita"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="tipKreditaCheck" class="text-muted">Tip ugovora:</label>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="tipKreditaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraKredita()" [(ngModel)]="selectedSviUgovoriKredita" >
-                                    <label class="custom-control-label" for="tipKreditaCheck">Svi tipovi</label>
+            
+                        <div class="tab-pane fade" id="nav-kartice" role="tabpanel" aria-labelledby="nav-kartice-tab">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="datum_od_kartice" class="text-muted">Datum ugovora od:</label>
+                                        <my-date-picker name="datum_od_kartice" [options]="myDatePickerOptions" [(ngModel)]="datumOdKartica" id="datum_od_kartice"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datum_do_kartice" class="text-muted">Datum ugovora do:</label>
+                                        <my-date-picker name="datum_do_kartice" [options]="myDatePickerOptions" [(ngModel)]="datumDoKartica" id="datum_do_kartice"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipUgovoraCheck" class="text-muted">Tip ugovora:</label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="tipUgovoraCheck" type="checkbox" (change)="selektujSveTipoveUgovoraKartica()" [(ngModel)]="selectedSviUgovoriKartica" >
+                                            <label class="custom-control-label" for="tipUgovoraCheck">Svi tipovi</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraKartica">
+                                            <input class="custom-control-input" id="{{o.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraKartice()" type="checkbox">
+                                            <label class="custom-control-label" for="{{o.opis_tipa_ugovora}}">{{o.opis_tipa_ugovora}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tip_kartice_svi" class="text-muted">Tip kartice:</label>
+                                        <div class="custom-control custom-radio">
+                                            <input id="tip_kartice_svi" name="tipKarticeRdb" [value]='sviTipovi' [(ngModel)]="tipKarticeRadio" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="tip_kartice_svi">Svi tipovi</label>
+                                        </div>
+                                        <div class="custom-control custom-radio" *ngFor="let o of tipoviKartica">
+                                            <input id="tip_kartice_{{o}}" [value]='o' [(ngModel)]="tipKarticeRadio" name="tipKarticeRdb" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="tip_kartice_{{o}}">{{o}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vrsta_kartice_sve" class="text-muted">Vrsta kartice:</label>
+                                        <div class="custom-control custom-radio">
+                                            <input id="vrsta_kartice_sve" name="vrstaKarticeRdb" [value]='sveVrste' [(ngModel)]="vrstaKarticeRadio" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="vrsta_kartice_sve">Sve vrste</label>
+                                        </div>
+                                        <div class="custom-control custom-radio" *ngFor="let o of vrsteKartica">
+                                            <input id="vrsta_kartice_{{o}}" [value]='o' [(ngModel)]="vrstaKarticeRadio" name="vrstaKarticeRdb" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="vrsta_kartice_{{o}}">{{o}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKartice()">Traži</button>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraKredita">
-                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraKredita()" type="checkbox">
-                                    <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKredite()">Traži</button>
-                            </div>
-                        </div>
-                        <div class="col-10" *ngIf="kreditiResult">
-                            <h4 class="card-title">Krediti</h4>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                            <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                            <th class="card-subtitle mb-2 text-muted">Odobreni iznos</th>
-                                            <th class="card-subtitle mb-2 text-muted">Glavnica</th>
-                                            <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let k of kreditiResult | paginate: { itemsPerPage: 10, currentPage: kreditiPage, id: 'krediti_pagination' }">
-                                        <tr>
-                                            <td>
-                                                <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ k.ugovor.opis_tipa_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ k.ugovor.partija }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ k.odobreni_iznos | number:'.2' }} BAM</p>
-                                                <p class="card-subtitle mb-2 text-muted">Stopa: {{ k.stopa }} %</p>
-                                                <p class="card-subtitle mb-2 text-muted">Anuitet: {{ k.iznos_anuitet | number:'.2' }} BAM</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ k.dospjela_glavnica | number:'.2' }} BAM</p>
-                                                <p class="card-subtitle mb-2 text-muted">Nedospjela: {{ k.nedospjela_glavnica | number:'.2' }} BAM</p>
-                                                <p class="card-subtitle mb-2 text-muted">Ostatak: {{ k.glavnica_ostatak | number:'.2' }} BAM</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ k.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                                <p class="text-primary">{{ k.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <pagination-controls class="text-center" (pageChange)="kreditiPage = $event" id="krediti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="kreditiCsv()">Spasi CSV</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div *ngIf="kreditiResult">
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="brojKreditaGraph" height="120"
-                                        [datasets]="kreditBrojChartData"
-                                        [labels]="kreditBrojChartLabels"
-                                        [options]="lineBrojChartOptions"
-                                        [legend]="kreditBrojChartLegend"
-                                        [chartType]="kreditBrojChartType">
-                                    </canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="kolicinaKreditaGraph" height="120"
-                                        [datasets]="kreditKolicinaChartData"
-                                        [labels]="kreditKolicinaChartLabels"
-                                        [options]="lineKolicinaChartOptions"
-                                        [legend]="kreditKolicinaChartLegend"
-                                        [chartType]="kreditKolicinaChartType">
-                                    </canvas>
+                                <div class="col-10" *ngIf="karticeResult">
+                                    <h4 class="card-title">Kartice</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Vrsta/tip kartice</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let k of karticeResult | paginate: { itemsPerPage: 10, currentPage: karticePage, id: 'kartice_pagination' }">
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.kartica.ugovor.opis_tipa_ugovora }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">{{ k.ugovor.opis_tipa_ugovora }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">{{ k.ugovor.partija }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.kartica.vrsta_kartice }}</p>
+                                                        <p class="text-primary">{{ k.kartica.tip_kartice }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.kartica.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                        <p class="text-primary">{{ k.kartica.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <div *ngIf="k.kartica.aktivna_kartica">
+                                                            <p class="text-success">Aktivna kartica</p>
+                                                        </div>
+                                                        <div *ngIf="!k.kartica.aktivna_kartica">
+                                                            <p class="text-danger">Neaktivna kartica</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <pagination-controls class="text-center" (pageChange)="karticePage = $event" id="kartice_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="karticeCsv()">Spasi izvještaj</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="kreditiGraph" height="100"
-                                        [data]="kreditDoughnutChartData"
-                                        [labels]="kreditDoughnutChartLabels"
-                                        [options]="kreditDoughnutChartOptions"
-                                        [chartType]="kreditDoughnutChartType">
-                                    </canvas>
+                            <div *ngIf="karticeResult">
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="brojKarticaGraph" height="100"
+                                                [datasets]="karticaBrojChartData"
+                                                [labels]="karticaBrojChartLabels"
+                                                [options]="lineBrojChartOptions"
+                                                [legend]="karticaBrojChartLegend"
+                                                [chartType]="karticaBrojChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade show" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
-                <div class="container">
-                    <hr>
-                    <div class="row">
-                        <div class="col-2">
-                            <div class="form-group">
-                                <label for="datum_od_depoziti" class="text-muted">Datum ugovora od:</label>
-                                <my-date-picker name="datum_od_depoziti" [options]="myDatePickerOptions" [(ngModel)]="datumOdDepozit" id="datum_od_depoziti"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="datum_do_depoziti" class="text-muted">Datum ugovora do:</label>
-                                <my-date-picker name="datum_do_depoziti" [options]="myDatePickerOptions" [(ngModel)]="datumDoDepozit" id="datum_do_depoziti"></my-date-picker>
-                            </div>
-                            <div class="form-group">
-                                <label for="vrstaDepozitaCheck" class="text-muted">Vrsta depozita:</label>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="vrstaDepozitaCheck" type="checkbox" (change)="selektujSveTipoveDepozita()" [(ngModel)]="selectedAllDepozit">
-                                    <label class="custom-control-label" for="vrstaDepozitaCheck">Sve vrste</label>
+            
+                        <div class="tab-pane fade" id="nav-krediti" role="tabpanel" aria-labelledby="nav-krediti-tab">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="datum_od_kredita" class="text-muted">Datum ugovora od:</label>
+                                        <my-date-picker name="datum_od_kredita" [options]="myDatePickerOptions" [(ngModel)]="datumOdKredit" id="datum_od_kredita"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datum_do_kredita" class="text-muted">Datum ugovora do:</label>
+                                        <my-date-picker name="datum_do_kredita" [options]="myDatePickerOptions" [(ngModel)]="datumDoKredit" id="datum_do_kredita"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipKreditaCheck" class="text-muted">Tip ugovora:</label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="tipKreditaCheck" type="checkbox" (change)="selektujSveTipoveUgovoraKredita()" [(ngModel)]="selectedSviUgovoriKredita" >
+                                            <label class="custom-control-label" for="tipKreditaCheck">Svi tipovi</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox" *ngFor="let o of tipoviUgovoraKredita">
+                                            <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipUgovoraKredita()" type="checkbox">
+                                            <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKredite()">Traži</button>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-checkbox" *ngFor="let o of tipoviDepozita">
-                                    <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipDepozita()" type="checkbox">
-                                    <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
+                                <div class="col-10" *ngIf="kreditiResult">
+                                    <h4 class="card-title">Krediti</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Odobreni iznos</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Glavnica</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let k of kreditiResult | paginate: { itemsPerPage: 10, currentPage: kreditiPage, id: 'krediti_pagination' }">
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.ugovor.opis_tipa_ugovora }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Partija: {{ k.ugovor.partija }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.odobreni_iznos | number:'.2' }} BAM</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Stopa: {{ k.stopa }} %</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Anuitet: {{ k.iznos_anuitet | number:'.2' }} BAM</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.dospjela_glavnica | number:'.2' }} BAM</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Nedospjela: {{ k.nedospjela_glavnica | number:'.2' }} BAM</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Ostatak: {{ k.glavnica_ostatak | number:'.2' }} BAM</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                        <p class="text-primary">{{ k.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <pagination-controls class="text-center" (pageChange)="kreditiPage = $event" id="krediti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="kreditiCsv()">Spasi izvještaj</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="traziDepozite()">Traži</button>
+                            <div *ngIf="kreditiResult">
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="brojKreditaGraph" height="120"
+                                                [datasets]="kreditBrojChartData"
+                                                [labels]="kreditBrojChartLabels"
+                                                [options]="lineBrojChartOptions"
+                                                [legend]="kreditBrojChartLegend"
+                                                [chartType]="kreditBrojChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="kolicinaKreditaGraph" height="120"
+                                                [datasets]="kreditKolicinaChartData"
+                                                [labels]="kreditKolicinaChartLabels"
+                                                [options]="lineKolicinaChartOptions"
+                                                [legend]="kreditKolicinaChartLegend"
+                                                [chartType]="kreditKolicinaChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="kreditiGraph" height="100"
+                                                [data]="kreditDoughnutChartData"
+                                                [labels]="kreditDoughnutChartLabels"
+                                                [options]="kreditDoughnutChartOptions"
+                                                [chartType]="kreditDoughnutChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-10" *ngIf="depozitiResult">
-                            <h4 class="card-title">Depoziti</h4>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                            <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                            <th class="card-subtitle mb-2 text-muted">Ugovoreni iznos</th>
-                                            <th class="card-subtitle mb-2 text-muted">Period ugovora</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let d of depozitiResult | paginate: { itemsPerPage: 10, currentPage: depozitiPage, id: 'depoziti_pagination' }">
-                                        <tr>
-                                            <td>
-                                                <p class="text-primary">{{ d.klijent.ime }} {{ d.klijent.prezime }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Jmbg: {{ d.klijent.maticni_broj }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ d.ugovor.opis_tipa_ugovora }}</p>
-                                                <p class="card-subtitle mb-2 text-muted">Partija: {{ d.ugovor.partija }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ d.stanje_racuna | number:'.2' }} BAM</p>
-                                                <p class="card-subtitle mb-2 text-muted">Kamatna stopa: {{ d.stopa }} %</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
-                                                <p class="text-primary">{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</p>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <pagination-controls class="text-center" (pageChange)="depozitiPage = $event" id="depoziti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                <button type="submit" class="btn btn-outline-primary float-right" (click)="depozitiCsv()">Spasi CSV</button>
-                            </div>
-                        </div>      
-                    </div>
-                    <div *ngIf="depozitiResult">
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="brojDepozitaGraph" height="100"
-                                        [datasets]="depozitBrojChartData"
-                                        [labels]="depozitBrojChartLabels"
-                                        [options]="lineBrojChartOptions"
-                                        [legend]="depozitBrojChartLegend"
-                                        [chartType]="depozitBrojChartType">
-                                    </canvas>
+            
+                        <div class="tab-pane fade show" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="datum_od_depoziti" class="text-muted">Datum ugovora od:</label>
+                                        <my-date-picker name="datum_od_depoziti" [options]="myDatePickerOptions" [(ngModel)]="datumOdDepozit" id="datum_od_depoziti"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datum_do_depoziti" class="text-muted">Datum ugovora do:</label>
+                                        <my-date-picker name="datum_do_depoziti" [options]="myDatePickerOptions" [(ngModel)]="datumDoDepozit" id="datum_do_depoziti"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vrstaDepozitaCheck" class="text-muted">Vrsta depozita:</label>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="vrstaDepozitaCheck" type="checkbox" (change)="selektujSveTipoveDepozita()" [(ngModel)]="selectedAllDepozit">
+                                            <label class="custom-control-label" for="vrstaDepozitaCheck">Sve vrste</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox" *ngFor="let o of tipoviDepozita">
+                                            <input class="custom-control-input" id="{{o._id.opis_tipa_ugovora}}" [(ngModel)]="o.selected" (change)="selektujTipDepozita()" type="checkbox">
+                                            <label class="custom-control-label" for="{{o._id.opis_tipa_ugovora}}">{{o._id.opis_tipa_ugovora}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziDepozite()">Traži</button>
+                                    </div>
                                 </div>
+                                <div class="col-10" *ngIf="depozitiResult">
+                                    <h4 class="card-title">Depoziti</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Ugovoreni iznos</th>
+                                                    <th class="card-subtitle mb-2 text-muted">Period ugovora</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let d of depozitiResult | paginate: { itemsPerPage: 10, currentPage: depozitiPage, id: 'depoziti_pagination' }">
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-primary">{{ d.klijent.ime }} {{ d.klijent.prezime }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Jmbg: {{ d.klijent.maticni_broj }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ d.ugovor.opis_tipa_ugovora }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Partija: {{ d.ugovor.partija }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ d.stanje_racuna | number:'.2' }} BAM</p>
+                                                        <p class="card-subtitle mb-2 text-muted">Kamatna stopa: {{ d.stopa }} %</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
+                                                        <p class="text-primary">{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <pagination-controls class="text-center" (pageChange)="depozitiPage = $event" id="depoziti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="depozitiCsv()">Spasi izvještaj</button>
+                                    </div>
+                                </div>      
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="kolicinaDepozitaGraph" height="100"
-                                        [datasets]="depozitKolicinaChartData"
-                                        [labels]="depozitKolicinaChartLabels"
-                                        [options]="lineKolicinaChartOptions"
-                                        [legend]="depozitKolicinaChartLegend"
-                                        [chartType]="depozitKolicinaChartType">
-                                    </canvas>
+                            <div *ngIf="depozitiResult">
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="brojDepozitaGraph" height="100"
+                                                [datasets]="depozitBrojChartData"
+                                                [labels]="depozitBrojChartLabels"
+                                                [options]="lineBrojChartOptions"
+                                                [legend]="depozitBrojChartLegend"
+                                                [chartType]="depozitBrojChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-12">
-                                <div style="display: block">
-                                    <canvas baseChart id="depozitiGraph" height="100"
-                                        [data]="doughnutChartData"
-                                        [labels]="doughnutChartLabels"
-                                        [options]="doughnutChartOptions"
-                                        [chartType]="doughnutChartType">
-                                    </canvas>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="kolicinaDepozitaGraph" height="100"
+                                                [datasets]="depozitKolicinaChartData"
+                                                [labels]="depozitKolicinaChartLabels"
+                                                [options]="lineKolicinaChartOptions"
+                                                [legend]="depozitKolicinaChartLegend"
+                                                [chartType]="depozitKolicinaChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-12">
+                                        <div style="display: block">
+                                            <canvas baseChart id="depozitiGraph" height="100"
+                                                [data]="doughnutChartData"
+                                                [labels]="doughnutChartLabels"
+                                                [options]="doughnutChartOptions"
+                                                [chartType]="doughnutChartType">
+                                            </canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

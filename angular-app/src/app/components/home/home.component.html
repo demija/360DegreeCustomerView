@@ -9,8 +9,9 @@
             <br>
             <div id="svakodnevno_bankarstvo">
                 <div class="card card-1">
-                    <h3 class="card-header">Svakodnevno bankarstvo</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Svakodnevno bankarstvo</h4>
+                        <hr>
                         <div class="row">
                             <div class="col">
                                 <h6 class="card-subtitle mb-2 card-subtitle mb-2 text-muted">Ime i prezime</h6>
@@ -154,8 +155,9 @@
             <br>
             <div id="transakcijsko_poslovanje">
                 <div class="card card-1">
-                    <h3 class="card-header">Transakcijsko poslovanje</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Transakcijsko poslovanje</h4>
+                        <hr>
                         <div *ngFor="let rcn of racuni.data; let idx = index">
                             <div class="row" >
                                 <div class="col-4">
@@ -193,8 +195,9 @@
             <br>
             <div id="karticno_poslovanje">
                 <div class="card card-1">
-                    <h3 class="card-header">Kartično poslovanje</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Kartično poslovanje</h4>
+                        <hr>
                         <div *ngFor="let kart of kartice; let idx = index">
                             <div class="row">
                                 <div class="col">
@@ -237,8 +240,9 @@
             <br>
             <div id="krediti">
                 <div class="card card-1">
-                    <h3 class="card-header">Krediti</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Krediti</h4>
+                        <hr>
                         <div *ngFor="let kredit of krediti.data; let idx = index">
                             <div class="row" >
                                 <div class="col-4">
@@ -280,8 +284,9 @@
             <br>
             <div id="depoziti">
                 <div class="card card-1">
-                    <h3 class="card-header">Depoziti</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Depoziti</h4>
+                        <hr>
                         <div *ngFor="let dpz of depoziti.data; let idx = index">
                             <div class="row" >
                                 <div class="col-6">
@@ -311,8 +316,9 @@
             <br>
             <div id="ostale_usluge">
                 <div class="card card-1">
-                    <h3 class="card-header">Dodatne usluge</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Dodatne usluge</h4>
+                        <hr>
                         <h5><span *ngFor="let usluga of dodatne_usluge">
                             <span class="badge badge-info floating-box">{{ usluga.naziv_ponude }}</span>
                         </span></h5>
@@ -322,8 +328,9 @@
             <br>
             <div id="biljeske">
                 <div class="card card-1">
-                    <h3 class="card-header">Bilješke</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Bilješke</h4>
+                        <hr>
                         <div class="row">
                             <div class="col-sm" *ngIf="biljeske.data">
                                 <ul *ngFor="let biljeska of biljeske.data | paginate: { itemsPerPage: 3, currentPage: biljeskePage, id: 'biljeske_pagination' }">
@@ -344,8 +351,9 @@
             <br>
             <div id="arhiva_interakcija">
                 <div class="card card-1">
-                    <h3 class="card-header">Arhiva interakcija</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Arhiva interakcija</h4>
+                        <hr>
                         <div class="row">
                             <div class="col-sm" *ngIf="arhivaPonuda.data">
                                 <ul *ngFor="let arhiva of arhivaPonuda.data | paginate: { itemsPerPage: 3, currentPage: arhivaPonudaPage, id: 'arhivaPonuda_pagination' }">
@@ -367,8 +375,9 @@
             <br>
             <div id="vremenska_linija">
                 <div class="card card-1">
-                    <h3 class="card-header">Vremenska linija</h3>
                     <div class="card-body">
+                        <h4 class="card-title">Vremenska linija</h4>
+                        <hr>
                         <ul class="timeline" *ngFor="let timel of time_line; let even = even; let odd = odd">
                             <li [ngClass]="{true: 'timeline-inverted', false: ''}[even]">
                                 <div class="timeline-badge" [ngClass]="{kartica: 'info', depozit: 'warning', kredit: 'primary', racun: 'secondary'}[timel.type]"><i [ngClass]="{kartica: 'fa fa-credit-card', depozit: 'fa fa-line-chart', kredit: 'fa fa-file-text-o', racun: 'fa fa-handshake-o'}[timel.type]" aria-hidden="true"></i></div>

@@ -58,7 +58,7 @@ export class AuthService {
 
     spasiPrijavljenogKorisnika(token, korisnik) {
         localStorage.setItem('id_token', token);
-        localStorage.setItem('user', JSON.stringify(korisnik)); //make to string, to store in localStorage
+        localStorage.setItem('user', JSON.stringify(korisnik));
 
         this.authToken = token;
         this.korisnik = korisnik;

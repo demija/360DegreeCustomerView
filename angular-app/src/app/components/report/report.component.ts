@@ -1,9 +1,9 @@
 import { Component, OnInit, transition } from '@angular/core';
+import { ValidateService } from '../../services/validate.service';
 import { DepozitService } from '../../services/depozit.service';
 import { KreditService } from '../../services/kredit.service';
 import { RacunService } from '../../services/racun.service';
 import { IMyDpOptions } from 'mydatepicker';
-import swal from 'sweetalert2';
 
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
@@ -269,7 +269,7 @@ export class ReportComponent implements OnInit {
         dateFormat: 'dd.mm.yyyy',
     };
 
-    constructor(private depozitService: DepozitService, private kreditService: KreditService, private racunService: RacunService) { }
+    constructor(private validateService: ValidateService, private depozitService: DepozitService, private kreditService: KreditService, private racunService: RacunService) { }
 
     ngOnInit() {
         // Računi
@@ -404,11 +404,11 @@ export class ReportComponent implements OnInit {
                     this.generisanjeKolicinaRacunaGrafa();
                     this.generisanjeGrafaRacuna();
                 } else {
-                    this.pokreniSwal('Greška!', racuni.msg, 'error', 'Uredu');
+                    this.validateService.pokreniSwal('Greška!', racuni.msg, 'error', 'Uredu');
                 }
             });
         } else {
-            this.pokreniSwal('Greška!', "Odaberi tip ugovora!", 'warning', 'Uredu');
+            this.validateService.pokreniSwal('Greška!', "Odaberi tip ugovora!", 'warning', 'Uredu');
         }
     }
 
@@ -678,11 +678,11 @@ export class ReportComponent implements OnInit {
                     this.generisanjePeriodaKarticaGrafa();
                     this.generisanjeBrojKarticaGrafa();
                 } else {
-                    this.pokreniSwal('Greška!', kartice.msg, 'error', 'Uredu');
+                    this.validateService.pokreniSwal('Greška!', kartice.msg, 'error', 'Uredu');
                 }
             });
         } else {
-            this.pokreniSwal('Greška!', "Odaberi tip ugovora!", 'warning', 'Uredu');
+            this.validateService.pokreniSwal('Greška!', "Odaberi tip ugovora!", 'warning', 'Uredu');
         }
     }
 
@@ -849,11 +849,11 @@ export class ReportComponent implements OnInit {
                     this.generisanjeKolicinaKreditaGrafa();
                     this.generisanjeGrafaKredita();
                 } else {
-                    this.pokreniSwal('Greška!', krediti.msg, 'error', 'Uredu');
+                    this.validateService.pokreniSwal('Greška!', krediti.msg, 'error', 'Uredu');
                 }
             });
         } else {
-            this.pokreniSwal('Greška!', "Odaberi tip ugovora!", 'warning', 'Uredu');
+            this.validateService.pokreniSwal('Greška!', "Odaberi tip ugovora!", 'warning', 'Uredu');
         }
     }
 
@@ -1106,11 +1106,11 @@ export class ReportComponent implements OnInit {
                     this.generisanjeKolicinaDepozitaGrafa();
                     this.generisanjeGrafaDepozita();
                 } else {
-                    this.pokreniSwal('Greška!', depoziti.msg, 'error', 'Uredu');
+                    this.validateService.pokreniSwal('Greška!', depoziti.msg, 'error', 'Uredu');
                 }
             });
         } else {
-            this.pokreniSwal('Greška!', "Odaberi tip depozita!", 'warning', 'Uredu');
+            this.validateService.pokreniSwal('Greška!', "Odaberi tip depozita!", 'warning', 'Uredu');
         }
     }
 
@@ -1301,15 +1301,5 @@ export class ReportComponent implements OnInit {
         });
         
         new Angular2Csv(data, 'depozitiReport', {headers: (head)});
-    }
-    
-    // prebaciti u navbar service
-    pokreniSwal(title, text, type, confirmButtonText) {
-        swal({
-            title: title,
-            text: text,
-            type: type,
-            confirmButtonText: confirmButtonText
-        });
     }
 }

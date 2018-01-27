@@ -3,7 +3,6 @@ import { AuthService } from '../../services/auth.service';
 import { NavhomeService } from '../../services/navhome.service';
 import { ValidateService } from '../../services/validate.service';
 import { Router } from '@angular/router';
-import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-navbar',
@@ -34,15 +33,7 @@ export class NavbarComponent implements OnInit {
 
     onSearchClick() {
         if(!this.validateService.validateSearch()) {
-            swal({
-                //position: 'top-right',
-                title: 'Greška!',
-                text: 'Unesi ispravan matični broj',
-                type: 'warning',
-                showConfirmButton: false,
-                timer: 2000
-            });
-
+            this.validateService.pokreniSwal('Greška!', 'Unesi ispravan matični broj', 'warning', 'Uredu');
             return false;
         }
 
@@ -68,12 +59,7 @@ export class NavbarComponent implements OnInit {
                 this.navhomeService.changePreporucenePonude(klijent.preporuceneponude);
                 this.navhomeService.changeTimeline(klijent);
             } else {
-                swal({
-                    title: 'Greška!',
-                    text: klijent.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
+                this.validateService.pokreniSwal('Greška!', klijent.msg, 'error', 'Uredu');
             }
         });
     }

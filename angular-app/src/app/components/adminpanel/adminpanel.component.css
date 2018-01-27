@@ -1,6 +1,14 @@
-.card {
+.container {
     margin-top: 100px;
-    margin-bottom: 10px;
+    width: 85% !important;
+}
+
+.sideBr {
+    width: 15% !important;
+}
+
+.card {
+    margin-bottom: 15px;
 }
 
 .tab-content {

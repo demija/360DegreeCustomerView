@@ -3,20 +3,20 @@
     <div class="row">
         <div class="col form-group">
             <label class="form-control-label" for="korisnickoimeTextbox">Korisničko ime</label>
-            <input class="form-control" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" id="korisnickoimeTextbox" type="text" placeholder="Unesi korisničko ime">
+            <input class="form-control" [(ngModel)]="korisnicko_ime" name="korisnicko_ime" id="korisnickoimeTextbox" type="text" placeholder="Unesi korisničko ime" (keyup.enter)="prijava()">
             <div class="invalid-feedback">Obavezan unos!</div>
         </div>
     </div>
     <div class="row">
         <div class="col form-group">
             <label class="form-control-label" for="lozinkaTextbox">Lozinka</label>
-            <input class="form-control" [(ngModel)]="lozinka" name="lozinka" id="lozinkaTextbox" type="password" placeholder="Unesi lozinku">
+            <input class="form-control" [(ngModel)]="lozinka" name="lozinka" id="lozinkaTextbox" type="password" placeholder="Unesi lozinku" (keyup.enter)="prijava()">
             <div class="invalid-feedback">Obavezan unos!</div>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <button type="submit" class="btn btn-outline-success w-100" (click)="onLoginSubmit()">Prijava</button>
+            <button type="submit" class="btn btn-outline-success w-100" (click)="prijava()">Prijava</button>
         </div>
     </div>
     <br>

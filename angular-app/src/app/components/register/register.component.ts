@@ -3,7 +3,6 @@ import { ValidateService } from '../../services/validate.service';
 import { NavhomeService } from '../../services/navhome.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-register',
@@ -19,8 +18,11 @@ export class RegisterComponent implements OnInit {
     lozinka: String;
     potvrdaLozinke: String;
     odjel: Object;
+    poslovnica: Object;
     datum_registracije: Date;
     odjeliLista: Object;
+    poslovniceLista: Object;
+    prikaziPoslovnicu: Boolean = false;
 
     constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService) { }
 
@@ -28,9 +30,22 @@ export class RegisterComponent implements OnInit {
         this.navhomeService.getOdjeli().subscribe(data => {
             this.odjeliLista = data;
         });
+
+        this.navhomeService.getPoslovnice().subscribe(data => {
+            this.poslovniceLista = data;
+        });
     }
 
-    onRegisterSubmit() {
+    onOdjelChange() {
+        if(this.odjel['organizaciona_jedinica'] == 'Sektor poslova sa stanovništvom') {
+            this.prikaziPoslovnicu = true;
+        } else {
+            this.prikaziPoslovnicu = false;
+            this.poslovnica = null;
+        }
+    }
+
+    registracija() {
         const korisnik = {
             id_uposlenika: this.id_uposlenika,
             ime: this.ime,
@@ -44,6 +59,10 @@ export class RegisterComponent implements OnInit {
             administrator: false
         }
 
+        if(this.poslovnica) {
+            korisnik['poslovnica'] = this.poslovnica;
+        }
+
         // Validacija unesenih vrijednosti
         if(!this.validateService.validacijaRegistracije(korisnik)) {
             return false;
@@ -52,23 +71,10 @@ export class RegisterComponent implements OnInit {
         // Registracija korisnika
         this.authService.registracijaKorisnika(korisnik).subscribe(data => {
             if(data.success) {
-                swal({
-                    //position: 'top-right',
-                    type: 'success',
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-
+                this.validateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
                 this.router.navigate(['/login']);
             } else {
-                swal({
-                    title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
-
+                this.validateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
                 this.router.navigate(['/registracija']);
             }
         });

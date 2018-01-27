@@ -169,6 +169,10 @@ export class NavhomeService {
         return this.http.get('http://localhost:3000/odjeli/vratisvepodatke').map((res: any) => res.json());
     }
 
+    getPoslovnice() {
+        return this.http.get('http://localhost:3000/poslovnice/vratisvepodatke').map((res: any) => res.json());
+    }
+
     getKorisnici() {
         return this.http.get('http://localhost:3000/korisnici/vratisvepodatke').map((res: any) => res.json());
     }

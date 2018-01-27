@@ -5,7 +5,6 @@ import { AuthService } from '../../services/auth.service';
 import { ProfilService } from '../../services/profil.service';
 import { KlijentPonudeService } from '../../services/klijent-ponude.service';
 import { Router } from '@angular/router';
-import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-profile',
@@ -15,6 +14,7 @@ import swal from 'sweetalert2';
 export class ProfileComponent implements OnInit {
     user: Object;
     odjeliLista: any;
+    poslovniceLista: any;
     brojPretraga: String;
     brojPonudjenihUsluga: Number;
     brojUgovorenihUsluga: Number;
@@ -25,6 +25,8 @@ export class ProfileComponent implements OnInit {
     emailEdit: String;
     id_odjelaEdit: String;
     odjelEdit: Object;
+    id_poslovniceEdit: String;
+    prikaziPoslovnicu: Boolean = false;
 
     // izmjena lozinke
     novaLozinkaEdit: String = '';
@@ -37,6 +39,10 @@ export class ProfileComponent implements OnInit {
 
         this.navhomeService.getOdjeli().subscribe(odjeli => {
             this.odjeliLista = odjeli.data;
+        });
+
+        this.navhomeService.getPoslovnice().subscribe(data => {
+            this.poslovniceLista = data.data;
         });
 
         this.profilService.brojPretraga(this.user).subscribe(broj_pretraga => {
@@ -61,10 +67,35 @@ export class ProfileComponent implements OnInit {
         this.prezimeEdit = user.prezime;
         this.emailEdit = user.email;
         this.id_odjelaEdit = user.odjel._id;
+
+        if(user.odjel.organizaciona_jedinica == 'Sektor poslova sa stanovništvom') {
+            this.id_poslovniceEdit = user.poslovnica._id;
+            this.prikaziPoslovnicu = true;
+        }
+    }
+
+    onOdjelChange() {
+        let org_jedinica;
+        this.odjeliLista.forEach(element => {
+            if(element._id == this.id_odjelaEdit) {
+                org_jedinica = element.organizaciona_jedinica;
+            }
+        });
+
+        if(org_jedinica == 'Sektor poslova sa stanovništvom') {
+            this.prikaziPoslovnicu = true;
+        } else {
+            this.prikaziPoslovnicu = false;
+            this.id_poslovniceEdit = null;
+        }
     }
 
     sacuvajIzmjene() {
         let org_jedinica = '';
+        let poslovnica = {
+            _id: null,
+            naziv: ''
+        };
 
         this.odjeliLista.forEach(element => {
             if(element._id == this.id_odjelaEdit) {
@@ -83,6 +114,19 @@ export class ProfileComponent implements OnInit {
             }
         }
 
+        if(this.id_poslovniceEdit) {
+            this.poslovniceLista.forEach(element => {
+                if(element._id == this.id_poslovniceEdit) {
+                    poslovnica.naziv = element.naziv;
+                }
+            });
+
+            poslovnica._id = this.id_poslovniceEdit;
+            editProfile['poslovnica'] = poslovnica;
+        } else {
+            editProfile['poslovnica'] = null;
+        }
+
         // Validacija unesenih vrijednosti
         if(!this.validateService.validacijaIzmjeneProfila(editProfile)) {
             return false;
@@ -91,19 +135,9 @@ export class ProfileComponent implements OnInit {
         // Update korisnika
         this.authService.izmjenaKorisnika(editProfile).subscribe(data => {
             if(data.success) {
-                swal({
-                    type: 'success',
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                this.validateService.pokreniSwal(data.msg, '', 'success', 'Uredu');
             } else {
-                swal({
-                    title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
+                this.validateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
             }
         });
     }
@@ -123,19 +157,9 @@ export class ProfileComponent implements OnInit {
         // Update korisnika
         this.authService.izmjenaLozinkeKorisnika(korisnik).subscribe(data => {
             if(data.success) {
-                swal({
-                    type: 'success',
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                this.validateService.pokreniSwal(data.msg, '', 'succes', 'Uredu');
             } else {
-                swal({
-                    title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
+                this.validateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
             }
         });
     }

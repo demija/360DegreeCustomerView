@@ -1,109 +1,118 @@
 <app-navbar></app-navbar>
-<div class="card card-1">
-    <h3 class="card-header">Administracija</h3>
-    <div class="card-body">
-        <nav class="nav nav-tabs" id="myTab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-izvjestaj-tab" data-toggle="tab" href="#nav-izvjestaj" role="tab" aria-controls="nav-izvjestaj" aria-selected="false">
-                Izvještaji
-            </a>
-            <a class="nav-item nav-link" id="nav-korisnici-tab" data-toggle="tab" href="#nav-korisnici" role="tab" aria-controls="nav-korisnici" aria-selected="true">
-                Korisnici
-            </a>
-            <a class="nav-item nav-link" id="nav-ponude-tab" data-toggle="tab" href="#nav-ponude" role="tab" aria-controls="nav-ponude" aria-selected="false">
-                Ponude
-            </a>
-            <a class="nav-item nav-link" id="nav-akcija-tab" data-toggle="tab" href="#nav-akcija" role="tab" aria-controls="nav-akcija" aria-selected="false">
-                Akcije
-            </a>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-izvjestaj" role="tabpanel" aria-labelledby="nav-izvjestaj-tab">
-                Izvještaji
-            </div>
-            <div class="tab-pane fade" id="nav-korisnici" role="tabpanel" aria-labelledby="nav-korisnici-tab">
-                <h3 class="card-header">Pregled korisnika</h3>
-                <table class="table table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">ID uposlenika</th>
-                            <th scope="col">Ime i prezime</th>
-                            <th scope="col">Korisničko ime</th>
-                            <th scope="col">E-mail</th>
-                            <th scope="col">Odjel</th>
-                            <th acope="col">Administrator</th>
-                            <th scope="col">Datum registracije</th>
-                            <th scope="col">Aktivan korisnik</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let korisnik of korisnici; let myIndex = index">
-                            <th scope="row">{{myIndex + 1}}</th>
-                            <td>{{korisnik.id_uposlenika}}</td>
-                            <td>{{korisnik.ime}} {{korisnik.prezime}}</td>
-                            <td>{{korisnik.korisnicko_ime}}</td>
-                            <td>{{korisnik.email}}</td>
-                            <td>{{korisnik.odjel.organizaciona_jedinica}}</td>
-                            <td>
-                                <label class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" [(ngModel)]="korisnik.administrator" id="admin_{{korisnik._id}}" (ngModelChange)="toggleAdministrator($event, korisnik._id)">
-                                    <label class="custom-control-label" for="admin_{{korisnik._id}}"></label>
-                                </label>
-                            </td>
-                            <td>{{korisnik.datum_registracije | date:'dd/MM/yyyy'}}</td>
-                            <td>
-                                <label class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" [(ngModel)]="korisnik.aktivan" id="active_{{korisnik._id}}" (ngModelChange)="toggleAktivan($event, korisnik._id)">
-                                    <label class="custom-control-label" for="active_{{korisnik._id}}"></label>
-                                </label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="tab-pane fade" id="nav-ponude" role="tabpanel" aria-labelledby="nav-ponude-tab">
-                <h3 class="card-header">Pregled ponuda</h3>
-                <br>
-                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#novaPonuda">Nova ponuda</button>
-                <br>
-                <br>
-                <table class="table table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">Naziv ponude</th>
-                            <th scope="col">Šfra</th>
-                            <th scope="col">Klasa</th>
-                            <th acope="col">Aktivna</th>
-                            <th scope="col">Kreirao</th>
-                            <th scope="col">Datum kreiranja</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let ponuda of ponude | paginate: { itemsPerPage: 15, currentPage: ponudePage, id: 'ponude_pagination' }">
-                            <td>{{ponuda.naziv_ponude}}</td>
-                            <td>{{ponuda.sifra_ponude}}</td>
-                            <td>{{ponuda.klasa_ponude}}</td>
-                            <td>
-                                <label class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" [(ngModel)]="ponuda.aktivna" id="ponuda_{{ponuda._id}}" (ngModelChange)="toggleAktivnaPonuda($event, ponuda._id)">
-                                    <label class="custom-control-label" for="ponuda_{{ponuda._id}}"></label>
-                                </label>
-                            </td>
-                            <td>{{ponuda.kreirao.korisnicko_ime}}</td>
-                            <td>{{ponuda.datum_kreiranja | date:'dd/MM/yyyy'}}</td>
-                            <td>
-                                <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Obriši ponudu" (click)="onDeleteClick(ponuda._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                <button type="button" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Izmjeni ponudu" (click)="onEditClick(ponuda._id)" data-toggle="modal" data-target="#editPonude"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <pagination-controls class="text-center" (pageChange)="ponudePage = $event" id="ponude_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-            </div>
-            
-            <div class="tab-pane fade" id="nav-akcija" role="tabpanel" aria-labelledby="nav-akcija-tab">
-                Pregled akcija
+<div class="container-fluid">
+    <div class="row">
+        <div class="sideBr">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="container">
+            <div class="card card-1">
+                <div class="card-body">
+                    <h4 class="card-title">Administracija</h4>
+                    <hr>
+                    <nav class="nav nav-tabs" id="myTab" role="tablist">
+                        <a class="nav-item nav-link" id="nav-izvjestaj-tab" data-toggle="tab" href="#nav-izvjestaj" role="tab" aria-controls="nav-izvjestaj" aria-selected="false">
+                            Izvještaji
+                        </a>
+                        <a class="nav-item nav-link" id="nav-korisnici-tab" data-toggle="tab" href="#nav-korisnici" role="tab" aria-controls="nav-korisnici" aria-selected="true">
+                            Korisnici
+                        </a>
+                        <a class="nav-item nav-link" id="nav-ponude-tab" data-toggle="tab" href="#nav-ponude" role="tab" aria-controls="nav-ponude" aria-selected="false">
+                            Ponude
+                        </a>
+                        <a class="nav-item nav-link" id="nav-akcija-tab" data-toggle="tab" href="#nav-akcija" role="tab" aria-controls="nav-akcija" aria-selected="false">
+                            Akcije
+                        </a>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade" id="nav-izvjestaj" role="tabpanel" aria-labelledby="nav-izvjestaj-tab">
+                            Izvještaji
+                        </div>
+                        <div class="tab-pane fade" id="nav-korisnici" role="tabpanel" aria-labelledby="nav-korisnici-tab">
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID uposlenika</th>
+                                        <th scope="col">Ime i prezime</th>
+                                        <th scope="col">Korisničko ime</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Odjel</th>
+                                        <th acope="col">Administrator</th>
+                                        <th scope="col">Datum registracije</th>
+                                        <th scope="col">Aktivan korisnik</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let korisnik of korisnici; let myIndex = index">
+                                        <th scope="row">{{myIndex + 1}}</th>
+                                        <td>{{korisnik.id_uposlenika}}</td>
+                                        <td>{{korisnik.ime}} {{korisnik.prezime}}</td>
+                                        <td>{{korisnik.korisnicko_ime}}</td>
+                                        <td>{{korisnik.email}}</td>
+                                        <td>{{korisnik.odjel.organizaciona_jedinica}}</td>
+                                        <td>
+                                            <label class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" [(ngModel)]="korisnik.administrator" id="admin_{{korisnik._id}}" (ngModelChange)="toggleAdministrator($event, korisnik._id)">
+                                                <label class="custom-control-label" for="admin_{{korisnik._id}}"></label>
+                                            </label>
+                                        </td>
+                                        <td>{{korisnik.datum_registracije | date:'dd/MM/yyyy'}}</td>
+                                        <td>
+                                            <label class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" [(ngModel)]="korisnik.aktivan" id="active_{{korisnik._id}}" (ngModelChange)="toggleAktivan($event, korisnik._id)">
+                                                <label class="custom-control-label" for="active_{{korisnik._id}}"></label>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="nav-ponude" role="tabpanel" aria-labelledby="nav-ponude-tab">
+                            <h3 class="card-header">Pregled ponuda</h3>
+                            <br>
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#novaPonuda">Nova ponuda</button>
+                            <br>
+                            <br>
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Naziv ponude</th>
+                                        <th scope="col">Šfra</th>
+                                        <th scope="col">Klasa</th>
+                                        <th acope="col">Aktivna</th>
+                                        <th scope="col">Kreirao</th>
+                                        <th scope="col">Datum kreiranja</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let ponuda of ponude | paginate: { itemsPerPage: 15, currentPage: ponudePage, id: 'ponude_pagination' }">
+                                        <td>{{ponuda.naziv_ponude}}</td>
+                                        <td>{{ponuda.sifra_ponude}}</td>
+                                        <td>{{ponuda.klasa_ponude}}</td>
+                                        <td>
+                                            <label class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" [(ngModel)]="ponuda.aktivna" id="ponuda_{{ponuda._id}}" (ngModelChange)="toggleAktivnaPonuda($event, ponuda._id)">
+                                                <label class="custom-control-label" for="ponuda_{{ponuda._id}}"></label>
+                                            </label>
+                                        </td>
+                                        <td>{{ponuda.kreirao.korisnicko_ime}}</td>
+                                        <td>{{ponuda.datum_kreiranja | date:'dd/MM/yyyy'}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Obriši ponudu" (click)="onDeleteClick(ponuda._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Izmjeni ponudu" (click)="onEditClick(ponuda._id)" data-toggle="modal" data-target="#editPonude"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <pagination-controls class="text-center" (pageChange)="ponudePage = $event" id="ponude_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="nav-akcija" role="tabpanel" aria-labelledby="nav-akcija-tab">
+                            Pregled akcija
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

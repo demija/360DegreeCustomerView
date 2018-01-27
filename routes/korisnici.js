@@ -20,6 +20,10 @@ router.post('/registracija', (req, res, next) => {
         administrator: false
     });
 
+    if(req.body.poslovnica) {
+        noviKorisnik['poslovnica'] = req.body.poslovnica;
+    }
+
     Korisnik.vratiKorisnickoIme(noviKorisnik.korisnicko_ime, (err, user) => {
         if(err) {
             throw err;
@@ -56,8 +60,13 @@ router.post('/izmjena', (req, res, next) => {
         prezime: req.body.prezime,
         email: req.body.email,
         odjel: req.body.odjel,
+        poslovnica: req.body.poslovnica,
         datum_zadnje_izmjene: Date.now()
     });
+
+    if(req.body.poslovnica) {
+        korisnik['poslovnica'] = req.body.poslovnica;
+    }
 
     Korisnik.izmjena(korisnik, (err, user) => {
         if(err) {

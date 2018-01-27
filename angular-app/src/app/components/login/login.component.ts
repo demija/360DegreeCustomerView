@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ValidateService } from '../../services/validate.service';
 import { Router } from '@angular/router';
-import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +17,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
     }
 
-    onLoginSubmit() {
+    prijava() {
         const korisnik = {
             korisnicko_ime: this.korisnicko_ime,
             lozinka: this.lozinka
@@ -32,24 +31,11 @@ export class LoginComponent implements OnInit {
         // Autentifikacija
         this.authService.autentifikacijaKorisnika(korisnik).subscribe(data => {
             if(data.success) {
-                swal({
-                    type: 'info',
-                    title: 'Dobro došli ' + data.user.ime + ' ' + data.user.prezime + '!',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-
-                // Spašavanje podataka priajvljenog korisnika u local storage
-                this.authService.spasiPrijavljenogKorisnika(data.token, data.user);
+                this.validateService.pokreniSwal('Dobro došli ' + data.user.ime + ' ' + data.user.prezime + '!', '', 'info', 'Uredu');
+                this.authService.spasiPrijavljenogKorisnika(data.token, data.user); // Spašavanje podataka priajvljenog korisnika u local storage
                 this.router.navigate(['/']);
             } else {
-                swal({
-                    title: 'Greška!',
-                    text: data.msg,
-                    type: 'error',
-                    confirmButtonText: 'Uredu'
-                });
-
+                this.validateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
                 this.router.navigate(['/login']);
             }
         });
