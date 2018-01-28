@@ -1,6 +1,7 @@
 import { Component, OnInit, transition } from '@angular/core';
 import { NavhomeService } from '../../services/navhome.service';
 import { ValidateService } from '../../services/validate.service';
+import { KlijentService } from '../../services/klijent.service';
 import { DepozitService } from '../../services/depozit.service';
 import { KreditService } from '../../services/kredit.service';
 import { RacunService } from '../../services/racun.service';
@@ -59,6 +60,8 @@ export class ReportComponent implements OnInit {
     datumOdDepozit: Date;
     datumDoDepozit: Date;
     // pregled poslovanja
+    brojKlijenata: any;
+    poslovanjeKorisnik: any = [];
     pretrage: any;
     brojPretraga: any;
     ponude: any;
@@ -70,7 +73,7 @@ export class ReportComponent implements OnInit {
     brojBiljeski: any;
     datumOdPoslovanje: Date;
     datumDoPoslovanje: Date;
-    pretragaOdjeli:any = [];
+    pretragaOdjeli: any = [];
 
     /*
     * GRAFOVI RAČUNA
@@ -299,7 +302,7 @@ export class ReportComponent implements OnInit {
 
     constructor(private navhomeService: NavhomeService, private validateService: ValidateService,
         private depozitService: DepozitService, private kreditService: KreditService, private racunService: RacunService,
-        private klijentPonudeService: KlijentPonudeService, private biljeskaService: BiljeskaService) { }
+        private klijentPonudeService: KlijentPonudeService, private biljeskaService: BiljeskaService, private klijentService: KlijentService) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
@@ -1347,13 +1350,20 @@ export class ReportComponent implements OnInit {
             search.datum_do = this.datumDoPoslovanje['jsdate'];
         }
 
+        this.klijentService.vratiSveKlijente().subscribe(klijenti => {
+            this.brojKlijenata = klijenti.data.length;
+        });
+
         this.navhomeService.getSvePretrage(search).subscribe(brojPretraga => {
+            let poslovanjeKorisnikNiz;
             let unizu;
             this.pretragaOdjeli = [];
+            this.poslovanjeKorisnik = [];
             this.pretrage = brojPretraga.data;
             this.brojPretraga = this.pretrage.length;
 
             this.pretrage.forEach(elementPretrage => {
+                poslovanjeKorisnikNiz = false;
                 unizu = false;
 
                 this.pretragaOdjeli.forEach(elementPretragaOdjel => {
@@ -1367,6 +1377,23 @@ export class ReportComponent implements OnInit {
                     this.pretragaOdjeli.push({
                         odjel: elementPretrage.korisnik.odjel.organizaciona_jedinica,
                         brojPretraga: 1
+                    });
+                }
+
+                this.poslovanjeKorisnik.forEach(elementPoslovanjeKorisnik => {
+                    if(elementPretrage.korisnik._id == elementPoslovanjeKorisnik['korisnik']['_id']) {
+                        ++elementPoslovanjeKorisnik['brojPretraga'];
+                        poslovanjeKorisnikNiz = true;
+                    }
+                });
+
+                if(!poslovanjeKorisnikNiz) {
+                    this.poslovanjeKorisnik.push({
+                        korisnik: elementPretrage.korisnik,
+                        brojPretraga: 1,
+                        brojPonudjenihUsluga: 0,
+                        brojUgovorenihUsluga: 0,
+                        brojBiljeski: 0
                     });
                 }
             });
@@ -1389,7 +1416,7 @@ export class ReportComponent implements OnInit {
 
                 elementPonude.ponudjene_usluge.forEach(element => {
                     this.ponudjeneUsluge.forEach(elementPonudjeneUslge => {
-                        if(element.naziv_ponude == elementPonudjeneUslge['naziv']) {
+                        if(element.naziv_ponude == elementPonudjeneUslge['naziv_ponude']) {
                             ++elementPonudjeneUslge['brojPonuda'];
                             ponudjenaUslugaUnizu = true;
                         }
@@ -1405,7 +1432,7 @@ export class ReportComponent implements OnInit {
 
                 elementPonude.ugovorene_usluge.forEach(element => {
                     this.ugovoreneUsluge.forEach(elementUgovoreneUslge => {
-                        if(element.naziv_ponude == elementUgovoreneUslge['naziv']) {
+                        if(element.naziv_ponude == elementUgovoreneUslge['naziv_ponude']) {
                             ++elementUgovoreneUslge['brojPonuda'];
                             ugovorenaUslugaUnizu = true;
                         }
@@ -1416,6 +1443,13 @@ export class ReportComponent implements OnInit {
                             naziv_ponude: element['naziv_ponude'],
                             brojPonuda: 1
                         });
+                    }
+                });
+
+                this.poslovanjeKorisnik.forEach(element => {
+                    if(element.korisnik._id == elementPonude.evidentirao._id) {
+                        element.brojPonudjenihUsluga += elementPonude.ponudjene_usluge.length;
+                        element.brojUgovorenihUsluga += elementPonude.ugovorene_usluge.length;
                     }
                 });
             });
@@ -1435,6 +1469,16 @@ export class ReportComponent implements OnInit {
         this.biljeskaService.sveBiljeske(search).subscribe(biljeske => {
             this.biljeske = biljeske.data;
             this.brojBiljeski = this.biljeske.length;
+
+            this.biljeske.forEach(elementBiljeske => {
+                this.poslovanjeKorisnik.forEach(element => {
+                    if(element.korisnik._id == elementBiljeske.kreirao._id) {
+                        ++element['brojBiljeski'];
+                    }
+                });
+            });
+
+            this.poslovanjeKorisnik.sort(function(a,b) {return (b.brojPretraga > a.brojPretraga) ? 1 : ((a.brojPretraga > b.brojPretraga) ? -1 : 0);} );
         });
     }
 
