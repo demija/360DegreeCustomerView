@@ -43,7 +43,9 @@ export class NavbarComponent implements OnInit {
             id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
             ime: this.prijavljeni_korisnik['ime'],
             prezime: this.prijavljeni_korisnik['prezime'],
-            korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime']
+            korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime'],
+            odjel: this.prijavljeni_korisnik['odjel'],
+            poslovnica: this.prijavljeni_korisnik['poslovnica']
         }
 
         this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {

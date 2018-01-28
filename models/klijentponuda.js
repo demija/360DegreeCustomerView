@@ -60,3 +60,25 @@ module.exports.dodaj = function(novaKlijentPonuda, callback) {
 
     novaKlijentPonuda.save(callback);
 }
+
+module.exports.getPonudeReport = function(pretraga, callback) {
+    let datumi = {}
+
+    const query = {
+        
+    };
+
+    if(pretraga.datum_od != '' && pretraga.datum_od != undefined) {
+        datumi.$gte = new Date(pretraga.datum_od);
+    }
+
+    if(pretraga.datum_do != '' && pretraga.datum_do != undefined) {
+        datumi.$lt = new Date(pretraga.datum_do);
+    }
+
+    if(Object.keys(datumi).length !== 0) {
+        query.datum_evidentiranja = datumi;
+    }
+    
+    KlijentPonuda.find(query, callback);
+}

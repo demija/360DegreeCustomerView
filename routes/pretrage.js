@@ -13,6 +13,8 @@ router.post('/unosPretrage', (req, res, next) => {
             ime: req.body.ime,
             prezime: req.body.prezime,
             korisnicko_ime: req.body.korisnicko_ime,
+            odjel: req.body.odjel,
+            poslovnica: req.body.poslovnica
         },
         datum_pretrage: Date.now()
     });
@@ -33,10 +35,10 @@ router.post('/unosPretrage', (req, res, next) => {
 });
 
 // Broj pretraga korisnika
-router.post('/brojpretraga', (req, res, next) => {
+router.post('/brojpretragakorisnika', (req, res, next) => {
     let korisnik_id = req.body._id;
 
-    Pretraga.brojPretraga(korisnik_id, (err, data) => {
+    Pretraga.brojPretragaKorisnika(korisnik_id, (err, data) => {
         if(err) {
             res.json({
                 success: false,
@@ -49,6 +51,34 @@ router.post('/brojpretraga', (req, res, next) => {
                 msg: 'ok!',
                 data: data
             });
+        }
+    });
+});
+
+// Vraćanje svih pretraga
+router.post('/svepretrage', (req, res, next) => {
+    let pretraga = {
+        datum_od: req.body.datum_od,
+        datum_do: req.body.datum_do
+    };
+
+    Pretraga.getPretrageReport(pretraga, (err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Ne postoje podaci',
+                    data: null
+                });
+            }
         }
     });
 });

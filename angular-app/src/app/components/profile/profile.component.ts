@@ -4,6 +4,7 @@ import { NavhomeService } from '../../services/navhome.service';
 import { AuthService } from '../../services/auth.service';
 import { ProfilService } from '../../services/profil.service';
 import { KlijentPonudeService } from '../../services/klijent-ponude.service';
+import { BiljeskaService } from '../../services/biljeska.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,6 +19,7 @@ export class ProfileComponent implements OnInit {
     brojPretraga: String;
     brojPonudjenihUsluga: Number;
     brojUgovorenihUsluga: Number;
+    brojBiljeski: Number;
     
     // izmjena podataka
     imeEdit: String;
@@ -32,7 +34,7 @@ export class ProfileComponent implements OnInit {
     novaLozinkaEdit: String = '';
     potvrdaNoveLozinkeEdit: String = '';
     
-    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService, private profilService: ProfilService, private klijentPonudeService: KlijentPonudeService) { }
+    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService, private profilService: ProfilService, private klijentPonudeService: KlijentPonudeService, private biljeskaService: BiljeskaService) { }
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user'));
@@ -45,7 +47,7 @@ export class ProfileComponent implements OnInit {
             this.poslovniceLista = data.data;
         });
 
-        this.profilService.brojPretraga(this.user).subscribe(broj_pretraga => {
+        this.profilService.brojPretragaKorisnika(this.user).subscribe(broj_pretraga => {
             this.brojPretraga = broj_pretraga.data;
         });
 
@@ -59,6 +61,10 @@ export class ProfileComponent implements OnInit {
                 this.brojPonudjenihUsluga += element.ponudjene_usluge.length;
                 this.brojUgovorenihUsluga += element.ugovorene_usluge.length;
             });
+        });
+
+        this.biljeskaService.biljeskeKorisnika(this.user).subscribe(biljeske => {
+            this.brojBiljeski = biljeske.data.length;
         });
     }
 

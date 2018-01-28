@@ -21,6 +21,9 @@
                         <a class="nav-item nav-link" id="nav-depoziti-tab" data-toggle="tab" href="#nav-depoziti" role="tab" aria-controls="nav-depoziti" aria-selected="true" (click)="promjenaLabele('depozita')">
                             Depoziti
                         </a>
+                        <a class="nav-item nav-link" id="nav-poslovanje-tab" data-toggle="tab" href="#nav-poslovanje" role="tab" aria-controls="nav-poslovanje" aria-selected="true" (click)="promjenaLabele('poslovanja')" *ngIf="prijavljeni_korisnik?.administrator">
+                            Poslovanje
+                        </a>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-racuni" role="tabpanel" aria-labelledby="nav-racuni-tab">
@@ -47,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziRacune()">Traži</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="traziRacune()">Traži</button>
                                     </div>
                                 </div>
 
@@ -89,7 +92,7 @@
                                             </tbody>
                                         </table>
                                         <pagination-controls class="text-center" (pageChange)="racuniPage = $event" id="racuni_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="racuniCsv()">Spasi izvještaj</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="racuniCsv()">Spasi izvještaj</button>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +187,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKartice()">Traži</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="traziKartice()">Traži</button>
                                     </div>
                                 </div>
                                 <div class="col-10" *ngIf="karticeResult">
@@ -231,7 +234,7 @@
                                             </tbody>
                                         </table>
                                         <pagination-controls class="text-center" (pageChange)="karticePage = $event" id="kartice_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="karticeCsv()">Spasi izvještaj</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="karticeCsv()">Spasi izvještaj</button>
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +280,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziKredite()">Traži</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="traziKredite()">Traži</button>
                                     </div>
                                 </div>
                                 <div class="col-10" *ngIf="kreditiResult">
@@ -321,7 +324,7 @@
                                             </tbody>
                                         </table>
                                         <pagination-controls class="text-center" (pageChange)="kreditiPage = $event" id="krediti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="kreditiCsv()">Spasi izvještaj</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="kreditiCsv()">Spasi izvještaj</button>
                                     </div>
                                 </div>
                             </div>
@@ -370,7 +373,7 @@
                             </div>
                         </div>
             
-                        <div class="tab-pane fade show" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
+                        <div class="tab-pane fade" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
                             <br>
                             <div class="row">
                                 <div class="col-2">
@@ -394,7 +397,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="traziDepozite()">Traži</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="traziDepozite()">Traži</button>
                                     </div>
                                 </div>
                                 <div class="col-10" *ngIf="depozitiResult">
@@ -431,7 +434,7 @@
                                             </tbody>
                                         </table>
                                         <pagination-controls class="text-center" (pageChange)="depozitiPage = $event" id="depoziti_pagination" previousLabel="Prethodna" nextLabel="Slijedeća"></pagination-controls>
-                                        <button type="submit" class="btn btn-outline-primary float-right" (click)="depozitiCsv()">Spasi izvještaj</button>
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="depozitiCsv()">Spasi izvještaj</button>
                                     </div>
                                 </div>      
                             </div>
@@ -479,6 +482,99 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="tab-pane fade" id="nav-poslovanje" role="tabpanel" aria-labelledby="nav-poslovanje-tab">
+                            <br>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="datum_od_poslovanje" class="text-muted">Period od:</label>
+                                        <my-date-picker name="datum_od_poslovanje" [options]="myDatePickerOptions" [(ngModel)]="datumOdPoslovanje" id="datum_od_poslovanje"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datum_do_poslovanje" class="text-muted">Period do:</label>
+                                        <my-date-picker name="datum_do_poslovanje" [options]="myDatePickerOptions" [(ngModel)]="datumDoPoslovanje" id="datum_do_poslovanje"></my-date-picker>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-success float-right" (click)="traziPoslovanje()">Traži</button>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">Broj pretraga</p>
+                                    <h5 class="text-primary" style="border-bottom: 2px solid #86C7F3;"><strong>{{ brojPretraga }}</strong></h5>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">Broj ponuđenih usluga</p>
+                                    <h5 class="text-primary" style="border-bottom: 2px solid #C0D6E1;"><strong>{{ brojPonudjenihUsluga }}</strong></h5>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">Broj ugovorenih usluga</p>
+                                    <h5 class="text-primary" style="border-bottom: 2px solid #93D9D9;"><strong>{{ brojUgovorenihUsluga }}</strong></h5>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">Broj bilješki</p>
+                                    <p class="text-primary" style="border-bottom: 2px solid #FED29D;">{{ brojBiljeski }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-muted">Broj pretraga po odjelima</p>
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Odjel</th>
+                                                <th>Broj pretraga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let pretrage of pretragaOdjeli">
+                                                <td>{{ pretrage.odjel }}</td>
+                                                <td>{{ pretrage.brojPretraga }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">Top 10 ponuđenih usluga</p>
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Usluga</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let usluga of ponudjeneUsluge">
+                                                <td>{{ usluga.naziv_ponude }}</td>
+                                                <td>{{ usluga.brojPonuda }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">Top 10 ugovorenih usluga</p>
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Usluga</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let usluga of ugovoreneUsluge">
+                                                <td>{{ usluga.naziv_ponude }}</td>
+                                                <td>{{ usluga.brojPonuda }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col">
+
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

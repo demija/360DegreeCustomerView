@@ -1,10 +1,12 @@
 import { Component, OnInit, transition } from '@angular/core';
+import { NavhomeService } from '../../services/navhome.service';
 import { ValidateService } from '../../services/validate.service';
 import { DepozitService } from '../../services/depozit.service';
 import { KreditService } from '../../services/kredit.service';
 import { RacunService } from '../../services/racun.service';
+import { KlijentPonudeService } from '../../services/klijent-ponude.service';
+import { BiljeskaService } from '../../services/biljeska.service';
 import { IMyDpOptions } from 'mydatepicker';
-
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 @Component({
@@ -13,6 +15,8 @@ import { Angular2Csv } from 'angular2-csv/Angular2-csv';
     styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
+    prijavljeni_korisnik: Object;
+
     // paging
     racuniPage: number = 1;
     karticePage: number = 1;
@@ -54,6 +58,19 @@ export class ReportComponent implements OnInit {
     selektovaniTipoviDepozita: Array<Object> = [];
     datumOdDepozit: Date;
     datumDoDepozit: Date;
+    // pregled poslovanja
+    pretrage: any;
+    brojPretraga: any;
+    ponude: any;
+    ponudjeneUsluge: any;
+    brojPonudjenihUsluga: any;
+    ugovoreneUsluge: any;
+    brojUgovorenihUsluga: any;
+    biljeske: any;
+    brojBiljeski: any;
+    datumOdPoslovanje: Date;
+    datumDoPoslovanje: Date;
+    pretragaOdjeli:any = [];
 
     /*
     * GRAFOVI RAČUNA
@@ -221,6 +238,11 @@ export class ReportComponent implements OnInit {
             display: true,
             position: 'bottom',
             fullWidth: true
+        },
+        elements: {
+            line: {
+                    fill: false
+            }
         }
     };
 
@@ -263,6 +285,11 @@ export class ReportComponent implements OnInit {
             display: true,
             position: 'bottom',
             fullWidth: true
+        },
+        elements: {
+            line: {
+                    fill: false
+            }
         }
     };
 
@@ -270,9 +297,13 @@ export class ReportComponent implements OnInit {
         dateFormat: 'dd.mm.yyyy',
     };
 
-    constructor(private validateService: ValidateService, private depozitService: DepozitService, private kreditService: KreditService, private racunService: RacunService) { }
+    constructor(private navhomeService: NavhomeService, private validateService: ValidateService,
+        private depozitService: DepozitService, private kreditService: KreditService, private racunService: RacunService,
+        private klijentPonudeService: KlijentPonudeService, private biljeskaService: BiljeskaService) { }
 
     ngOnInit() {
+        this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
+
         // Računi
         this.racunService.tipoviUgovora().subscribe(tipoviUgovora => {
             this.tipoviUgovoraRacuna = tipoviUgovora.data;
@@ -1097,10 +1128,6 @@ export class ReportComponent implements OnInit {
             this.depozitService.pretraga(search).subscribe(depoziti => {
                 if(depoziti.success) {
                     this.depozitiResult = depoziti.data;
-
-                    //
-                    //new Angular2Csv(this.depozitiResult, 'My Report');
-                    //
     
                     this.generisanjePeriodaDepozitGrafa();
                     this.generisanjeBrojDepozitaGrafa();
@@ -1302,6 +1329,113 @@ export class ReportComponent implements OnInit {
         });
         
         new Angular2Csv(data, 'depozitiReport', {headers: (head)});
+    }
+
+    traziPoslovanje() {
+        let brojPonudjenihUslugaTemp = 0;
+        let brojUgovorenihUslugaTemp = 0;
+        let search = {
+            datum_od: null,
+            datum_do: null
+        }
+
+        if(this.datumOdPoslovanje) {
+            search.datum_od = this.datumOdPoslovanje['jsdate'];
+        }
+
+        if(this.datumDoPoslovanje) {
+            search.datum_do = this.datumDoPoslovanje['jsdate'];
+        }
+
+        this.navhomeService.getSvePretrage(search).subscribe(brojPretraga => {
+            let unizu;
+            this.pretragaOdjeli = [];
+            this.pretrage = brojPretraga.data;
+            this.brojPretraga = this.pretrage.length;
+
+            this.pretrage.forEach(elementPretrage => {
+                unizu = false;
+
+                this.pretragaOdjeli.forEach(elementPretragaOdjel => {
+                    if(elementPretrage.korisnik.odjel.organizaciona_jedinica == elementPretragaOdjel['odjel']) {
+                        ++elementPretragaOdjel['brojPretraga'];
+                        unizu = true;
+                    }
+                });
+
+                if(!unizu) {
+                    this.pretragaOdjeli.push({
+                        odjel: elementPretrage.korisnik.odjel.organizaciona_jedinica,
+                        brojPretraga: 1
+                    });
+                }
+            });
+
+            this.pretragaOdjeli.sort(function(a,b) {return (b.brojPretraga > a.brojPretraga) ? 1 : ((a.brojPretraga > b.brojPretraga) ? -1 : 0);} );
+        });
+
+        this.klijentPonudeService.svePonude(search).subscribe(ponude => {
+            let ponudjenaUslugaUnizu;
+            let ugovorenaUslugaUnizu;
+            this.ponudjeneUsluge = [];
+            this.ugovoreneUsluge = [];
+            this.ponude = ponude.data;
+
+            this.ponude.forEach(elementPonude => {
+                brojPonudjenihUslugaTemp += elementPonude.ponudjene_usluge.length;
+                brojUgovorenihUslugaTemp += elementPonude.ugovorene_usluge.length;
+                ponudjenaUslugaUnizu = false;
+                ugovorenaUslugaUnizu = false;
+
+                elementPonude.ponudjene_usluge.forEach(element => {
+                    this.ponudjeneUsluge.forEach(elementPonudjeneUslge => {
+                        if(element.naziv_ponude == elementPonudjeneUslge['naziv']) {
+                            ++elementPonudjeneUslge['brojPonuda'];
+                            ponudjenaUslugaUnizu = true;
+                        }
+                    });
+
+                    if(!ponudjenaUslugaUnizu) {
+                        this.ponudjeneUsluge.push({
+                            naziv_ponude: element['naziv_ponude'],
+                            brojPonuda: 1
+                        });
+                    }
+                });
+
+                elementPonude.ugovorene_usluge.forEach(element => {
+                    this.ugovoreneUsluge.forEach(elementUgovoreneUslge => {
+                        if(element.naziv_ponude == elementUgovoreneUslge['naziv']) {
+                            ++elementUgovoreneUslge['brojPonuda'];
+                            ugovorenaUslugaUnizu = true;
+                        }
+                    });
+
+                    if(!ugovorenaUslugaUnizu) {
+                        this.ugovoreneUsluge.push({
+                            naziv_ponude: element['naziv_ponude'],
+                            brojPonuda: 1
+                        });
+                    }
+                });
+            });
+
+            this.brojPonudjenihUsluga = brojPonudjenihUslugaTemp;
+            this.brojUgovorenihUsluga = brojUgovorenihUslugaTemp;
+            this.ponudjeneUsluge.sort(function(a,b) {return (b.brojPonuda > a.brojPonuda) ? 1 : ((a.brojPonuda > b.brojPonuda) ? -1 : 0);} );
+            if(this.ponudjeneUsluge.length > 10) {
+                this.ponudjeneUsluge.length = 10;
+            }
+            this.ugovoreneUsluge.sort(function(a,b) {return (b.brojPonuda > a.brojPonuda) ? 1 : ((a.brojPonuda > b.brojPonuda) ? -1 : 0);} );
+            if(this.ugovoreneUsluge.length > 10) {
+                this.ugovoreneUsluge.length = 10;
+            }
+        });
+
+        this.biljeskaService.sveBiljeske(search).subscribe(biljeske => {
+            this.biljeske = biljeske.data;
+            this.brojBiljeski = this.biljeske.length;
+        });
     }
 
     promjenaLabele(lbl) {

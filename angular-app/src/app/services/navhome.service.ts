@@ -176,4 +176,11 @@ export class NavhomeService {
     getKorisnici() {
         return this.http.get('http://localhost:3000/korisnici/vratisvepodatke').map((res: any) => res.json());
     }
+
+    getSvePretrage(pretraga) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.post('http://localhost:3000/pretrage/svepretrage', pretraga, {headers: headers}).map(res => res.json());
+    }
 }

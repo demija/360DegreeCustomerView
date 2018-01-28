@@ -24,6 +24,13 @@ body {
     border: 2px solid #d2dae2;
 }
 
+.nav-tabs .nav-link.active {
+    color: #18BC9C !important;
+    font-weight: bold !important;
+    border: none !important;
+    border-bottom: 2px solid #18BC9C !important;
+}
+
 /*.btn-outline-primary {
     color: #374664;
     background-color: transparent;

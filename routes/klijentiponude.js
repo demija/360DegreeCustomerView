@@ -73,4 +73,32 @@ router.post('/ponudekorisnika', (req, res, next) => {
     });
 });
 
+// Vraćanje broja ponuda
+router.post('/sveponude', (req, res, next) => {
+    let pretraga = {
+        datum_od: req.body.datum_od,
+        datum_do: req.body.datum_do
+    };
+
+    KlijentPonuda.getPonudeReport(pretraga, (err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                res.json({
+                    success: true,
+                    msg: 'ok',
+                    data: data
+                });
+            } else {
+                res.json({
+                    success: false,
+                    msg: 'Greška!',
+                    data: null
+                });
+            }
+        }
+    });
+});
+
 module.exports = router;

@@ -57,22 +57,25 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col">
-                                        <div class="alert alert-dismissible alert-info">
-                                            <p>Broj pretraga:&nbsp;&nbsp;<strong>{{ brojPretraga }}</strong></p>
-                                        </div>
+                                        <p class="text-muted">Broj pretraga</p>
+                                        <h5 class="text-primary" style="border-bottom: 2px solid #86C7F3;"><strong>{{ brojPretraga }}</strong></h5>
                                     </div>
+    
                                     <div class="col">
-                                        <div class="alert alert-dismissible alert-warning">
-                                            <p>Broj ponuđenih usluga:&nbsp;&nbsp;<strong>{{ brojPonudjenihUsluga }}</strong></p>
-                                        </div>
+                                        <p class="text-muted">Broj ponuđenih usluga</p>
+                                        <h5 class="text-primary" style="border-bottom: 2px solid #C0D6E1;"><strong>{{ brojPonudjenihUsluga }}</strong></h5>
                                     </div>
+    
                                     <div class="col">
-                                        <div class="alert alert-dismissible alert-success">
-                                            <p>Broj ugovorenih usluga:&nbsp;&nbsp;<strong>{{ brojUgovorenihUsluga }}</strong></p>
-                                        </div>
+                                        <p class="text-muted">Broj ugovorenih usluga</p>
+                                        <h5 class="text-primary" style="border-bottom: 2px solid #93D9D9;"><strong>{{ brojUgovorenihUsluga }}</strong></h5>
+                                    </div>
+    
+                                    <div class="col">
+                                        <p class="text-muted">Broj bilješki</p>
+                                        <p class="text-primary" style="border-bottom: 2px solid #FED29D;">{{ brojBiljeski }}</p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -153,8 +156,10 @@
                                     </div>
                                 </div>
                                 <br>
-                                <button type="button" class="btn btn-link text-danger" data-dismiss="modal">Zatvori</button>
-                                <button type="button" class="btn btn-link" (click)="sacuvajIzmjene()">Sačuvaj</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-outline-success" (click)="sacuvajIzmjene()">Sačuvaj</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -188,8 +193,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#" class="card-link text-danger" data-dismiss="modal">Zatvori</a>
-                                <a href="#" class="card-link" (click)="izmjeniLozinku()">Sačuvaj</a>
+                                <br>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Zatvori</button>
+                                    <button type="submit" class="btn btn-outline-success" (click)="izmjeniLozinku()">Sačuvaj</button>
+                                </div>
                             </div>
                         </div>
                     </div>
