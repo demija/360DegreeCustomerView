@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
-const Ponuda = require('../models/ponuda');
-var Recommender = require('likely');
+const Recommender = require('likely');
 const KlijentDodatnaUsluga = require('../models/klijentdodatnausluga');
+const Ponuda = require('../models/ponuda');
 const Klijent = require('../models/klijent');
 
-// Registracija korisnik
+// Dodavanje ponude
 router.post('/dodaj', (req, res, next) => {
     let novaPonuda = new Ponuda({
         naziv_ponude: req.body.naziv_ponude,
@@ -25,7 +25,7 @@ router.post('/dodaj', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška prilikom registracije!'
+                msg: 'Greška!'
             });
         } else {
             res.json({
@@ -36,7 +36,7 @@ router.post('/dodaj', (req, res, next) => {
     });
 });
 
-// Vrati sve ne obrisane ponude
+// Vrati sve zapise
 router.get('/vratisvepodatke', (req, res, next) => {
     Ponuda.vratiSveZapise((err, data) => {
         if(err) {
@@ -189,7 +189,7 @@ router.post('/vratipreporuceneponude', (req, res, next) => {
     }
 });
 
-// Obirši ponudu
+// Brisanje ponude
 router.post('/obrisi', (req, res, next) => {
     let ponuda = new Ponuda({
         _id: req.body._id
@@ -199,7 +199,7 @@ router.post('/obrisi', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška prilikom registracije!'
+                msg: 'Greška!'
             });
         } else {
             res.json({
@@ -210,7 +210,7 @@ router.post('/obrisi', (req, res, next) => {
     });
 });
 
-// Izmjeni ponudu
+// Izmjena ponude
 router.post('/izmjeniponudu', (req, res, next) => {
     let ponuda = new Ponuda({
         _id: req.body._id,
@@ -225,7 +225,7 @@ router.post('/izmjeniponudu', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška prilikom izmjene!'
+                msg: 'Greška, izmjene nisu sačuvane!'
             });
         } else {
             res.json({

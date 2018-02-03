@@ -3,7 +3,7 @@ const router = express.Router();
 const config = require('../config/database');
 const Kartica = require('../models/kartica');
 
-// Vraćanje podataka racun
+// Vraćanje podataka kartica
 router.post('/vratipodatke', (req, res, next) => {
     const klijent_id = req.body.klijent_id;
 

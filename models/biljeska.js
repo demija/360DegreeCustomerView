@@ -4,11 +4,13 @@ const config = require('../config/database');
 // Bilješka - šema
 const biljeskaSchema = mongoose.Schema({
     klijent: {
-        type: Object
+        type: Object,
+        required: true
     },
 
     kreirao: {
-        type: Object
+        type: Object,
+        required: true
     },
 
     poruka: {

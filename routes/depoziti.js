@@ -3,7 +3,7 @@ const router = express.Router();
 const config = require('../config/database');
 const Depozit = require('../models/depozit');
 
-// Vraćanje podataka racun
+// Vraćanje podataka depozita
 router.post('/vratipodatke', (req, res, next) => {
     const id = req.body.klijent_id;
 

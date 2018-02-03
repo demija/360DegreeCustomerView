@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Račun - šema
 const userSchema = mongoose.Schema({
     klijent: {
-        type: Object
+        type: Object,
+        required: true
     },
 
     ugovor: {

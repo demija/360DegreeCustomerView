@@ -3,7 +3,7 @@ const router = express.Router();
 const config = require('../config/database');
 const Odjel = require('../models/odjel');
 
-// Vraćanje podataka racun
+// Vraćanje podataka odjeli
 router.get('/vratisvepodatke', (req, res, next) => {
     Odjel.vratiSveZapise((err, data) => {
         if(err) {

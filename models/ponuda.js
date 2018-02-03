@@ -4,7 +4,8 @@ const config = require('../config/database');
 // Korisnik - šema
 const ponudaSchema = mongoose.Schema({
     naziv_ponude: {
-        type: String
+        type: String,
+        required: true
     },
 
     sifra_ponude: {

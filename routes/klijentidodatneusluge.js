@@ -44,7 +44,7 @@ router.get('/vratisvezapise', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje zapisi za klijenta',
+                    msg: 'Ne postoje podaci',
                     data: null
                 });
             }

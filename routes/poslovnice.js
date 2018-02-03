@@ -3,7 +3,7 @@ const router = express.Router();
 const config = require('../config/database');
 const Poslovnica = require('../models/poslovnica');
 
-// Vraćanje podataka racun
+// Vraćanje podataka poslovnica
 router.get('/vratisvepodatke', (req, res, next) => {
     Poslovnica.vratiSveZapise((err, data) => {
         if(err) {

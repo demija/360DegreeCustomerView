@@ -19,18 +19,15 @@ const klijentSchema = mongoose.Schema({
     },
 
     broj_lk: {
-        type: String,
-        required: true
+        type: String
     },
 
     datum_izdavanja_lk: {
-        type: Date,
-        required: true
+        type: Date
     },
 
     datum_vazenja_lk: {
-        type: Date,
-        required: true
+        type: Date
     },
 
     kucni_telefon: {

@@ -4,11 +4,13 @@ const config = require('../config/database');
 // Arhiva - šema
 const pretragaSchema = mongoose.Schema({
     trazeni_maticni_broj: {
-        type: String
+        type: String,
+        required: true
     },
 
     korisnik: {
-        type: Object
+        type: Object,
+        required: true
     },
 
     datum_pretrage: {

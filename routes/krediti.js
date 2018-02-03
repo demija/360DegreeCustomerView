@@ -3,7 +3,7 @@ const router = express.Router();
 const config = require('../config/database');
 const Kredit = require('../models/kredit');
 
-// Vraćanje podataka racun
+// Vraćanje podataka krediti
 router.post('/vratipodatke', (req, res, next) => {
     const klijent_id = req.body.klijent_id;
 

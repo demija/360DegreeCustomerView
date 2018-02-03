@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Kartica - šema
 const karticaSchema = mongoose.Schema({
     klijent: {
-        type: Object
+        type: Object,
+        required: true
     },
 
     tip_ugovora: {

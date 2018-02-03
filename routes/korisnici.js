@@ -45,7 +45,7 @@ router.post('/registracija', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Korisničko ime postoji!'
+                    msg: 'Korisničko ime već postoji!'
                 });
             }
         }
@@ -128,7 +128,7 @@ router.post('/autentifikacija', (req, res, next) => {
                 } else {
                     if(isMatch) {
                         const token = jwt.sign({data: user}, config.secret, {
-                            expiresIn: 900 // 15 minuta
+                            expiresIn: 3600 // 1h
                         });
 
                         res.json({

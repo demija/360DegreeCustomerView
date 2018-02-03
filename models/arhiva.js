@@ -4,7 +4,8 @@ const config = require('../config/database');
 // Arhiva - šema
 const arhivSchema = mongoose.Schema({
     id_korisnika: {
-        type: String
+        type: String,
+        required: true
     },
 
     ime: {

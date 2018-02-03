@@ -4,11 +4,13 @@ const config = require('../config/database');
 // KlijentPonuda - šema
 const klijentPonudaSchema = mongoose.Schema({
     klijent: {
-        type: Object
+        type: Object,
+        required: true
     },
 
     evidentirao: {
-        type: Object
+        type: Object,
+        required: true
     },
 
     ponudjene_usluge: {

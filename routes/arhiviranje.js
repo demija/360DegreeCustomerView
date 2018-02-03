@@ -4,7 +4,7 @@ const config = require('../config/database');
 const Arhiva = require('../models/arhiva');
 const os = require('os');
 
-// Registracija korisnik
+// Unos loga prijave
 router.post('/unosloga', (req, res, next) => {
     var interfaces = os.networkInterfaces();
     var addresses = [];
