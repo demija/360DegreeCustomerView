@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
 const Ponuda = require('../models/ponuda');
+var Recommender = require('likely');
+const KlijentDodatnaUsluga = require('../models/klijentdodatnausluga');
+const Klijent = require('../models/klijent');
 
 // Registracija korisnik
 router.post('/dodaj', (req, res, next) => {
@@ -77,6 +80,113 @@ router.get('/vratiaktivneponude', (req, res, next) => {
             }
         }
     });
+});
+
+// Vrati preporučene ponude
+router.post('/vratipreporuceneponude', (req, res, next) => {
+    const id = req.body.klijent_id;
+    var aktivnePonude;
+    var klijenti;
+    var klijentiDodatneUsluge;
+
+    // Vrati aktivne ponude
+    Ponuda.vratiAktivnePonude((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                this.aktivnePonude = data;
+            } else {
+                this.aktivnePonude = null;
+            }
+        }
+    });
+    
+    // Vrati sve klijente
+    Klijent.vratiSveZapise((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                this.klijenti = data;
+            } else {
+                this.klijenti = null;
+            }
+        }
+    });
+
+    // Vrati dodatne usluge svih klijenata
+    KlijentDodatnaUsluga.vratiSveZapise((err, data) => {
+        if(err) {
+            throw err;
+        } else {
+            if(data) {
+                this.klijentiDodatneUsluge = data;
+            } else {
+                this.klijentiDodatneUsluge = null;
+            }
+        }
+    });
+
+    var inputMatrix = [];
+    var ponudeArray;
+    var rowLabels = [];
+    var colLabels = [];
+
+    if(this.klijenti && this.aktivnePonude) {
+        this.klijenti.forEach(elementKlijenti => {
+            ponudeArray = [];
+            this.aktivnePonude.forEach(elementPonude => {
+                let postoji = 0;
+                
+                this.klijentiDodatneUsluge.forEach(elementDodatneUsluge => {
+                    if(elementKlijenti._id.toString() == elementDodatneUsluge.klijent._id.toString()) {
+                        elementDodatneUsluge.dodatne_usluge.forEach(element => {
+                            if(elementPonude._id.toString() == element._id.toString()) {
+                                postoji = 5;
+                            }
+                        });
+                    }
+                });
+
+                ponudeArray.push(postoji);
+            });
+
+            rowLabels.push(elementKlijenti._id);
+            inputMatrix.push(ponudeArray);
+        });
+    }
+
+    if(this.aktivnePonude) {
+        this.aktivnePonude.forEach(element => {
+            colLabels.push(element.naziv_ponude);        
+        });
+    }
+
+    if(inputMatrix.length > 0) {
+        var Model = Recommender.buildModel(inputMatrix, rowLabels, colLabels);
+        var recommendations = Model.recommendations(id);
+
+        function Comparator(a, b) {
+            if (a[1] > b[1]) {
+                return -1;
+            }
+            
+            if (a[1] < b[1]) {
+                return 1;
+            }
+            
+            return 0;
+        }
+
+        recommendations = recommendations.sort(Comparator);
+
+        res.json({
+            success: true,
+            msg: 'ok',
+            data: recommendations
+        });
+    }
 });
 
 // Obirši ponudu

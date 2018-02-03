@@ -28,7 +28,9 @@ export class HomeComponent implements OnInit {
     biljeske: Object;
     dodatne_usluge: Array<Object> = [];
     arhivaPonuda: any;
-    preporucene_ponude: any;
+    aktivnePonude: any;
+    preporucenePonude: any;
+    preporucene_ponude: any = [];
     time_line: Object;
 
     // biljeske
@@ -42,7 +44,14 @@ export class HomeComponent implements OnInit {
     arhivaPonudaPonudjeneUsluge: String = "";
     arhivaPonudaUgovoreneUsluge: String = "";
 
-    constructor(private authService: AuthService, private valdateService: ValidateService, private navhomeService: NavhomeService, private ponudeService: PonudeService, private biljeskaService: BiljeskaService, private klijentPonudeService: KlijentPonudeService) { }
+    constructor(
+        private authService: AuthService,
+        private valdateService: ValidateService,
+        private navhomeService: NavhomeService,
+        private ponudeService: PonudeService,
+        private biljeskaService: BiljeskaService,
+        private klijentPonudeService: KlijentPonudeService
+    ) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
@@ -98,22 +107,22 @@ export class HomeComponent implements OnInit {
             this.arhivaPonuda = arhiva_ponuda;
         });
 
-        this.navhomeService.currentPreporucenaPonuda.subscribe(preporucene_ponude => {
-            this.preporucene_ponude = [];
-            let tempPreporucenePonude = preporucene_ponude['data'];
+        this.navhomeService.currentAktivnaPonuda.subscribe(aktivne_ponude => {
+            this.aktivnePonude = aktivne_ponude;
+        });
 
-            if(this.dodatne_usluge.length > 0) {
-                tempPreporucenePonude.forEach(tempPreporucenePonudeElement => {
-                    this.dodatne_usluge.forEach(dodatneUslugeElement => {
-                        if(tempPreporucenePonudeElement['_id'] == dodatneUslugeElement['_id']) {
-                            tempPreporucenePonude.splice(tempPreporucenePonude.indexOf(tempPreporucenePonudeElement), 1);
+        this.navhomeService.currentPreporucenaPonuda.subscribe(preporucene_ponude => {
+            this.preporucenePonude = preporucene_ponude;
+            this.preporucene_ponude = [];
+
+            if(this.preporucenePonude['data']) {
+                this.preporucenePonude['data'].forEach(element => {
+                    this.aktivnePonude['data'].forEach(elementAktivnePonude => {
+                        if(element[0] == elementAktivnePonude.naziv_ponude) {
+                            this.preporucene_ponude.push(elementAktivnePonude);
                         }
                     });
                 });
-
-                this.preporucene_ponude = tempPreporucenePonude;
-            } else {
-                this.preporucene_ponude = tempPreporucenePonude;
             }
         });
 

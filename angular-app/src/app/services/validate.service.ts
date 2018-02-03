@@ -349,7 +349,7 @@ export class ValidateService {
 
     pokreniSwal(title, text, type, confirmButtonText) {
         swal({
-            position: 'top-right',
+            //position: 'top-right',
             title: title,
             text: text,
             type: type,

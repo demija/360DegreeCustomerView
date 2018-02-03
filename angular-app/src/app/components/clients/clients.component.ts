@@ -54,7 +54,12 @@ export class ClientsComponent implements OnInit {
         dateFormat: 'dd.mm.yyyy',
     };
 
-    constructor(private authService: AuthService, private klijentService: KlijentService, private kompanijaService: KompanijaService, private valdateService: ValidateService) { }
+    constructor(
+        private authService: AuthService,
+        private klijentService: KlijentService,
+        private kompanijaService: KompanijaService,
+        private valdateService: ValidateService
+    ) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));

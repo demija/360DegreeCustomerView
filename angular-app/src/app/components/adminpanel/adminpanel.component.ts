@@ -32,7 +32,12 @@ export class AdminpanelComponent implements OnInit {
     korisniciPage: number = 1;
     labela: String = 'izvještaja';
 
-    constructor(private navhomeService: NavhomeService, private authService: AuthService, private ponudeService: PonudeService, private valdateService: ValidateService) { }
+    constructor(
+        private navhomeService: NavhomeService,
+        private authService: AuthService,
+        private ponudeService: PonudeService,
+        private valdateService: ValidateService
+    ) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));

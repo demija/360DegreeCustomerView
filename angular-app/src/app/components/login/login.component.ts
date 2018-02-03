@@ -12,7 +12,11 @@ export class LoginComponent implements OnInit {
     korisnicko_ime: String;
     lozinka: String;
 
-    constructor(private authService: AuthService, private validateService: ValidateService, private router: Router) { }
+    constructor(
+        private authService: AuthService,
+        private validateService: ValidateService,
+        private router: Router
+    ) { }
 
     ngOnInit() {
     }

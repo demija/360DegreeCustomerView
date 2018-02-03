@@ -24,7 +24,12 @@ export class RegisterComponent implements OnInit {
     poslovniceLista: Object;
     prikaziPoslovnicu: Boolean = false;
 
-    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService) { }
+    constructor(
+        private validateService: ValidateService,
+        private authService: AuthService,
+        private router: Router,
+        private navhomeService: NavhomeService
+    ) { }
 
     ngOnInit() {
         this.navhomeService.getOdjeli().subscribe(data => {

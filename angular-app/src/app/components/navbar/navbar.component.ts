@@ -18,7 +18,12 @@ export class NavbarComponent implements OnInit {
     maticni_broj_search: String;
     klijent_id: String;
 
-    constructor(private authService: AuthService, private navhomeService: NavhomeService, private validateService: ValidateService, private router: Router) { }
+    constructor(
+        private authService: AuthService,
+        private navhomeService: NavhomeService,
+        private validateService: ValidateService,
+        private router: Router
+    ) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
@@ -58,6 +63,7 @@ export class NavbarComponent implements OnInit {
                 this.navhomeService.changeBiljeske(klijent.biljeske);
                 this.navhomeService.changeDodatneUsluge(klijent.dodatneUsluge);
                 this.navhomeService.changeArhivaPonuda(klijent.arhivaponuda);
+                this.navhomeService.changeAktivnePonude(klijent.aktivneponude);
                 this.navhomeService.changePreporucenePonude(klijent.preporuceneponude);
                 this.navhomeService.changeTimeline(klijent);
             } else {
@@ -75,6 +81,7 @@ export class NavbarComponent implements OnInit {
         this.navhomeService.changeBiljeske([]);
         this.navhomeService.changeDodatneUsluge([]);
         this.navhomeService.changeArhivaPonuda([]);
+        this.navhomeService.changeAktivnePonude([]);
         this.navhomeService.changePreporucenePonude([]);
         this.navhomeService.changeTimeline(null);
     }

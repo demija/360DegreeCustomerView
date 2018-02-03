@@ -25,3 +25,7 @@ module.exports.vratiDodatneUslugeKlijenta = function(id, callback) {
     
     KlijentDodatnaUsluga.find(query, callback);
 }
+
+module.exports.vratiSveZapise = function(callback) {    
+    KlijentDodatnaUsluga.find(callback);
+}

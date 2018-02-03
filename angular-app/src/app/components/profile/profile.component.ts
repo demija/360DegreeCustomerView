@@ -34,7 +34,15 @@ export class ProfileComponent implements OnInit {
     novaLozinkaEdit: String = '';
     potvrdaNoveLozinkeEdit: String = '';
     
-    constructor(private validateService: ValidateService, private authService: AuthService, private router: Router, private navhomeService: NavhomeService, private profilService: ProfilService, private klijentPonudeService: KlijentPonudeService, private biljeskaService: BiljeskaService) { }
+    constructor(
+        private validateService: ValidateService,
+        private authService: AuthService,
+        private router: Router,
+        private navhomeService: NavhomeService,
+        private profilService: ProfilService,
+        private klijentPonudeService: KlijentPonudeService,
+        private biljeskaService: BiljeskaService
+    ) { }
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user'));

@@ -300,9 +300,16 @@ export class ReportComponent implements OnInit {
         dateFormat: 'dd.mm.yyyy',
     };
 
-    constructor(private navhomeService: NavhomeService, private validateService: ValidateService,
-        private depozitService: DepozitService, private kreditService: KreditService, private racunService: RacunService,
-        private klijentPonudeService: KlijentPonudeService, private biljeskaService: BiljeskaService, private klijentService: KlijentService) { }
+    constructor(
+        private navhomeService: NavhomeService,
+        private validateService: ValidateService,
+        private depozitService: DepozitService,
+        private kreditService: KreditService,
+        private racunService: RacunService,
+        private klijentPonudeService: KlijentPonudeService,
+        private biljeskaService: BiljeskaService,
+        private klijentService: KlijentService
+    ) { }
 
     ngOnInit() {
         this.prijavljeni_korisnik = JSON.parse(localStorage.getItem('user'));
@@ -1334,6 +1341,9 @@ export class ReportComponent implements OnInit {
         new Angular2Csv(data, 'depozitiReport', {headers: (head)});
     }
 
+    /*
+    *   POSLOVANJE - metode
+    */
     traziPoslovanje() {
         let brojPonudjenihUslugaTemp = 0;
         let brojUgovorenihUslugaTemp = 0;

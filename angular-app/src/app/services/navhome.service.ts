@@ -31,6 +31,9 @@ export class NavhomeService {
     private arhivaPonudaSource = new BehaviorSubject<Object>({});
     currentArhivaPonuda = this.arhivaPonudaSource.asObservable();
 
+    private aktivnaPonudaSource = new BehaviorSubject<Object>({});
+    currentAktivnaPonuda = this.aktivnaPonudaSource.asObservable();
+
     private preporucenaPonudaSource = new BehaviorSubject<Object>({});
     currentPreporucenaPonuda = this.preporucenaPonudaSource.asObservable();
 
@@ -65,9 +68,10 @@ export class NavhomeService {
                     this.http.post('http://localhost:3000/racuni/vratikartice', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/krediti/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.post('http://localhost:3000/biljeske/vratibiljeske', klId, {headers: headers}).map((res: any) => res.json()),
-                    this.http.post('http://localhost:3000/klijentidodatneusluge/vratiusluge', klId, {headers: headers}).map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/klijentidodatneusluge/vratiusluge', klId, {headers: headers}).map((res: any) => res.json()),//
                     this.http.post('http://localhost:3000/klijentiponude/vratipodatke', klId, {headers: headers}).map((res: any) => res.json()),
                     this.http.get('http://localhost:3000/ponude/vratiaktivneponude').map((res: any) => res.json()),
+                    this.http.post('http://localhost:3000/ponude/vratipreporuceneponude', klId, {headers: headers}).map((res: any) => res.json()),//
                     this.http.post('http://localhost:3000/pretrage/unosPretrage', pretraga, {headers: headers}).map((res: any) => res.json())
                 )
                 .map((data: any[]) => {
@@ -79,7 +83,8 @@ export class NavhomeService {
                     let biljeske = data[5];
                     let dodatneUsluge = data[6];
                     let arhivaponuda = data[7];
-                    let preporuceneponude = data[8];
+                    let aktivneponude = data[8];
+                    let preporuceneponude = data[9];
 
                     klijent_rezultat.racuni = racuni;
                     klijent_rezultat.depoziti = depoziti;
@@ -88,6 +93,7 @@ export class NavhomeService {
                     klijent_rezultat.biljeske = biljeske;
                     klijent_rezultat.dodatneUsluge = dodatneUsluge;
                     klijent_rezultat.arhivaponuda = arhivaponuda;
+                    klijent_rezultat.aktivneponude = aktivneponude;
                     klijent_rezultat.preporuceneponude = preporuceneponude;
 
                     return klijent_rezultat;
@@ -126,6 +132,10 @@ export class NavhomeService {
 
     changeArhivaPonuda(arhivaPonude) {
         this.arhivaPonudaSource.next(arhivaPonude);
+    }
+
+    changeAktivnePonude(aktivnePonude) {
+        this.aktivnaPonudaSource.next(aktivnePonude);
     }
 
     changePreporucenePonude(preporucenaPonuda) {
