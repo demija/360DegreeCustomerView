@@ -39,7 +39,7 @@ export class AuthService {
         .map(res => res.json())
         .flatMap((data: any) => {
             if(data.user) {
-                korisnik.id_korisnika = data.user.id,
+                korisnik.id_korisnika = data.user._id,
                 korisnik.ime = data.user.ime,
                 korisnik.prezime = data.user.prezime
                 korisnik.email = data.user.email,

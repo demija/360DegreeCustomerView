@@ -72,7 +72,7 @@ module.exports.vratiAktivnePonude = function(callback) {
 
 //Obriši ponudu
 module.exports.obrisi = function(ponuda, callback) {
-    const ObjectId = require('mongoose').Types.ObjectId; 
+    const ObjectId = require('mongoose').Types.ObjectId;
     const query = {
         _id: new ObjectId(ponuda._id)
     };
@@ -82,7 +82,9 @@ module.exports.obrisi = function(ponuda, callback) {
 
 //Izmjeni ponudu
 module.exports.izmjeni = function(ponuda, callback) {
-    const ObjectId = require('mongoose').Types.ObjectId; 
+    ponuda.izmjenio._id = mongoose.Types.ObjectId(ponuda.izmjenio._id);
+    
+    const ObjectId = require('mongoose').Types.ObjectId;
     const query = {
         _id: new ObjectId(ponuda._id)
     };

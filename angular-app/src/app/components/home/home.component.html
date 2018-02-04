@@ -19,6 +19,7 @@
                                 <p class="text-muted">Datum izdavanja</p>
                                 <p class="text-muted">Datum važenja</p>
                                 <p class="text-muted">CRK saglasnost</p>
+                                <p class="text-muted">U radnom odnosu</p>
                             </div>
                             <div class="col">
                                 <p class="text-primary">{{ klijent.ime }} {{ klijent.prezime }}</p>
@@ -27,6 +28,12 @@
                                 <p class="text-primary">{{ klijent.datum_izdavanja_lk | date:'dd/MM/yyyy' }}</p>
                                 <p class="text-primary">{{ klijent.datum_vazenja_lk | date:'dd/MM/yyyy' }}</p>
                                 <p [ngClass]="{Da:'text-success', Ne:'text-danger'}[klijent.saglasnost_za_crk]">{{ klijent.saglasnost_za_crk }}</p>
+                                <div *ngIf="klijent.radni_status === true">
+                                    <p class='text-success'>Da</p>
+                                </div>
+                                <div *ngIf="klijent.radni_status === false">
+                                    <p class='text-danger'>Ne</p>
+                                </div>
                             </div>
                             <div class="col">
                                 <p class="text-muted">Adresa</p>
@@ -35,6 +42,7 @@
                                 <p class="text-muted">E-mail</p>
                                 <p class="text-muted">Fiksni telefon</p>
                                 <p class="text-muted">Mobilni telefon</p>
+                                <p class="text-muted">Firma zaposlenja</p>
                             </div>
                             <div class="col">
                                 <p class="text-primary">{{ klijent.adresa?.ulica_i_broj }}</p>
@@ -43,6 +51,7 @@
                                 <p class="text-primary">{{ klijent.mail_adresa }}</p>
                                 <p class="text-primary">{{ klijent.kucni_telefon }}</p>
                                 <p class="text-primary">{{ klijent.mobilni_telefon }}</p>
+                                <p *ngIf="klijent.firma_zaposlenja" class="text-primary">{{ klijent.firma_zaposlenja.naziv }}</p>
                             </div>
                         </div>
                     </div>
@@ -55,24 +64,25 @@
                     <div class="card-body">
                         <div *ngFor="let rcn of racuni.data; let idx = index">
                             <div class="row" >
-                                <div class="col-4">
+                                <div class="col-sm-3">
                                     <p class="card-subtitle mb-2 text-muted">Račun</p>
                                     <p class="text-primary">{{ rcn.ugovor.opis_tipa_ugovora }}</p>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-sm-3">
                                     <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ rcn.ugovor.partija }}</p>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
                                     <p class="text-primary">{{ rcn.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="text-primary">{{ rcn.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Stanje na računu</p>
-                                    <p class="text-primary">{{ rcn.stanje_racuna | number:'.2' }} BAM</p>
+                                    <p class="text-success" *ngIf="rcn.stanje_racuna > 0">{{ rcn.stanje_racuna | number:'.2' }} BAM</p>
+                                    <p class="text-danger" *ngIf="rcn.stanje_racuna < 0">{{ rcn.stanje_racuna | number:'.2' }} BAM</p>
                                 </div>
-                                <div col="col-2">
+                                <div col="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Status računa</p>
                                     <div *ngIf="!rcn.aktivan_racun">
                                         <p class="text-danger">Neaktivan račun</p>
@@ -94,29 +104,29 @@
                     <div class="card-body">
                         <div *ngFor="let kart of kartice; let idx = index">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-sm-3">
                                     <p class="card-subtitle mb-2 text-muted">Opis tipa ugovora</p>
                                     <p class="text-primary">{{ kart.ugovor.opis_tipa_ugovora }}</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-sm-3">
                                     <p class="card-subtitle mb-2 text-muted">Račun</p>
                                     <p class="text-primary">{{ kart.racunUgovor.opis_tipa_ugovora }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ kart.racunUgovor.partija }}</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Vrsta kartice</p>
                                     <p class="text-primary">{{ kart.vrsta_kartice }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Tip kartice</p>
                                     <p class="text-primary">{{ kart.tip_kartice }}</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
                                     <p class="text-primary">{{ kart.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
                                     <p class="text-primary">{{ kart.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
-                                <div class="col">
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Status kartice</p>
                                     <div *ngIf="!kart.aktivna_kartica">
                                         <p class="text-danger">Neaktivna kartica</p>
@@ -138,35 +148,35 @@
                     <div class="card-body">
                         <div *ngFor="let kredit of krediti.data; let idx = index">
                             <div class="row" >
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <p class="card-subtitle mb-2 text-muted">Opis</p>
                                     <p class="text-primary">{{ kredit.ugovor.opis_tipa_ugovora }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ kredit.ugovor.partija }}</p>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
                                     <p class="text-primary">{{ kredit.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
                                     <p class="text-primary">{{ kredit.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
-                                <div class="col-2">
-                                    <p class="card-subtitle mb-2 text-muted">Odobreni iznos</p>
-                                    <p class="text-primary">{{ kredit.odobreni_iznos | number:'.2' }} BAM</p>
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Kamatna stopa</p>
                                     <p class="text-primary">{{ kredit.stopa }} %</p>
+                                    <p class="card-subtitle mb-2 text-muted">Kamata</p>
+                                    <p class="text-primary">{{ kredit.ukupna_kamatna_stopa | number:'.2' }} BAM</p>
                                 </div>
-                                <div class="col-2">
-                                    <p class="card-subtitle mb-2 text-muted">Ostatak duga</p>
-                                    <p class="text-primary">{{ kredit.nedospjela_glavnica | number:'.2' }} BAM</p>
-                                    <p class="card-subtitle mb-2 text-muted">Glavnica ostatak</p>
-                                    <p class="text-primary">{{ kredit.glavnica_ostatak | number:'.2' }} BAM</p>
+                                <div class="col-sm-2">
+                                    <p class="card-subtitle mb-2 text-muted">Odobreni iznos</p>
+                                    <p class="text-primary">{{ kredit.odobreni_iznos | number:'.2' }} BAM</p>
+                                    <p class="card-subtitle mb-2 text-muted">Ukupno</p>
+                                    <p class="text-primary">{{ kredit.ukupno_placanje | number:'.2' }} BAM</p>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <p class="card-subtitle mb-2 text-muted">Anuitet</p>
                                     <p class="text-primary">{{ kredit.iznos_anuitet | number:'.2' }} BAM</p>
-                                    <p class="card-subtitle mb-2 text-muted">Dospjela glavnica</p>
-                                    <p class="text-primary">{{ kredit.dospjela_glavnica | number:'.2' }} BAM</p>
+                                    <p class="card-subtitle mb-2 text-muted">Period otplate</p>
+                                    <p class="text-primary">{{ kredit.period_otplate }} mj.</p>
                                 </div>
                             </div>
                             <hr>
@@ -181,19 +191,19 @@
                     <div class="card-body">
                         <div *ngFor="let dpz of depoziti.data; let idx = index">
                             <div class="row" >
-                                <div class="col-6">
+                                <div class="col-sm-6">
                                     <p class="card-subtitle mb-2 text-muted">Opis</p>
                                     <p class="text-primary">{{ dpz.ugovor.opis_tipa_ugovora }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Partija</p>
                                     <p class="text-primary">{{ dpz.ugovor.partija }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-3">
                                     <p class="card-subtitle mb-2 text-muted">Datum ugovora</p>
                                     <p class="text-primary">{{ dpz.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                     <p class="card-subtitle mb-2 text-muted">Datum važenja</p>
                                     <p class="text-primary">{{ dpz.datum_vazenja | date:'dd/MM/yyyy' }}</p>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-3">
                                     <p class="card-subtitle mb-2 text-muted">Iznos oročenja</p>
                                     <p class="text-primary">{{ dpz.stanje_racuna | number:'.2' }} BAM</p>
                                     <p class="card-subtitle mb-2 text-muted">Kamatna stopa</p>

@@ -79,17 +79,12 @@ export class ReportComponent implements OnInit {
     * GRAFOVI RAČUNA
     */
     periodRacunGrafa: Array<any> = [];
-    // broj kredita graf
+    // broj računa graf
     public racunBrojChartData:any[] = [{data: [], label: ''}];
     public racunBrojChartLabels:string[] = [];
     public racunBrojChartLegend:boolean = true;
     public racunBrojChartType:string = 'line';
-    // kolicina kredita graf
-    public racunKolicinaChartData:any[] = [{data: [], label: ''}];
-    public racunKolicinaChartLabels:string[] = [];
-    public racunKolicinaChartLegend:boolean = true;
-    public racunKolicinaChartType:string = 'line';
-    // krediti
+    // računi
     public racunDoughnutChartData:number[] = [0];
     public racunDoughnutChartLabels:string[] = [];
     public racunDoughnutChartType:string = 'pie';
@@ -108,7 +103,7 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'bottom',
+            position: 'left',
             fullWidth: true
         }
     };
@@ -156,7 +151,7 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'bottom',
+            position: 'left',
             fullWidth: true
         }
     };
@@ -194,7 +189,7 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'bottom',
+            position: 'left',
             fullWidth: true
         }
     }
@@ -239,8 +234,8 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'bottom',
-            fullWidth: true
+            position: 'left',
+            fullWidth: false
         },
         elements: {
             line: {
@@ -286,7 +281,7 @@ export class ReportComponent implements OnInit {
         },
         legend: {
             display: true,
-            position: 'bottom',
+            position: 'left',
             fullWidth: true
         },
         elements: {
@@ -443,7 +438,6 @@ export class ReportComponent implements OnInit {
 
                     this.generisanjePeriodaRacunGrafa();
                     this.generisanjeBrojRacunaGrafa();
-                    this.generisanjeKolicinaRacunaGrafa();
                     this.generisanjeGrafaRacuna();
                 } else {
                     this.validateService.pokreniSwal('Greška!', racuni.msg, 'error', 'Uredu');
@@ -457,11 +451,9 @@ export class ReportComponent implements OnInit {
     resetRacunGrafova() {
         // Reset chart labela
         this.racunBrojChartLabels = [];
-        this.racunKolicinaChartLabels = [];
 
         // Reset chart vrijednosti
         this.racunBrojChartData.length = 1;
-        this.racunKolicinaChartData.length = 1;
 
         this.racunDoughnutChartData.forEach(element => {
             element = 0;
@@ -471,10 +463,6 @@ export class ReportComponent implements OnInit {
     pripremaRacunGrafova() {
         while(this.racunBrojChartData.length < this.selektovaniTipoviUgovoraRacuna.length) {
             this.racunBrojChartData.push({ data: [], label: "" });
-        }
-
-        while(this.kreditKolicinaChartData.length < this.selektovaniTipoviUgovoraRacuna.length) {
-            this.racunKolicinaChartData.push({ data: [], label: "" });
         }
     }
 
@@ -513,7 +501,6 @@ export class ReportComponent implements OnInit {
         this.periodRacunGrafa.forEach(element => {
             let datum = element.mjesec + '. mjesec ' + element.godina;
             this.racunBrojChartLabels.push(datum);
-            this.racunKolicinaChartLabels.push(datum);
         });
     }
 
@@ -550,44 +537,12 @@ export class ReportComponent implements OnInit {
         this.racunBrojChartData = clone;
     }
 
-    generisanjeKolicinaRacunaGrafa() {
-        let clone = JSON.parse(JSON.stringify(this.racunKolicinaChartData));
-
-        for(let i = 0; i < this.selektovaniTipoviUgovoraRacuna.length; i++) {
-            // računanje iznosa potpisanih ugovora po periodu
-            let data = [];
-            let labela = '';
-
-            this.periodRacunGrafa.forEach(element => {
-                let broj = 0.00;
-
-                this.racuniResult.forEach(elementRacun => {
-                    if(elementRacun.ugovor.tip_ugovora == this.selektovaniTipoviUgovoraRacuna[i]) {
-                        labela = elementRacun.ugovor.opis_tipa_ugovora;
-
-                        let datumUgovora = new Date(elementRacun.datum_ugovora);
-                        
-                        if(datumUgovora.getMonth() + 1 == element.mjesec && datumUgovora.getFullYear() == element.godina) {
-                            broj += Number(elementRacun.stanje_racuna);
-                        }
-                    }
-                });
-
-                data.push(broj.toFixed(2));
-            });
-
-            clone[i].data = data;
-            clone[i].label = labela;
-        }
-
-        this.racunKolicinaChartData = clone;
-    }
-
     generisanjeGrafaRacuna() {
         let vrijednosti = [];
         let tempVrijednost;
 
-        this.racunKolicinaChartData.forEach(element => {
+        //this.racunKolicinaChartData.forEach(element => {
+        this.racunBrojChartData.forEach(element => {
             tempVrijednost = 0;
 
             if(element.label != '') {
@@ -620,8 +575,17 @@ export class ReportComponent implements OnInit {
 
     racuniCsv() {
         let data = [];
-        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
-                        'Partija', 'Konto', 'Datum ugovora'];
+        let head = [
+            'Ime',
+            'Prezime',
+            'Broj l.k.',
+            'JMBG',
+            'Tip ugovora',
+            'Opis tipa ugovora',
+            'Partija',
+            'Konto',
+            'Datum ugovora'
+        ];
 
         this.racuniResult.forEach(element => {
             let obj = {
@@ -815,8 +779,19 @@ export class ReportComponent implements OnInit {
 
     karticeCsv() {
         let data = [];
-        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
-                        'Partija', 'Tip kartice', 'Vrsta kartice', 'Datum ugovora', 'Datum vazenja'];
+        let head = [
+            'Ime',
+            'Prezime',
+            'Broj l.k.',
+            'JMBG',
+            'Tip ugovora',
+            'Opis tipa ugovora',
+            'Partija',
+            'Tip kartice',
+            'Vrsta kartice',
+            'Datum ugovora',
+            'Datum vazenja'
+        ];
 
         this.karticeResult.forEach(element => {
             let obj = {
@@ -1065,8 +1040,24 @@ export class ReportComponent implements OnInit {
 
     kreditiCsv() {
         let data = [];
-        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
-                        'Partija', 'Stopa', 'Odobreni iznos', 'Dospjela glavnica', 'Glavnica ostatak', 'Anuitet', 'Datum ugovora', 'Datum vazenja'];
+        let head = [
+            'Ime',
+            'Prezime',
+            'Broj l.k.',
+            'JMBG',
+            'Tip ugovora',
+            'Opis tipa ugovora',
+            'Partija',
+            'Odobreni iznos',
+            'Period otplate',
+            'Stopa',
+            'Mjesecna kamatna stopa',
+            'Anuitet',
+            'Ukupna kamatna stopa',
+            'Ukupno placanje',
+            'Datum ugovora',
+            'Datum vazenja'
+        ];
 
         this.kreditiResult.forEach(element => {
             let obj = {
@@ -1077,11 +1068,13 @@ export class ReportComponent implements OnInit {
                 tip_ugovora: element.ugovor.tip_ugovora,
                 opis_tipa_ugovora: element.ugovor.opis_tipa_ugovora,
                 partija: element.ugovor.partija,
-                stopa: element.stopa,
                 odobreni_iznos: element.odobreni_iznos,
-                dospjela_glavnica: element.dospjela_glavnica,
-                glavnica_ostatak: element.glavnica_ostatak,
+                period_otplate: element.period_otplate,
+                stopa: element.stopa,
+                mjesecna_kamatna_stopa: element.mjesecna_kamatna_stopa,
                 anuitet: element.iznos_anuitet,
+                ukupna_kamatna_stopa: element.ukupna_kamatna_stopa,
+                ukupno_placanje: element.ukupno_placanje,
                 datum_ugovora: element.datum_ugovora,
                 datum_vazenja: element.datum_vazenja
             }
@@ -1318,8 +1311,18 @@ export class ReportComponent implements OnInit {
 
     depozitiCsv() {
         let data = [];
-        let head = ['Ime klijenta', 'Prezime klijenta', 'Broj l.k. klijenta', 'JMBG klijenta', 'Tip ugovora', 'Opis tipa ugovora',
-                        'Partija', 'Stanje racuna', 'Datum ugovora', 'Datum vazenja'];
+        let head = [
+            'Ime',
+            'Prezime',
+            'Broj l.k.',
+            'JMBG',
+            'Tip ugovora',
+            'Opis tipa ugovora',
+            'Partija',
+            'Stanje racuna',
+            'Datum ugovora',
+            'Datum vazenja'
+        ];
 
         this.depozitiResult.forEach(element => {
             let obj = {

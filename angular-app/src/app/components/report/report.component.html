@@ -60,17 +60,17 @@
                                         <table class="table table-hover table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Datum ugovora</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Stanje</th>
+                                                    <th class="text-muted">Klijent</th>
+                                                    <th class="text-muted">Tip ugovora</th>
+                                                    <th class="text-muted">Datum ugovora</th>
+                                                    <th class="text-muted">Stanje računa</th>
                                                 </tr>
                                             </thead>
                                             <tbody *ngFor="let r of racuniResult | paginate: { itemsPerPage: 10, currentPage: racuniPage, id:'racuni_pagination' }">
                                                 <tr>
                                                     <td>
                                                         <p class="text-primary">{{ r.klijent.ime }} {{ r.klijent.prezime }}</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Jmbg:  {{ r.klijent.maticni_broj }}</p>
+                                                        <p class="card-subtitle mb-2 text-muted">JMBG:  {{ r.klijent.maticni_broj }}</p>
                                                     </td>
                                                     <td>
                                                         <p class="text-primary">{{ r.ugovor.opis_tipa_ugovora }}</p>
@@ -99,7 +99,7 @@
                             <div *ngIf="racuniResult">
                                 <hr>
                                 <div class="row justify-content-md-center">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div style="display: block">
                                             <canvas baseChart id="brojRacunaGraph"
                                                 [datasets]="racunBrojChartData"
@@ -113,21 +113,7 @@
                                 </div>
                                 <hr>
                                 <div class="row justify-content-md-center">
-                                    <div class="col-md-8">
-                                        <div style="display: block">
-                                            <canvas baseChart id="kolicinaRacunaGraph"
-                                                [datasets]="racunKolicinaChartData"
-                                                [labels]="racunKolicinaChartLabels"
-                                                [options]="lineKolicinaChartOptions"
-                                                [legend]="racunKolicinaChartLegend"
-                                                [chartType]="racunKolicinaChartType">
-                                            </canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row justify-content-md-center">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div style="display: block">
                                             <canvas baseChart id="racuniGraph"
                                                 [data]="racunDoughnutChartData"
@@ -196,18 +182,18 @@
                                         <table class="table table-hover table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Vrsta/tip kartice</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Status</th>
+                                                    <th class="text-muted">Klijent</th>
+                                                    <th class="text-muted">Tip ugovora</th>
+                                                    <th class="text-muted">Vrsta/tip kartice</th>
+                                                    <th class="text-muted">Datum važenja</th>
+                                                    <th class="text-muted">Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody *ngFor="let k of karticeResult | paginate: { itemsPerPage: 10, currentPage: karticePage, id: 'kartice_pagination' }">
                                                 <tr>
                                                     <td>
                                                         <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
+                                                        <p class="text-muted">JMBG: {{ k.klijent.maticni_broj }}</p>
                                                     </td>
                                                     <td>
                                                         <p class="text-primary">{{ k.kartica.ugovor.opis_tipa_ugovora }}</p>
@@ -241,7 +227,7 @@
                             <div *ngIf="karticeResult">
                                 <hr>
                                 <div class="row justify-content-md-center">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div style="display: block">
                                             <canvas baseChart id="brojKarticaGraph"
                                                 [datasets]="karticaBrojChartData"
@@ -289,36 +275,33 @@
                                         <table class="table table-hover table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Odobreni iznos</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Glavnica</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Datum važenja</th>
+                                                    <th class="text-muted">Klijent</th>
+                                                    <th class="text-muted">Tip ugovora</th>
+                                                    <th class="text-muted">Period važenja</th>
+                                                    <th class="text-muted">Odobreni iznos</th>
+                                                    <th class="text-muted">Anuitet</th>
                                                 </tr>
                                             </thead>
                                             <tbody *ngFor="let k of kreditiResult | paginate: { itemsPerPage: 10, currentPage: kreditiPage, id: 'krediti_pagination' }">
                                                 <tr>
                                                     <td>
                                                         <p class="text-primary">{{ k.klijent.ime }} {{ k.klijent.prezime }}</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Jmbg: {{ k.klijent.maticni_broj }}</p>
+                                                        <p class="text-muted">JMBG: {{ k.klijent.maticni_broj }}</p>
                                                     </td>
                                                     <td>
                                                         <p class="text-primary">{{ k.ugovor.opis_tipa_ugovora }}</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Partija: {{ k.ugovor.partija }}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-primary">{{ k.odobreni_iznos | number:'.2' }} BAM</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Stopa: {{ k.stopa }} %</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Anuitet: {{ k.iznos_anuitet | number:'.2' }} BAM</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-primary">{{ k.dospjela_glavnica | number:'.2' }} BAM</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Nedospjela: {{ k.nedospjela_glavnica | number:'.2' }} BAM</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Ostatak: {{ k.glavnica_ostatak | number:'.2' }} BAM</p>
+                                                        <p class="text-muted">Partija: {{ k.ugovor.partija }}</p>
                                                     </td>
                                                     <td>
                                                         <p class="text-primary">{{ k.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                                         <p class="text-primary">{{ k.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.odobreni_iznos | number:'.2' }} BAM</p>
+                                                        <p class="text-muted">Stopa: {{ k.stopa }} %</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ k.iznos_anuitet | number:'.2' }} BAM</p>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -406,29 +389,29 @@
                                         <table class="table table-hover table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th class="card-subtitle mb-2 text-muted">Klijent</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Tip ugovora</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Ugovoreni iznos</th>
-                                                    <th class="card-subtitle mb-2 text-muted">Period ugovora</th>
+                                                    <th class="text-muted">Klijent</th>
+                                                    <th class="text-muted">Tip ugovora</th>
+                                                    <th class="text-muted">Period ugovora</th>
+                                                    <th class="text-muted">Ugovoreni iznos</th>
                                                 </tr>
                                             </thead>
                                             <tbody *ngFor="let d of depozitiResult | paginate: { itemsPerPage: 10, currentPage: depozitiPage, id: 'depoziti_pagination' }">
                                                 <tr>
                                                     <td>
                                                         <p class="text-primary">{{ d.klijent.ime }} {{ d.klijent.prezime }}</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Jmbg: {{ d.klijent.maticni_broj }}</p>
+                                                        <p class="text-muted">JMBG: {{ d.klijent.maticni_broj }}</p>
                                                     </td>
                                                     <td>
                                                         <p class="text-primary">{{ d.ugovor.opis_tipa_ugovora }}</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Partija: {{ d.ugovor.partija }}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="text-primary">{{ d.stanje_racuna | number:'.2' }} BAM</p>
-                                                        <p class="card-subtitle mb-2 text-muted">Kamatna stopa: {{ d.stopa }} %</p>
+                                                        <p class="text-muted">Partija: {{ d.ugovor.partija }}</p>
                                                     </td>
                                                     <td>
                                                         <p class="text-primary">{{ d.datum_ugovora | date:'dd/MM/yyyy' }}</p>
                                                         <p class="text-primary">{{ d.datum_vazenja | date:'dd/MM/yyyy' }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">{{ d.stanje_racuna | number:'.2' }} BAM</p>
+                                                        <p class="text-muted" *ngIf="d.stopa">Kamatna stopa: {{ d.stopa }} %</p>
                                                     </td>
                                                 </tr>
                                             </tbody>

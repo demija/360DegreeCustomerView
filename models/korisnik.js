@@ -79,6 +79,10 @@ module.exports.vratiKorisnickoIme = function(korisnicko_ime, callback) {
 }
 
 module.exports.dodaj = function(noviKorisnik, callback) {
+    if(noviKorisnik.poslovnica) {
+        noviKorisnik.poslovnica._id = mongoose.Types.ObjectId(noviKorisnik.poslovnica._id);
+    }
+
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(noviKorisnik.lozinka, salt, (err, hash) => {
             if(err) {

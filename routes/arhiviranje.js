@@ -18,7 +18,7 @@ router.post('/unosloga', (req, res, next) => {
     }
 
     let log = new Arhiva({
-        id_korisnika: req.body.id,
+        id_korisnika: req.body.id_korisnika,
         ime: req.body.ime,
         prezime: req.body.prezime,
         email: req.body.email,

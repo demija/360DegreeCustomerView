@@ -4,8 +4,7 @@ const config = require('../config/database');
 // Arhiva - šema
 const arhivSchema = mongoose.Schema({
     id_korisnika: {
-        type: String,
-        required: true
+        type: String
     },
 
     ime: {
@@ -58,5 +57,6 @@ arhivSchema.set('collection', 'arhiva_prijava');
 const Arhiva = module.exports = mongoose.model('Arhiva', arhivSchema);
 
 module.exports.upisLoga = function(log, callback) {
+    log.odjel._id = mongoose.Types.ObjectId(log.odjel._id);
     log.save(callback);
 }
