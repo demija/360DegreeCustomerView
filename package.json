@@ -1,31 +1,33 @@
 {
-  "name": "360degreecustomerview",
-  "version": "1.0.0",
-  "description": "360-degree customer view",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app"
-  },
-  "dependencies": {
-    "bcryptjs": "*",
-    "body-parser": "*",
-    "cors": "*",
-    "express": "*",
-    "jsonwebtoken": "*",
-    "likely": "^0.2.0",
-    "mongoose": "*",
-    "passport": "*",
-    "passport-jwt": "*"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/demija/360DegreeCustomerView.git"
-  },
-  "author": "Adem Gabela",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/demija/360DegreeCustomerView/issues"
-  },
-  "homepage": "https://github.com/demija/360DegreeCustomerView#readme"
+    "name": "360degreecustomerview",
+    "version": "1.0.0",
+    "description": "360-degree customer view",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app"
+    },
+    "dependencies": {
+        "bcryptjs": "*",
+        "body-parser": "*",
+        "cors": "*",
+        "express": "*",
+        "jsonwebtoken": "*",
+        "likely": "^0.2.0",
+        "mongoose": "*",
+        "passport": "*",
+        "passport-jwt": "*",
+        "ldapjs": "*",
+        "uuid": "*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/demija/360DegreeCustomerView.git"
+    },
+    "author": "Adem Gabela",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/demija/360DegreeCustomerView/issues"
+    },
+    "homepage": "https://github.com/demija/360DegreeCustomerView#readme"
 }

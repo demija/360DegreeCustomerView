@@ -57,6 +57,9 @@ arhivSchema.set('collection', 'arhiva_prijava');
 const Arhiva = module.exports = mongoose.model('Arhiva', arhivSchema);
 
 module.exports.upisLoga = function(log, callback) {
-    log.odjel._id = mongoose.Types.ObjectId(log.odjel._id);
+    if(log.uspjesan_login) {
+        log.odjel._id = mongoose.Types.ObjectId(log.odjel._id);
+    }
+
     log.save(callback);
 }

@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const Korisnik = require('../models/korisnik');
 
+//
+let ldap = require('ldapjs');
+
+let token = null;
+//
+
 // Registracija korisnik
 router.post('/registracija', (req, res, next) => {
     let noviKorisnik = new Korisnik({
@@ -116,9 +122,86 @@ router.post('/autentifikacija', (req, res, next) => {
             throw err;
         } else {
             if(!user || !user.aktivan) {
+                // Active directory autentifikacija
+                let url = "ldap://ldap.example.com/dc=example,dc=com";
+                let userPrincipalName = req.body.korisnicko_ime + "@" + req.body.domain;
+                let passwd = req.body.lozinka;
+                let suffix = "dc=" + req.body.domain.replace(/\./g, ",dc=");
+            
+                if(passwd === '') {
+                    return;
+                }
+            
+                // Bind korisnika
+                let adClient = ldap.createClient({ url: url });
+                adClient.bind(userPrincipalName, passwd, function(err) {
+                    if(err) {
+                        if(err.name === 'InvalidCredentialsError') {
+                            return res.json({
+                                success: false,
+                                msg: 'Pogrešni podaci!'
+                            });
+                        } else {
+                            return res.json({
+                                success: false,
+                                msg: JSON.stringify(err)
+                            });
+                        }
+                    } else {
+                        adClient.search(suffix, 
+                            {
+                                scope: "sub",
+                                filter: "(userPrincipalName=" + userPrincipalName + ")"
+                            }, 
+                            function(err, ldapResult) {
+                                if(err) {
+                                    return res.json({
+                                        success: false,
+                                        msg: 'Graška: ' + err
+                                    });
+                                }
+                        
+                                ldapResult.on('searchEntry', function(entry) {
+                                    let groups = entry.object.memberOf;
+                                    let member = false;
+                                    
+                                    if (typeof groups === "string") {
+                                        groups = [groups];
+                                    }
+
+                                    if(groups) {
+                                        groups.forEach(element => {
+                                            if(element == 'korisnik360') {
+                                                member = true;
+                                            }
+                                        });
+                                    }
+                                    
+                                    if(member) {
+                                        token = jwt.sign({data: user}, config.secret, {
+                                            expiresIn: 3600 // 1h
+                                        });
+                                        
+                                        res.json({
+                                            success: true,
+                                            token: 'JWT ' + token,
+                                            user: user
+                                        });
+                                    } else {
+                                        return res.json({
+                                            success: false,
+                                            msg: 'Korisnik nema potrebne privilegije'
+                                        });
+                                    }
+                                });
+                            }
+                        );
+                    }
+                });
+
                 return res.json({
                     success: false,
-                    msg: 'Korisnik ne postoji ili nije aktivan'
+                    msg: 'Korisnik ne postoji!'
                 });
             }
 
@@ -127,7 +210,7 @@ router.post('/autentifikacija', (req, res, next) => {
                     throw err;
                 } else {
                     if(isMatch) {
-                        const token = jwt.sign({data: user}, config.secret, {
+                        token = jwt.sign({data: user}, config.secret, {
                             expiresIn: 3600 // 1h
                         });
 
@@ -135,7 +218,7 @@ router.post('/autentifikacija', (req, res, next) => {
                             success: true,
                             token: 'JWT ' + token,
                             user: user
-                        })
+                        });
                     } else {
                         return res.json({
                             success: false,

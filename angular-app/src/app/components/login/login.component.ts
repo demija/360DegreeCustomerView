@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
     prijava() {
         const korisnik = {
             korisnicko_ime: this.korisnicko_ime,
-            lozinka: this.lozinka
+            lozinka: this.lozinka,
+            domain: 'korisnik360.ba'
         }
 
         // Validacija unesenih vrijednosti
