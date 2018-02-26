@@ -91,7 +91,7 @@ export class ReportComponent implements OnInit {
     public racunDoughnutChartOptions:any = {
         title: {
             display: true,
-            text: 'Računi'
+            text: 'Tipovi računa'
         },
         layout: {
             padding: {
@@ -139,7 +139,7 @@ export class ReportComponent implements OnInit {
     public kreditDoughnutChartOptions:any = {
         title: {
             display: true,
-            text: 'Krediti'
+            text: 'Tipovi kredita'
         },
         layout: {
             padding: {
@@ -250,7 +250,7 @@ export class ReportComponent implements OnInit {
         //maintainAspectRatio: true,
         title: {
             display: true,
-            text: 'Iznos'
+            text: 'Iznos ugovora'
         },
         layout: {
             padding: {

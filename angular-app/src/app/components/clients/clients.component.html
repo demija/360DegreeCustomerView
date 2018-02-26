@@ -33,7 +33,9 @@
                                         <button type="button" class="btn btn-link disabled" data-toggle="tooltip" data-placement="top" title="Izmjena" (click)="editKlijenta(klijent)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
                                         {{ klijent.ime }} {{ klijent.prezime }}
                                     </td>
-                                    <td>{{ klijent.maticni_broj }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-link" (click)="pregledKlijenta(klijent.maticni_broj)">{{ klijent.maticni_broj }}</button>
+                                    </td>
                                     <td>{{ klijent.broj_lk }}</td>
                                     <td>{{ klijent.mobilni_telefon }}</td>
                                     <td>{{ klijent.mail_adresa }}</td>

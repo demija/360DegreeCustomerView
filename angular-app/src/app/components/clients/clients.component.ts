@@ -4,6 +4,10 @@ import { KlijentService } from '../../services/klijent.service';
 import { KompanijaService } from '../../services/kompanija.service';
 import { ValidateService } from '../../services/validate.service';
 import { IMyDpOptions } from 'mydatepicker';
+//
+import { NavhomeService } from '../../services/navhome.service';
+import { Router } from '@angular/router';
+//
 
 @Component({
     selector: 'app-clients',
@@ -58,7 +62,9 @@ export class ClientsComponent implements OnInit {
         private authService: AuthService,
         private klijentService: KlijentService,
         private kompanijaService: KompanijaService,
-        private valdateService: ValidateService
+        private valdateService: ValidateService,
+        private navhomeService: NavhomeService,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -293,6 +299,38 @@ export class ClientsComponent implements OnInit {
                 this.vratiSveKompanije();
             } else {
                 this.valdateService.pokreniSwal('Greška!', data.msg, 'error', 'Uredu');
+            }
+        });
+    }
+
+    pregledKlijenta(maticniBroj) {
+        const pretraga = {
+            maticni_broj: maticniBroj,
+            id_prijavljenog_korisnika: this.prijavljeni_korisnik['_id'],
+            id_uposlenika: this.prijavljeni_korisnik['id_uposlenika'],
+            ime: this.prijavljeni_korisnik['ime'],
+            prezime: this.prijavljeni_korisnik['prezime'],
+            korisnicko_ime: this.prijavljeni_korisnik['korisnicko_ime'],
+            odjel: this.prijavljeni_korisnik['odjel'],
+            poslovnica: this.prijavljeni_korisnik['poslovnica']
+        }
+
+        this.navhomeService.getClientData(pretraga).subscribe((klijent: any) => {
+            if(klijent.success) {
+                this.router.navigate(['/']);
+                this.navhomeService.changeClient(klijent.client);
+                this.navhomeService.changeRacun(klijent.racuni);
+                this.navhomeService.changeDeposit(klijent.depoziti);
+                this.navhomeService.changeKartice(klijent.kartice);
+                this.navhomeService.changeKredite(klijent.krediti);
+                this.navhomeService.changeBiljeske(klijent.biljeske);
+                this.navhomeService.changeDodatneUsluge(klijent.dodatneUsluge);
+                this.navhomeService.changeArhivaPonuda(klijent.arhivaponuda);
+                this.navhomeService.changeAktivnePonude(klijent.aktivneponude);
+                this.navhomeService.changePreporucenePonude(klijent.preporuceneponude);
+                this.navhomeService.changeTimeline(klijent);
+            } else {
+                this.valdateService.pokreniSwal('Greška!', klijent.msg, 'error', 'Uredu');
             }
         });
     }
