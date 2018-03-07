@@ -239,7 +239,7 @@ export class ReportComponent implements OnInit {
         },
         elements: {
             line: {
-                    fill: false
+                    fill: true
             }
         }
     };
@@ -286,7 +286,7 @@ export class ReportComponent implements OnInit {
         },
         elements: {
             line: {
-                    fill: false
+                    fill: true
             }
         }
     };

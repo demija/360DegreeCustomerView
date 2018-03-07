@@ -10,10 +10,9 @@
                 <div class="card-body">
                     <div *ngIf="user">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-7">
                                 <p class="card-subtitle mb-2 text-muted">Lični podaci</p>
                                 <hr>
-                                <br>
                                 <p class="text-center"><i class="fa fa-user-circle-o fa-5x" aria-hidden="true"></i></p>
                                 <span class="text-center"><h3>{{ user.ime }} {{ user.prezime }}</h3></span>
                                 <p class="text-muted text-center">{{ user.odjel.organizaciona_jedinica }}</p>
@@ -52,28 +51,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <p class="card-subtitle mb-2 text-muted">Statistika</p>
+                            
+                            <div class="col-5">
+                                <p class="card-subtitle mb-2 text-muted">Pregled aktivnosti</p>
                                 <hr>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="text-muted">Broj pretraga</p>
-                                        <h5 class="text-primary" style="border-bottom: 2px solid #86C7F3;"><strong>{{ brojPretraga }}</strong></h5>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-6" style="border-bottom: 2px solid #C0D6E1; margin: 10px;">
+                                        <p class="text-muted" style="float: left;">Broj ponuđenih usluga</p>
+                                        <h5 class="text-primary" style="float: right;"><strong>{{ brojPonudjenihUsluga }}</strong></h5>
                                     </div>
-    
-                                    <div class="col">
-                                        <p class="text-muted">Broj ponuđenih usluga</p>
-                                        <h5 class="text-primary" style="border-bottom: 2px solid #C0D6E1;"><strong>{{ brojPonudjenihUsluga }}</strong></h5>
+                                </div>
+                                <br>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-6" style="border-bottom: 2px solid #93D9D9; margin: 10px;">
+                                        <p class="text-muted" style="float: left;">Broj ugovorenih usluga</p>
+                                        <h5 class="text-primary" style="float: right;"><strong>{{ brojUgovorenihUsluga }}</strong></h5>
                                     </div>
-    
-                                    <div class="col">
-                                        <p class="text-muted">Broj ugovorenih usluga</p>
-                                        <h5 class="text-primary" style="border-bottom: 2px solid #93D9D9;"><strong>{{ brojUgovorenihUsluga }}</strong></h5>
+                                </div>
+                                <br>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-6" style="border-bottom: 2px solid #86C7F3; margin: 10px;">
+                                        <p class="text-muted" style="float: left;">Broj pretraga</p>
+                                        <h5 class="text-primary" style="float: right;"><strong>{{ brojPretraga }}</strong></h5>
                                     </div>
-    
-                                    <div class="col">
-                                        <p class="text-muted">Broj bilješki</p>
-                                        <p class="text-primary" style="border-bottom: 2px solid #FED29D;">{{ brojBiljeski }}</p>
+                                </div>
+                                <br>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-6" style="border-bottom: 2px solid #FED29D; margin: 10px;">
+                                        <p class="text-muted" style="float: left;">Broj bilješki</p>
+                                        <h5 class="text-primary" style="float: right;"><strong>{{ brojBiljeski }}</strong></h5>
                                     </div>
                                 </div>
                             </div>

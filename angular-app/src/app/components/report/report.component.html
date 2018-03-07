@@ -482,37 +482,53 @@
                                         <button type="submit" class="btn btn-outline-success float-right" (click)="traziPoslovanje()">Traži</button>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <p class="text-muted">Broj klijenata</p>
-                                    <h5 class="text-primary text-right" style="border-bottom: 2px solid #E8A184;"><strong>{{ brojKlijenata }}</strong></h5>
-                                </div>
-                                <div class="col">
-                                    <p class="text-muted">Broj pretraga</p>
-                                    <h5 class="text-primary" style="border-bottom: 2px solid #86C7F3;"><strong>{{ brojPretraga }}</strong></h5>
-                                </div>
-                                <div class="col">
-                                    <p class="text-muted">Broj ponuđenih usluga</p>
-                                    <h5 class="text-primary" style="border-bottom: 2px solid #C0D6E1;"><strong>{{ brojPonudjenihUsluga }}</strong></h5>
-                                </div>
-                                <div class="col">
-                                    <p class="text-muted">Broj ugovorenih usluga</p>
-                                    <h5 class="text-primary" style="border-bottom: 2px solid #93D9D9;"><strong>{{ brojUgovorenihUsluga }}</strong></h5>
-                                </div>
-                                <div class="col">
-                                    <p class="text-muted">Broj bilješki</p>
-                                    <p class="text-primary" style="border-bottom: 2px solid #FED29D;">{{ brojBiljeski }}</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div *ngIf="poslovanjeKorisnik.length > 0">
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="text-muted">Top korisnici</p>
+
+                                <div class="col-10">
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-3" style="border-bottom: 2px solid #E8A184; margin: 10px;">
+                                            <div>
+                                                <p class="text-muted" style="float: left;">Broj klijenata</p>
+                                                <h5 class="text-primary" style="float: right;"><strong>{{ brojKlijenata }}</strong></h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-3" style="border-bottom: 2px solid #C0D6E1; margin: 10px;">
+                                            <div>
+                                                <p class="text-muted" style="float: left;">Broj ponuđenih usluga</p>
+                                                <h5 class="text-primary" style="float: right;"><strong>{{ brojPonudjenihUsluga }}</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-3" style="border-bottom: 2px solid #86C7F3; margin: 10px;">
+                                            <div>
+                                                <p class="text-muted" style="float: left;">Broj pretraga</p>
+                                                <h5 class="text-primary" style="float: right;"><strong>{{ brojPretraga }}</strong></h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-3" style="border-bottom: 2px solid #93D9D9; margin: 10px;">
+                                            <div>
+                                                <p class="text-muted" style="float: left;">Broj ugovorenih usluga</p>
+                                                <h5 class="text-primary" style="float: right;"><strong>{{ brojUgovorenihUsluga }}</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-3" style="margin: 10px;"></div>
+                                        <div class="col-3" style="border-bottom: 2px solid #FED29D; margin: 10px;">
+                                            <div>
+                                                <p class="text-muted" style="float: left;">Broj bilješki</p>
+                                                <h5 class="text-primary" style="float: right;"><strong>{{ brojBiljeski }}</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <hr>
+                                    <div *ngIf="poslovanjeKorisnik.length > 0">
+                                        <h4 class="card-title">Top korisnici</h4>
                                         <table class="table table-sm table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Ime i prezime</th>
-                                                    <th>Odjel</th>
+                                                    <th>Korisnik</th>
                                                     <th>Broj bilješki</th>
                                                     <th>Broj ponuđenih usluga</th>
                                                     <th>Broj ugovorenih usluga</th>
@@ -521,8 +537,10 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let korisnik of poslovanjeKorisnik">
-                                                    <td>{{ korisnik.korisnik.ime }} {{ korisnik.korisnik.prezime }}</td>
-                                                    <td>{{ korisnik.korisnik.odjel.organizaciona_jedinica }} - {{ korisnik.korisnik.poslovnica?.naziv }}</td>
+                                                    <td>
+                                                        <p>{{ korisnik.korisnik.ime }} {{ korisnik.korisnik.prezime }}</p>
+                                                        <p class="text-muted">Odjel: {{ korisnik.korisnik.odjel.organizaciona_jedinica }} - {{ korisnik.korisnik.poslovnica?.naziv }}</p>
+                                                    </td>
                                                     <td>{{ korisnik.brojBiljeski }}</td>
                                                     <td>{{ korisnik.brojPonudjenihUsluga }}</td>
                                                     <td>{{ korisnik.brojUgovorenihUsluga }}</td>
@@ -530,13 +548,9 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                                <br>
-                                <br>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <p class="text-muted">Broj pretraga po odjelima</p>
+                                        <br>
+                                        <hr>
+                                        <h4 class="card-title">Broj pretraga po odjelima</h4>
                                         <table class="table table-sm table-hover">
                                             <thead>
                                                 <tr>
@@ -551,14 +565,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-muted">Top 10 ponuđenih usluga</p>
+                                        <br>
+                                        <hr>
+                                        <h4 class="card-title">Top 10 ponuđenih usluga</h4>
                                         <table class="table table-sm table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Usluga</th>
-                                                    <th></th>
+                                                    <th>Broj ponuda</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -568,14 +582,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="col">
-                                        <p class="text-muted">Top 10 ugovorenih usluga</p>
+                                        <br>
+                                        <hr>
+                                        <h4 class="card-title">Top 10 ugovorenih usluga</h4>
                                         <table class="table table-sm table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Usluga</th>
-                                                    <th></th>
+                                                    <th>Broj ugovora</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
