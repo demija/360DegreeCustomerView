@@ -12,12 +12,12 @@ router.post('/dodaj', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška!'
+                msg: 'Greška.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Ponuda uspješno dodana!'
+                msg: 'Ponuda uspješno dodana.'
             });
         }
     });
@@ -40,7 +40,7 @@ router.post('/vratipodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Greška!',
+                    msg: 'Greška.',
                     data: null
                 });
             }
@@ -65,7 +65,7 @@ router.post('/ponudekorisnika', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Greška!',
+                    msg: 'Greška.',
                     data: null
                 });
             }
@@ -93,7 +93,7 @@ router.post('/sveponude', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Greška!',
+                    msg: 'Greška.',
                     data: null
                 });
             }

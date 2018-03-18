@@ -20,7 +20,7 @@ router.post('/vratibiljeske', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje zapisi za klijenta',
+                    msg: 'Ne postoje zapisi klijenta.',
                     data: null
                 });
             }
@@ -45,7 +45,7 @@ router.post('/biljeskekorisnika', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Greška!',
+                    msg: 'Greška.',
                     data: null
                 });
             }
@@ -73,7 +73,7 @@ router.post('/svebiljeske', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Greška!',
+                    msg: 'Greška.',
                     data: null
                 });
             }
@@ -90,12 +90,12 @@ router.post('/dodaj', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška!'
+                msg: 'Greška.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Bilješka uspješno dodana!'
+                msg: 'Bilješka uspješno dodana.'
             });
         }
     });

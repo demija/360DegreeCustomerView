@@ -20,7 +20,7 @@ router.post('/vratipodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoji kredit',
+                    msg: 'Ne postoji kredit.',
                     data: null
                 });
             }
@@ -43,7 +43,7 @@ router.get('/tipoviugovora', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -72,7 +72,7 @@ router.post('/pretragareport', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }

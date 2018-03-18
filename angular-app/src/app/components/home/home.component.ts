@@ -207,12 +207,12 @@ export class HomeComponent implements OnInit {
 
     onCardClick() {        
         if(!this.klijent['_id']) {
-            this.valdateService.pokreniSwal('Greška!', 'Odaberi klijenta', 'warning', 'Uredu');
+            this.valdateService.pokreniSwal('Greška!', 'Potrebno je odabrati klijenta', 'warning', 'Uredu');
             return false;
         }
 
         if(this.ponudjeneUsluge.length == 0 && this.ugovoreneUsluge.length == 0) {
-            this.valdateService.pokreniSwal('Greška!', 'Odaberi uslugu', 'warning', 'Uredu');
+            this.valdateService.pokreniSwal('Greška!', 'Potrebno je odabrati uslugu', 'warning', 'Uredu');
             return false;
         }
 
@@ -259,7 +259,7 @@ export class HomeComponent implements OnInit {
         }
 
         if(!this.klijent['_id']) {
-            this.valdateService.pokreniSwal('Greška!', 'Odaberi klijenta', 'warning', 'Uredu');
+            this.valdateService.pokreniSwal('Greška!', 'Potrebno je odabrati klijenta', 'warning', 'Uredu');
         } else {
             if(bilj.poruka) {
                 this.biljeskaService.dodaj(bilj).subscribe(data => {
@@ -271,7 +271,7 @@ export class HomeComponent implements OnInit {
                     }
                 });
             } else {
-                this.valdateService.pokreniSwal('Greška!', 'Unesi poruku', 'warning', 'Uredu');
+                this.valdateService.pokreniSwal('Greška!', 'Potrebno je unijeti poruku', 'warning', 'Uredu');
             }
         }
     }

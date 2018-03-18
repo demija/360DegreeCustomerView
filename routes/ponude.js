@@ -25,12 +25,12 @@ router.post('/dodaj', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška!'
+                msg: 'Greška.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Ponuda uspješno dodata!'
+                msg: 'Ponuda uspješno dodana.'
             });
         }
     });
@@ -51,7 +51,7 @@ router.get('/vratisvepodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -74,7 +74,7 @@ router.get('/vratiaktivneponude', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -199,12 +199,12 @@ router.post('/obrisi', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška!'
+                msg: 'Greška.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Ponuda uspješno obrisana!'
+                msg: 'Ponuda uspješno obrisana.'
             });
         }
     });
@@ -225,12 +225,12 @@ router.post('/izmjeniponudu', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška, izmjene nisu sačuvane!'
+                msg: 'Greška, izmjene nisu sačuvane.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Izmjene sačuvane!'
+                msg: 'Izmjene sačuvane.'
             });
         }
     });
@@ -249,12 +249,12 @@ router.post('/aktivnaponuda', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška, izmjene nisu sačuvane!'
+                msg: 'Greška, izmjene nisu sačuvane.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Izmjene sačuvane!'
+                msg: 'Izmjene sačuvane.'
             });
         }
     });

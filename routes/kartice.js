@@ -20,7 +20,7 @@ router.post('/vratipodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoji kartica',
+                    msg: 'Ne postoji kartica.',
                     data: null
                 });
             }
@@ -43,7 +43,7 @@ router.get('/tipoviugovora', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -66,7 +66,7 @@ router.get('/tipovikartica', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -89,7 +89,7 @@ router.get('/vrstekartica', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -120,7 +120,7 @@ router.post('/pretragareport', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }

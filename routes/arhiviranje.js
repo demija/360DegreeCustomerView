@@ -41,7 +41,7 @@ router.post('/unosloga', (req, res, next) => {
         } else {
             res.json({
                 success: true,
-                msg: 'Log unešen!'
+                msg: 'Log unešen.'
             });
         }
     });

@@ -23,12 +23,12 @@ router.post('/unosPretrage', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška!'
+                msg: 'Greška.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Log spašen!'
+                msg: 'Log sačuvan.'
             });
         }
     });
@@ -42,7 +42,7 @@ router.post('/brojpretragakorisnika', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška!',
+                msg: 'Greška.',
                 data: null
             });
         } else {
@@ -75,7 +75,7 @@ router.post('/svepretrage', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }

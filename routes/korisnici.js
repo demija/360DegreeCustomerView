@@ -39,19 +39,19 @@ router.post('/registracija', (req, res, next) => {
                     if(err) {
                         res.json({
                             success: false,
-                            msg: 'Greška prilikom registracije!'
+                            msg: 'Greška prilikom registracije.'
                         });
                     } else {
                         res.json({
                             success: true,
-                            msg: 'Korisnik uspješno registrovan!'
+                            msg: 'Korisnik uspješno registrovan.'
                         });
                     }
                 });
             } else {
                 res.json({
                     success: false,
-                    msg: 'Korisničko ime već postoji!'
+                    msg: 'Korisničko ime već postoji.'
                 });
             }
         }
@@ -78,12 +78,12 @@ router.post('/izmjena', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška, izmjene nisu sačuvane!'
+                msg: 'Greška, izmjene nisu sačuvane.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Izmjene sačuvane!'
+                msg: 'Izmjene sačuvane.'
             });
         }
     });
@@ -101,12 +101,12 @@ router.post('/izmjenalozinke', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška, izmjene nisu sačuvane!'
+                msg: 'Greška, izmjene nisu sačuvane.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Nova lozinka sačuvana!'
+                msg: 'Nova lozinka sačuvana.'
             });
         }
     });
@@ -139,7 +139,7 @@ router.post('/autentifikacija', (req, res, next) => {
                         if(err.name === 'InvalidCredentialsError') {
                             return res.json({
                                 success: false,
-                                msg: 'Pogrešni podaci!'
+                                msg: 'Pogrešni podaci.'
                             });
                         } else {
                             return res.json({
@@ -190,7 +190,7 @@ router.post('/autentifikacija', (req, res, next) => {
                                     } else {
                                         return res.json({
                                             success: false,
-                                            msg: 'Korisnik nema potrebne privilegije'
+                                            msg: 'Korisnik nema potrebne privilegije.'
                                         });
                                     }
                                 });
@@ -201,7 +201,7 @@ router.post('/autentifikacija', (req, res, next) => {
 
                 return res.json({
                     success: false,
-                    msg: 'Korisnik ne postoji!'
+                    msg: 'Korisnik ne postoji.'
                 });
             }
 
@@ -222,7 +222,7 @@ router.post('/autentifikacija', (req, res, next) => {
                     } else {
                         return res.json({
                             success: false,
-                            msg: 'Pogrešna lozinka'
+                            msg: 'Pogrešna lozinka.'
                         });
                     }
                 }
@@ -253,7 +253,7 @@ router.get('/vratisvepodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -272,12 +272,12 @@ router.post('/adminrola', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška, izmjene nisu sačuvane!'
+                msg: 'Greška, izmjene nisu sačuvane.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Izmjene sačuvane!'
+                msg: 'Izmjene sačuvane.'
             });
         }
     });
@@ -294,12 +294,12 @@ router.post('/aktivankorisnik', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška, izmjene nisu sačuvane!'
+                msg: 'Greška, izmjene nisu sačuvane.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Izmjene sačuvane!'
+                msg: 'Izmjene sačuvane.'
             });
         }
     });

@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
 
     onSearchClick() {
         if(!this.validateService.validateSearch()) {
-            this.validateService.pokreniSwal('Greška!', 'Unesi ispravan matični broj', 'warning', 'Uredu');
+            this.validateService.pokreniSwal('Greška!', 'Format matičnog broja nije ispravan', 'warning', 'Uredu');
             return false;
         }
 

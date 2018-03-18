@@ -18,7 +18,7 @@ router.get('/vratisvezapise', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -35,12 +35,12 @@ router.post('/dodaj', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška!'
+                msg: 'Greška.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Kompanija uspješno dodana!'
+                msg: 'Kompanija uspješno dodana.'
             });
         }
     });

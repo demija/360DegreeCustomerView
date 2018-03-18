@@ -549,7 +549,7 @@
                                             </tbody>
                                         </table>
                                         <br>
-                                        <hr>
+                                        <br>
                                         <h4 class="card-title">Broj pretraga po odjelima</h4>
                                         <table class="table table-sm table-hover">
                                             <thead>
@@ -566,39 +566,43 @@
                                             </tbody>
                                         </table>
                                         <br>
-                                        <hr>
-                                        <h4 class="card-title">Top 10 ponuđenih usluga</h4>
-                                        <table class="table table-sm table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Usluga</th>
-                                                    <th>Broj ponuda</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let usluga of ponudjeneUsluge">
-                                                    <td>{{ usluga.naziv_ponude }}</td>
-                                                    <td>{{ usluga.brojPonuda }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
                                         <br>
-                                        <hr>
-                                        <h4 class="card-title">Top 10 ugovorenih usluga</h4>
-                                        <table class="table table-sm table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Usluga</th>
-                                                    <th>Broj ugovora</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let usluga of ugovoreneUsluge">
-                                                    <td>{{ usluga.naziv_ponude }}</td>
-                                                    <td>{{ usluga.brojPonuda }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div *ngIf="ponudjeneUsluge?.length > 0">
+                                            <h4 class="card-title">Top 10 ponuđenih usluga</h4>
+                                            <table class="table table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Usluga</th>
+                                                        <th>Broj ponuda</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let usluga of ponudjeneUsluge">
+                                                        <td>{{ usluga.naziv_ponude }}</td>
+                                                        <td>{{ usluga.brojPonuda }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div *ngIf="ugovoreneUsluge?.length > 0">
+                                            <h4 class="card-title">Top 10 ugovorenih usluga</h4>
+                                            <table class="table table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Usluga</th>
+                                                        <th>Broj ugovora</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let usluga of ugovoreneUsluge">
+                                                        <td>{{ usluga.naziv_ponude }}</td>
+                                                        <td>{{ usluga.brojPonuda }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

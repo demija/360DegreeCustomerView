@@ -20,7 +20,7 @@ router.post('/vratipodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoji klijent sa traženim matičnim brojem',
+                    msg: 'Ne postoji klijent sa traženim matičnim brojem.',
                     client: null
                 });
             }
@@ -43,7 +43,7 @@ router.get('/vratisvezapise', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -60,12 +60,12 @@ router.post('/izmjena', (req, res, next) => {
         if(err) {
             res.json({
                 success: false,
-                msg: 'Greška, izmjene nisu sačuvane!'
+                msg: 'Greška, izmjene nisu sačuvane.'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'Izmjene sačuvane!'
+                msg: 'Izmjene sačuvane.'
             });
         }
     });
@@ -85,7 +85,7 @@ router.post('/dodaj', (req, res, next) => {
         } else {
             res.json({
                 success: true,
-                msg: 'Klijent uspješno dodan!'
+                msg: 'Klijent uspješno dodan.'
             });
         }
     });

@@ -20,7 +20,7 @@ router.post('/vratipodatke', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoji račun',
+                    msg: 'Ne postoji račun.',
                     data: null
                 });
             }
@@ -43,7 +43,7 @@ router.get('/tipoviugovoraracuna', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -72,7 +72,7 @@ router.post('/pretragaracunareport', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -97,7 +97,7 @@ router.post('/vratikartice', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoji račun',
+                    msg: 'Ne postoji račun.',
                     data: null
                 });
             }
@@ -120,7 +120,7 @@ router.get('/tipoviugovorakartica', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -143,7 +143,7 @@ router.get('/tipovikartica', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -166,7 +166,7 @@ router.get('/vrstekartica', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
@@ -195,7 +195,7 @@ router.post('/pretragakarticareport', (req, res, next) => {
             } else {
                 res.json({
                     success: false,
-                    msg: 'Ne postoje podaci',
+                    msg: 'Ne postoje podaci.',
                     data: null
                 });
             }
