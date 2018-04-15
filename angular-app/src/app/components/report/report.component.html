@@ -106,7 +106,7 @@
                                                 [labels]="racunBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
                                                 [legend]="racunBrojChartLegend"
-                                                [chartType]="racunBrojChartType">
+                                                [chartType]="lineChartType">
                                             </canvas>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                                 [data]="racunDoughnutChartData"
                                                 [labels]="racunDoughnutChartLabels"
                                                 [options]="racunDoughnutChartOptions"
-                                                [chartType]="racunDoughnutChartType">
+                                                [chartType]="pieChartType">
                                             </canvas>
                                         </div>
                                     </div>
@@ -234,7 +234,7 @@
                                                 [labels]="karticaBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
                                                 [legend]="karticaBrojChartLegend"
-                                                [chartType]="karticaBrojChartType">
+                                                [chartType]="lineChartType">
                                             </canvas>
                                         </div>
                                     </div>
@@ -321,7 +321,7 @@
                                                 [labels]="kreditBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
                                                 [legend]="kreditBrojChartLegend"
-                                                [chartType]="kreditBrojChartType">
+                                                [chartType]="lineChartType">
                                             </canvas>
                                         </div>
                                     </div>
@@ -335,7 +335,7 @@
                                                 [labels]="kreditKolicinaChartLabels"
                                                 [options]="lineKolicinaChartOptions"
                                                 [legend]="kreditKolicinaChartLegend"
-                                                [chartType]="kreditKolicinaChartType">
+                                                [chartType]="lineChartType">
                                             </canvas>
                                         </div>
                                     </div>
@@ -348,14 +348,27 @@
                                                 [data]="kreditDoughnutChartData"
                                                 [labels]="kreditDoughnutChartLabels"
                                                 [options]="kreditDoughnutChartOptions"
-                                                [chartType]="kreditDoughnutChartType">
+                                                [chartType]="pieChartType">
                                             </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-10">
+                                        <div style="display: block">
+                                            <canvas baseChart
+                                                [datasets]="kreditHorizontalBarChartData"
+                                                [labels]="kreditHorizontalBarChartLabels"
+                                                [options]="horizontalBarChartOptions"
+                                                [legend]="horizontalBarChartLegend"
+                                                [chartType]="horizontalBarChartType"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-            
+
                         <div class="tab-pane fade" id="nav-depoziti" role="tabpanel" aria-labelledby="nav-depoziti-tab">
                             <br>
                             <div class="row">
@@ -431,7 +444,7 @@
                                                 [labels]="depozitBrojChartLabels"
                                                 [options]="lineBrojChartOptions"
                                                 [legend]="depozitBrojChartLegend"
-                                                [chartType]="depozitBrojChartType">
+                                                [chartType]="lineChartType">
                                             </canvas>
                                         </div>
                                     </div>
@@ -445,7 +458,7 @@
                                                 [labels]="depozitKolicinaChartLabels"
                                                 [options]="lineKolicinaChartOptions"
                                                 [legend]="depozitKolicinaChartLegend"
-                                                [chartType]="depozitKolicinaChartType">
+                                                [chartType]="lineChartType">
                                             </canvas>
                                         </div>
                                     </div>
@@ -455,11 +468,24 @@
                                     <div class="col-md-10">
                                         <div style="display: block">
                                             <canvas baseChart id="depozitiGraph"
-                                                [data]="doughnutChartData"
-                                                [labels]="doughnutChartLabels"
-                                                [options]="doughnutChartOptions"
-                                                [chartType]="doughnutChartType">
+                                                [data]="depozitDoughnutChartData"
+                                                [labels]="depozitDoughnutChartLabels"
+                                                [options]="depozitDoughnutChartOptions"
+                                                [chartType]="pieChartType">
                                             </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-10">
+                                        <div style="display: block">
+                                            <canvas baseChart
+                                                [datasets]="depozitHorizontalBarChartData"
+                                                [labels]="depozitHorizontalBarChartLabels"
+                                                [options]="horizontalBarChartOptions"
+                                                [legend]="horizontalBarChartLegend"
+                                                [chartType]="horizontalBarChartType"></canvas>
                                         </div>
                                     </div>
                                 </div>

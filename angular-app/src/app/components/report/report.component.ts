@@ -83,11 +83,9 @@ export class ReportComponent implements OnInit {
     public racunBrojChartData:any[] = [{data: [], label: ''}];
     public racunBrojChartLabels:string[] = [];
     public racunBrojChartLegend:boolean = true;
-    public racunBrojChartType:string = 'line';
     // računi
     public racunDoughnutChartData:number[] = [0];
     public racunDoughnutChartLabels:string[] = [];
-    public racunDoughnutChartType:string = 'pie';
     public racunDoughnutChartOptions:any = {
         title: {
             display: true,
@@ -116,7 +114,6 @@ export class ReportComponent implements OnInit {
     public karticaBrojChartData:any[] = [{data: [], label: ''}];
     public karticaBrojChartLabels:string[] = [];
     public karticaBrojChartLegend:boolean = true;
-    public karticaBrojChartType:string = 'line';
 
     /*
     * GRAFOVI KREDITA
@@ -126,16 +123,13 @@ export class ReportComponent implements OnInit {
     public kreditBrojChartData:any[] = [{data: [], label: ''}];
     public kreditBrojChartLabels:string[] = [];
     public kreditBrojChartLegend:boolean = true;
-    public kreditBrojChartType:string = 'line';
     // kolicina kredita graf
     public kreditKolicinaChartData:any[] = [{data: [], label: ''}];
     public kreditKolicinaChartLabels:string[] = [];
     public kreditKolicinaChartLegend:boolean = true;
-    public kreditKolicinaChartType:string = 'line';
     // krediti
-    public kreditDoughnutChartData:number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    public kreditDoughnutChartData:number[] = [];
     public kreditDoughnutChartLabels:string[] = [];
-    public kreditDoughnutChartType:string = 'pie';
     public kreditDoughnutChartOptions:any = {
         title: {
             display: true,
@@ -156,6 +150,9 @@ export class ReportComponent implements OnInit {
         }
     };
 
+    public kreditHorizontalBarChartData:any[] = [{data: [], label: ''}];
+    public kreditHorizontalBarChartLabels:string[] = [];
+
     /*
     * GRAFOVI DEPOZITA
     */
@@ -164,17 +161,14 @@ export class ReportComponent implements OnInit {
     public depozitBrojChartData:any[] = [{data: [], label: ''}];
     public depozitBrojChartLabels:string[] = [];
     public depozitBrojChartLegend:boolean = true;
-    public depozitBrojChartType:string = 'line';
     // kolicina depozita graf
     public depozitKolicinaChartData:any[] = [{data: [], label: ''}];
     public depozitKolicinaChartLabels:string[] = [];
     public depozitKolicinaChartLegend:boolean = true;
-    public depozitKolicinaChartType:string = 'line';
     // depoziti
-    public doughnutChartData:number[] = [0, 0, 0, 0, 0, 0, 0, 0];
-    public doughnutChartLabels:string[] = [];
-    public doughnutChartType:string = 'pie';
-    public doughnutChartOptions:any = {
+    public depozitDoughnutChartData:number[] = [];
+    public depozitDoughnutChartLabels:string[] = [];
+    public depozitDoughnutChartOptions:any = {
         title: {
             display: true,
             text: 'Depoziti'
@@ -194,9 +188,13 @@ export class ReportComponent implements OnInit {
         }
     }
 
+    public depozitHorizontalBarChartData:any[] = [{data: [], label: ''}];
+    public depozitHorizontalBarChartLabels:string[] = [];
+
     /*
     * GRAFOVI UNIVERZALNA KONFIGURACIJA
     */
+    public lineChartType:string = 'line';
     public lineBrojChartOptions:any = {
         scaleShowVerticalLines: false,
         responsive: true,
@@ -250,7 +248,7 @@ export class ReportComponent implements OnInit {
         //maintainAspectRatio: true,
         title: {
             display: true,
-            text: 'Iznos ugovora'
+            text: 'Iznos ugovora po periodu'
         },
         layout: {
             padding: {
@@ -291,6 +289,43 @@ export class ReportComponent implements OnInit {
         }
     };
 
+    public pieChartType:string = 'pie';
+
+    public horizontalBarChartType:string = 'horizontalBar';
+    public horizontalBarChartLegend:boolean = false;
+    public horizontalBarChartOptions:any = {
+        scaleShowVerticalLines: false,
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Ukupni iznos ugovora'
+        },
+        layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 50,
+                bottom: 0
+            }
+        },
+        scales: {
+            xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'BAM'
+                    }
+                }],
+            yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Tipovi ugovora'
+                    }
+                }]
+        }
+    };
+
     public myDatePickerOptions: IMyDpOptions = {
         dateFormat: 'dd.mm.yyyy',
     };
@@ -312,10 +347,6 @@ export class ReportComponent implements OnInit {
         // Računi
         this.racunService.tipoviUgovora().subscribe(tipoviUgovora => {
             this.tipoviUgovoraRacuna = tipoviUgovora.data;
-
-            this.tipoviUgovoraRacuna.forEach(element => {
-                this.racunDoughnutChartLabels.push(element._id.opis_tipa_ugovora);
-            });
         });
 
         // Kartice
@@ -373,19 +404,11 @@ export class ReportComponent implements OnInit {
         // Krediti
         this.kreditService.tipoviUgovora().subscribe(tipoviKredita => {
             this.tipoviUgovoraKredita = tipoviKredita.data;
-
-            this.tipoviUgovoraKredita.forEach(element => {
-                this.kreditDoughnutChartLabels.push(element._id.opis_tipa_ugovora);
-            });
         });
 
         // Depoziti
         this.depozitService.vratiSveTipove().subscribe(tipoviDepozita => {
             this.tipoviDepozita = tipoviDepozita.data;
-
-            this.tipoviDepozita.forEach(element => {
-                this.doughnutChartLabels.push(element._id.opis_tipa_ugovora);
-            });
         });
     }
 
@@ -405,9 +428,8 @@ export class ReportComponent implements OnInit {
     }
 
     traziRacune() {
-        this.selektovaniTipoviUgovoraRacuna = [];
-
         this.resetRacunGrafova();
+        this.selektovaniTipoviUgovoraRacuna = [];
 
         this.tipoviUgovoraRacuna.forEach(element => {
             if(element.selected) {
@@ -458,6 +480,11 @@ export class ReportComponent implements OnInit {
         this.racunDoughnutChartData.forEach(element => {
             element = 0;
         });
+
+        this.racunDoughnutChartLabels = [];
+        this.tipoviUgovoraRacuna.forEach(element => {
+            this.racunDoughnutChartLabels.push(element._id.opis_tipa_ugovora);
+        });
     }
 
     pripremaRacunGrafova() {
@@ -468,7 +495,6 @@ export class ReportComponent implements OnInit {
 
     generisanjePeriodaRacunGrafa() {
         this.periodRacunGrafa = [];
-        
         this.periodRacunGrafa.push({
             mjesec: new Date(this.racuniResult[0].datum_ugovora).getMonth() + 1,
             godina: new Date(this.racuniResult[0].datum_ugovora).getFullYear(),
@@ -538,6 +564,7 @@ export class ReportComponent implements OnInit {
     }
 
     generisanjeGrafaRacuna() {
+        let doughnutVrijednosti = [];
         let vrijednosti = [];
         let tempVrijednost;
 
@@ -557,7 +584,6 @@ export class ReportComponent implements OnInit {
             }
         });
 
-        let doughnutVrijednosti = [];
         this.tipoviUgovoraRacuna.forEach(element => {
             if(element.selected) {
                 vrijednosti.forEach(elementVrijednosti => {
@@ -622,9 +648,8 @@ export class ReportComponent implements OnInit {
     }
 
     traziKartice() {
-        this.selektovaniTipoviUgovoraKartica = [];
-
         this.resetKarticaGrafova();
+        this.selektovaniTipoviUgovoraKartica = [];
 
         for (var i = 0; i < this.tipoviUgovoraKartica.length; i++) {
             if(this.tipoviUgovoraKartica[i].selected) {
@@ -708,7 +733,6 @@ export class ReportComponent implements OnInit {
 
     generisanjePeriodaKarticaGrafa() {
         this.periodKarticaGrafa = [];
-        
         this.periodKarticaGrafa.push({
             mjesec: new Date(this.karticeResult[0].kartica.datum_ugovora).getMonth() + 1,
             godina: new Date(this.karticeResult[0].kartica.datum_ugovora).getFullYear(),
@@ -830,9 +854,8 @@ export class ReportComponent implements OnInit {
     }
 
     traziKredite() {
-        this.selektovaniTipoviUgovoraKredita = [];
-
         this.resetKreditGrafova();
+        this.selektovaniTipoviUgovoraKredita = [];
 
         this.tipoviUgovoraKredita.forEach(element => {
             if(element.selected) {
@@ -884,7 +907,12 @@ export class ReportComponent implements OnInit {
         this.kreditKolicinaChartData.length = 1;
 
         this.kreditDoughnutChartData.forEach(element => {
-            element = 0;
+            element = null;
+        });
+
+        this.kreditDoughnutChartLabels = [];
+        this.tipoviUgovoraKredita.forEach(element => {
+            this.kreditDoughnutChartLabels.push(element._id.opis_tipa_ugovora);
         });
     }
 
@@ -1004,8 +1032,12 @@ export class ReportComponent implements OnInit {
     }
 
     generisanjeGrafaKredita() {
+        let labelaVrijednost = [];
+        let doughnutVrijednosti = [];
         let vrijednosti = [];
+        let horVrijednosti = [];
         let tempVrijednost;
+        this.kreditHorizontalBarChartLabels = [];
 
         this.kreditKolicinaChartData.forEach(element => {
             tempVrijednost = 0;
@@ -1022,12 +1054,15 @@ export class ReportComponent implements OnInit {
             }
         });
 
-        let doughnutVrijednosti = [];
         this.tipoviUgovoraKredita.forEach(element => {
             if(element.selected) {
                 vrijednosti.forEach(elementVrijednosti => {
                     if(elementVrijednosti.labela == element._id.opis_tipa_ugovora) {
                         doughnutVrijednosti.push(elementVrijednosti.vrijednost);
+                        labelaVrijednost.push({
+                            labela: elementVrijednosti.labela,
+                            vrijednost: elementVrijednosti.vrijednost
+                        });
                     }
                 });
             } else {
@@ -1036,6 +1071,14 @@ export class ReportComponent implements OnInit {
         });
 
         this.kreditDoughnutChartData = doughnutVrijednosti;
+        
+        labelaVrijednost.sort(function(a,b) {return (a.vrijednost > b.vrijednost) ? -1 : ((b.vrijednost > a.vrijednost) ? 1 : 0);} );
+        labelaVrijednost.forEach(element => {
+            this.kreditHorizontalBarChartLabels.push(element.labela);
+            horVrijednosti.push(element.vrijednost);
+        });
+
+        this.kreditHorizontalBarChartData[0].data = horVrijednosti;
     }
 
     kreditiCsv() {
@@ -1101,9 +1144,8 @@ export class ReportComponent implements OnInit {
     }
 
     traziDepozite() {
-        this.selektovaniTipoviDepozita = [];
-
         this.resetDepozitGrafova();
+        this.selektovaniTipoviDepozita = [];
 
         for (var i = 0; i < this.tipoviDepozita.length; i++) {
             if(this.tipoviDepozita[i].selected) {
@@ -1154,8 +1196,13 @@ export class ReportComponent implements OnInit {
         this.depozitBrojChartData.length = 1;
         this.depozitKolicinaChartData.length = 1;
 
-        this.doughnutChartData.forEach(element => {
+        this.depozitDoughnutChartData.forEach(element => {
             element = 0;
+        });
+
+        this.depozitDoughnutChartLabels = [];
+        this.tipoviDepozita.forEach(element => {
+            this.depozitDoughnutChartLabels.push(element._id.opis_tipa_ugovora);
         });
     }
 
@@ -1171,7 +1218,6 @@ export class ReportComponent implements OnInit {
 
     generisanjePeriodaDepozitGrafa() {
         this.periodDepozitGrafa = [];
-        
         this.periodDepozitGrafa.push({
             mjesec: new Date(this.depozitiResult[0].datum_ugovora).getMonth() + 1,
             godina: new Date(this.depozitiResult[0].datum_ugovora).getFullYear(),
@@ -1275,8 +1321,12 @@ export class ReportComponent implements OnInit {
     }
 
     generisanjeGrafaDepozita() {
+        let labelaVrijednost = [];
+        let doughnutVrijednosti = [];
         let vrijednosti = [];
+        let horVrijednosti = [];
         let tempVrijednost;
+        this.depozitHorizontalBarChartLabels = [];
 
         this.depozitKolicinaChartData.forEach(element => {
             tempVrijednost = 0;
@@ -1292,13 +1342,16 @@ export class ReportComponent implements OnInit {
                 });
             }
         });
-
-        let doughnutVrijednosti = [];
+        
         this.tipoviDepozita.forEach(element => {
             if(element.selected) {
                 vrijednosti.forEach(elementVrijednosti => {
                     if(elementVrijednosti.labela == element._id.opis_tipa_ugovora) {
                         doughnutVrijednosti.push(elementVrijednosti.vrijednost);
+                        labelaVrijednost.push({
+                            labela: elementVrijednosti.labela,
+                            vrijednost: elementVrijednosti.vrijednost
+                        });
                     }
                 });
             } else {
@@ -1306,7 +1359,15 @@ export class ReportComponent implements OnInit {
             }
         });
 
-        this.doughnutChartData = doughnutVrijednosti;
+        this.depozitDoughnutChartData = doughnutVrijednosti;
+
+        labelaVrijednost.sort(function(a,b) {return (a.vrijednost > b.vrijednost) ? -1 : ((b.vrijednost > a.vrijednost) ? 1 : 0);} );
+        labelaVrijednost.forEach(element => {
+            this.depozitHorizontalBarChartLabels.push(element.labela);
+            horVrijednosti.push(element.vrijednost);
+        });
+
+        this.depozitHorizontalBarChartData[0].data = horVrijednosti;
     }
 
     depozitiCsv() {

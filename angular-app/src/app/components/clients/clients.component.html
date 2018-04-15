@@ -30,7 +30,7 @@
                             <tbody>
                                 <tr *ngFor="let klijent of klijenti | paginate: { itemsPerPage: 20, currentPage: klijentiPage, id: 'klijenti_pagination' }">
                                     <td>
-                                        <button type="button" class="btn btn-link disabled" data-toggle="tooltip" data-placement="top" title="Izmjena" (click)="editKlijenta(klijent)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+                                        <button type="button" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Izmjena" (click)="editKlijenta(klijent)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
                                         {{ klijent.ime }} {{ klijent.prezime }}
                                     </td>
                                     <td>

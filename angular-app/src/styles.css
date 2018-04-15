@@ -48,10 +48,6 @@ body {
     color: #374664;
 }
 
-.disabled {
-    cursor: pointer;
-}
-
 .container {
     max-width: 100% !important;
 }
