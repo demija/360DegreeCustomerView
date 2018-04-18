@@ -245,7 +245,6 @@ export class ReportComponent implements OnInit {
     public lineKolicinaChartOptions:any = {
         scaleShowVerticalLines: false,
         responsive: true,
-        //maintainAspectRatio: true,
         title: {
             display: true,
             text: 'Iznos ugovora po periodu'

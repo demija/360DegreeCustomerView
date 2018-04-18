@@ -7,7 +7,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="jmbgSearch" placeholder="Matični broj klijenta" [(ngModel)]="maticni_broj_search" (keyup.enter)="onSearchClick()" aria-label="Search">
                 <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button" (click)="onSearchClick()"><i fa class="fa fa-search"></i> Traži</button>
+                    <button class="btn btn-secondary" id='traziButton' type="button" (click)="onSearchClick()"><i fa class="fa" [ngClass]="{spinn:'fa-spinner fa-spin', search:'fa-search'}[traziBtnClass]"></i> Traži</button>
                 </span>
             </div>
         </div>

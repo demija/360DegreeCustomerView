@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
     prijavljeni_korisnik: Object;
     maticni_broj_search: String;
     klijent_id: String;
+    traziBtnClass: String = 'search';
 
     constructor(
         private authService: AuthService,
@@ -42,6 +43,8 @@ export class NavbarComponent implements OnInit {
             return false;
         }
 
+        this.traziBtnClass = 'spinn';
+
         const pretraga = {
             maticni_broj: this.maticni_broj_search,
             id_prijavljenog_korisnika: this.prijavljeni_korisnik['_id'],
@@ -66,6 +69,8 @@ export class NavbarComponent implements OnInit {
                 this.navhomeService.changeAktivnePonude(klijent.aktivneponude);
                 this.navhomeService.changePreporucenePonude(klijent.preporuceneponude);
                 this.navhomeService.changeTimeline(klijent);
+
+                this.traziBtnClass = 'search';
             } else {
                 this.validateService.pokreniSwal('Greška!', klijent.msg, 'error', 'Uredu');
             }
