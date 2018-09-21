@@ -11,3 +11,7 @@ MEAN stack is a full-stack JavaScript open-source solution, which provides a sol
 # Screenshots
 ![01](https://github.com/demija/360DegreeCustomerView/blob/master/screenshots/01.png)
 ![01](https://github.com/demija/360DegreeCustomerView/blob/master/screenshots/02.png)
+![01](https://github.com/demija/360DegreeCustomerView/blob/master/screenshots/03.png)
+![01](https://github.com/demija/360DegreeCustomerView/blob/master/screenshots/04.png)
+![01](https://github.com/demija/360DegreeCustomerView/blob/master/screenshots/05.png)
+![01](https://github.com/demija/360DegreeCustomerView/blob/master/screenshots/06.png)
